@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)https://sankeymatic.com/manual/ -->
+<html lang="en-US">
+  <!-- #bbinclude "sub-page-top.html"
+#PAGETITLE#="Manual - Getting Started: Nodes and Flows"
+#PAGEDESC#="How to use SankeyMATIC to the fullest"
+#BASEURL#="/manual/"
+--><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SankeyMATIC: Manual - Getting Started: Nodes and Flows</title>
+    <meta name="description" content="How to use SankeyMATIC to the fullest" />
+    <link
+      rel="stylesheet"
+      href="skm-main.css"
+    />
+    <!-- 
+ 
+   
+ 
+     
+     
+        
+    <main class="vs f-middle">
+      <!-- end bbinclude -->
+
+      <div class="home__intro vs">
+        <div class="home__intro--text">
+         
+        </div>
+      </div>
+
+      <div class="topic-area hs-md-vs f-middle">
+        
+      </div>
+
+      <div class="center" id="manual_main">
+        <!-- ====================== Begin Manual Content ====================== -->
+        <h2 class="manual-header">Getting Started: Nodes and Flows</h2>
+
+        <div>
+          <div class="example_topic">
+            <h3>Entering Data</h3>
+
+            <p>
+              In the field named “<strong>Inputs</strong>”, enter one “Flow” per
+              line, using this format:
+            </p>
+            <div class="hs-sm-vs f-gap-lg f-evenly f-acenter">
+              <span
+                ><code class="sankeymatic_code"
+                  ><i>Source</i>&nbsp;<b>[</b><i>Number</i><b>]</b>&nbsp;<i
+                    >Target</i
+                  ></code
+                ></span
+              >
+              <div class="hs-sm-vs f-gap f-acenter">
+                Example:
+                <code class="sankeymatic_sample"
+                  >Income&nbsp;[100]&nbsp;Checking&nbsp;Account</code
+                >
+              </div>
+            </div>
+
+            <div class="hs-md-vs f-gap f-middle">
+              <div>
+                <p>
+                  After entering one or more Flows, click
+                  “<strong>Preview</strong>”.
+                </p>
+                <p>
+                  SankeyMATIC will automatically lay out a diagram connecting
+                  all Source and Target “Nodes” using Flows with proportional
+                  thicknesses.
+                </p>
+                <p>
+                  Using the same Node name in multiple lines will produce
+                  multiple flows in or out of that Node.
+                </p>
+                <p>
+                  Note: Node names are <strong>case sensitive</strong>: 'A' is
+                  not considered a match for 'a'.
+                </p>
+              </div>
+              <div>
+                <div class="vs f-gap t-center manual-panel">
+                  Example:
+                  <div class="hs f-gap f-middle">
+                    <textarea id="example_input_1" rows="3" cols="7">
+A [8] C
+B [4] C</textarea
+                    ><img
+                      src="i/manual_d1x2.png"
+                      class="example_img"
+                      alt="Simple sankey example"
+                      height="50"
+                      width="120"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="example_topic">
+            <h3>Diagram Shape and Size</h3>
+            <p>
+              Experiment with the “<strong>Diagram Width</strong>” and
+              “<strong>Height</strong>” settings to find what shape communicates
+              your data most clearly.
+            </p>
+            <div class="vs f-basis-max">
+              <div class="hs f-acenter">
+                <img
+                  src="i/manual_tallnarrowx2.png"
+                  class="example_img"
+                  alt="Tall example"
+                  height="150"
+                  width="75"
+                />
+                <div>
+                  <p>Is your data shown best using:</p>
+                  <ul>
+                    <li>A <strong>tall</strong> rectangle?</li>
+                    <li>A <strong>wide</strong> rectangle?</li>
+                    <li>Something closer to a <strong>square</strong>?</li>
+                  </ul>
+                  <p>
+                    These three examples all share the same inputs—only the
+                    dimensions of the graph have been changed.
+                  </p>
+                </div>
+              </div>
+              <div class="hs-sm-vs f-basis-max">
+                <img
+                  src="i/manual_narrowshortx2.png"
+                  class="example_img"
+                  alt="Narrow Short example"
+                  height="60"
+                  width="75"
+                />
+                <img
+                  src="i/manual_wideshortx2.png"
+                  class="example_img"
+                  alt="Wide example"
+                  height="60"
+                  width="300"
+                /><br />
+              </div>
+            </div>
+          </div>
+
+          <div class="example_topic">
+            <h3>Spacing between Nodes</h3>
+            <div class="hs f-wrap f-middle">
+              <div class="t-center manual-panel smallbox">
+                <p>
+                  <strong>Small</strong> spacing between Nodes can lead to
+                  crowded or muddy diagrams, difficult to parse visually.
+                </p>
+                <img
+                  src="i/manual_smallspacingx2.png"
+                  class="example_img"
+                  alt="Small Node spacing example"
+                  height="60"
+                  width="120"
+                /><br />
+                Spacing = around <strong>10%</strong>
+              </div>
+
+              <div class="t-center manual-panel smallbox">
+                <p>
+                  <strong>Large</strong> spacing between Nodes leads to thin
+                  spidery Flows, making differences between sizes harder to
+                  distinguish.
+                </p>
+                <img
+                  src="i/manual_bigspacingx2.png"
+                  class="example_img"
+                  alt="Large Node spacing example"
+                  height="60"
+                  width="120"
+                /><br />
+                Spacing = around <strong>90%</strong>
+              </div>
+
+              <div class="t-center manual-panel smallbox">
+                <p>
+                  Find a <strong>happy medium</strong>, appropriate for making
+                  clear comparisons between Flows.
+                </p>
+                <img
+                  src="i/manual_goodspacingx2.png"
+                  class="example_img"
+                  alt="Good Node spacing example"
+                  height="60"
+                  width="120"
+                /><br />
+                Spacing = around <strong>50%</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="example_topic">
+            <h3>Getting Data from a Spreadsheet?</h3>
+            <div class="hs f-wrap f-middle">
+              <div class="t-center simple-panel">
+                <p>Given data laid out like this in a spreadsheet document:</p>
+                <table class="sampledata center">
+                  <tbody>
+                    <tr>
+                      <td></td>
+                      <th>A</th>
+                      <th>B</th>
+                      <th>C</th>
+                    </tr>
+                    <tr class="r2">
+                      <th>1</th>
+                      <td><strong>From</strong></td>
+                      <td><strong>To</strong></td>
+                      <td><strong>Amount</strong></td>
+                    </tr>
+                    <tr class="r1">
+                      <th>2</th>
+                      <td>Income</td>
+                      <td>Budget</td>
+                      <td class="number">100</td>
+                    </tr>
+                    <tr class="r2">
+                      <th>3</th>
+                      <td>Budget</td>
+                      <td>Expenses</td>
+                      <td class="number">60.75</td>
+                    </tr>
+                    <tr class="r1">
+                      <th>4</th>
+                      <td>Budget</td>
+                      <td>Savings</td>
+                      <td class="number">39.25</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="t-center simple-panel">
+                <p>
+                  <strong>Add another spreadsheet column</strong> applying
+                  either of the following formulas to all of your data rows:
+                </p>
+                <p>
+                  <code class="sankeymatic_code"
+                    ><strong
+                      >=<span class="cellname">A2</span> &amp; " [" &amp;
+                      <span class="cellname">C2</span> &amp; "] " &amp;
+                      <span class="cellname">B2</span></strong
+                    ></code
+                  ><br />
+                  or<br />
+                  <code class="sankeymatic_code"
+                    ><strong
+                      >=CONCATENATE(<span class="cellname">A2</span>, " [",
+                      <span class="cellname">C2</span>, "] ",
+                      <span class="cellname">B2</span>)</strong
+                    ></code
+                  >
+                </p>
+
+                <p>
+                  (Both formulas rearrange the data in the same way. Both have
+                  been tested in Excel and in Google Sheets.)
+                </p>
+              </div>
+
+              <div class="t-center simple-panel">
+                <p>
+                  The new column will contain your data rearranged like this:
+                </p>
+                <table class="sampledata">
+                  <tbody>
+                    <tr>
+                      <td></td>
+                      <th>A</th>
+                      <th>B</th>
+                      <th>C</th>
+                      <th>D</th>
+                    </tr>
+                    <tr class="r2">
+                      <th>1</th>
+                      <td><strong>From</strong></td>
+                      <td><strong>To</strong></td>
+                      <td><strong>Amount</strong></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <th>2</th>
+                      <td>Income</td>
+                      <td>Budget</td>
+                      <td class="number">100</td>
+                      <td class="result t-left">Income [100] Budget</td>
+                    </tr>
+                    <tr>
+                      <th>3</th>
+                      <td>Budget</td>
+                      <td>Expenses</td>
+                      <td class="number">60.75</td>
+                      <td class="result t-left">Budget [60.75] Expenses</td>
+                    </tr>
+                    <tr>
+                      <th>4</th>
+                      <td>Budget</td>
+                      <td>Savings</td>
+                      <td class="number">39.25</td>
+                      <td class="result t-left">Budget [39.25] Savings</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="t-center simple-panel">
+                <p>
+                  Then copy &amp; paste the values from that new column into the
+                  SankeyMATIC “<strong>Inputs</strong>” field, and voilà:
+                </p>
+
+                <div class="hs-md-vs f-acenter">
+                  <div class="f-basis-fit">
+                    <textarea id="example_input_2" rows="5" cols="25">
+Income [100] Budget
+Budget [60.75] Expenses
+Budget [39.25] Savings</textarea
+                    >
+                  </div>
+                  <img
+                    src="i/manual_spreadsheet_example.png"
+                    class="example_img"
+                    alt="Spreadsheet example"
+                    height="200"
+                    width="400"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
