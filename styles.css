@@ -1,0 +1,72 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center !important;
+}
+.table-container1 {
+  width: 100%;
+  max-height: 60vh; /* Table occupies half the screen height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  margin: 20px auto;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  position: relative;
+}
+thead th {
+  position: sticky;
+  top: 0;
+  background-color: #f4f4f4;
+  z-index: 2;
+  border: 1px solid #ddd;
+}
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  position: relative;
+}
+td input {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 4px;
+  box-sizing: border-box;
+}
+td input:focus {
+  border: none; /* No border for the input element */
+}
+td.selected {
+  border: 2px solid #0078d4; /* Highlight selected cells */
+}
+
+table td input.amount {
+  background-color: #ffffff !important;
+  font-size: 16px !important; /* Change the font size */
+  height: 40px !important; /* Adjust the height */
+  padding: 10px !important; /* Add padding to make the input feel more spacious */
+  width: 100% !important; /* Ensure the input takes the full width of the cell */
+}
+
+table td input.from {
+  background-color: #ffffff !important;
+  font-size: 16px !important; /* Change the font size */
+  height: 40px !important; /* Adjust the height */
+  padding: 10px !important; /* Add padding to make the input feel more spacious */
+  width: 100% !important; /* Ensure the input takes the full width of the cell */
+}
+
+table td input.to {
+  background-color: #ffffff !important;
+  font-size: 16px !important; /* Change the font size */
+  height: 40px !important; /* Adjust the height */
+  padding: 10px !important; /* Add padding to make the input feel more spacious */
+  width: 100% !important; /* Ensure the input takes the full width of the cell */
+}
