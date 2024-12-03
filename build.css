@@ -7,13 +7,13 @@
   --button-blue: #131313;
   --light-blue: rgb(4, 4, 4);
   --lighter-blue: #d5f0f0;
-  --gray-blue: rgb(13, 13, 13);
+  --gray-blue: rgb(31, 31, 31);
   --pale-blue-0: #090909;
   --pale-blue-1: #e7f7ff;
 
   --bg-medium: rgb(235, 240, 245);
   --bg-light: rgb(241, 244, 247);
-  --bg-pale: #eef7ff;
+  --bg-pale: #d5d5d8;
   --bg-palest: #fbfeff;
   --bg-pale-warning: #fffff8;
   --bg-attention: #e3ff9f;
@@ -29,7 +29,7 @@
 
   --border-base: 1px solid var(--medium-blue);
   --border-dark: 1px solid var(--deep-blue);
-  --border-light: 1px solid var(--gray-blue);
+
   --border-gray: 1px solid var(--gray60);
   --border-dotted: 1px dotted var(--medium-blue);
 
@@ -43,6 +43,13 @@ body {
   font-family: sans-serif;
   background-color: #ffffff;
   margin: 0;
+
+  display: flex;
+  flex-direction: column; /* Stack the content vertically */
+  height: 100vh; /* Full height of the viewport */
+  margin: 0;
+  font-family: Arial, sans-serif;
+  margin: 20px;
 }
 
 /* items for screen readers which do not need to be visible: */
@@ -485,32 +492,62 @@ dfn {
 }
 
 .form_elements {
-  margin: 2px 3px 5px;
+  margin: 4px 6px 8px; /* Updated for more consistent spacing */
+  font-family: "Inter", sans-serif; /* Modern font */
+  font-size: 14px; /* Improved readability */
+  color: #2c3e50; /* Neutral modern text color */
 }
 
+/* Minimal, inherits from parent but provides some structure */
 .form_elements1 {
-  background-color: inherit;
-  margin: 2px 3px 5px;
-  padding: 2px 3px;
+  background-color: transparent; /* Explicitly define transparent background */
+  margin: 4px 6px 8px;
+  padding: 6px 8px; /* Slightly larger padding for better spacing */
+  border-radius: 6px; /* Subtle rounded corners */
+  transition: background-color 0.3s ease;
+}
+
+.form_elements1:hover {
+  background-color: #f0f4f8; /* Light hover effect for better interactivity */
 }
 
 .form_elements2 {
-  background-color: #d8d8d8;
-  margin: 2px 3px 5px;
-  padding: 2px 3px;
+  background-color: #f5f5f5; /* Softer neutral tone */
+  margin: 4px 6px 8px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  transition: box-shadow 0.3s ease;
+}
+
+.form_elements2:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Subtle hover shadow for depth */
 }
 
 .form_elements3 {
-  background-color: var(--bg-pale);
-  border: var(--border-light);
-  margin: 2px 3px 5px;
-  padding: 3px 4px;
+  background-color: var(--bg-pale, #ffffff); /* Use variable with fallback */
+  border: 1px solid var(--border-light, #d1d1d1); /* Variable or fallback */
+  margin: 4px 6px 8px;
+  padding: 10px 12px; /* More padding for a comfortable layout */
+  border-radius: 8px;
+  transition: background-color 0.3s ease, border 0.3s ease;
+}
+
+.form_elements3:hover {
+  background-color: #f9fafb; /* Slight hover color change */
+  border: 1px solid #3498db; /* Accent color for interaction */
 }
 
 .share-box {
-  border: 2px solid var(--light-blue);
-  margin: 0.1em 0.2em 0.5em;
-  padding: 0.25em 0.4em;
+  border: 2px solid var(--light-blue, #3498db); /* Modern accent color */
+  margin: 0.2em 0.3em 0.6em; /* Slightly more spacing */
+  padding: 0.5em 0.7em; /* Comfortable padding */
+  border-radius: 6px; /* Rounded corners for a modern look */
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.share-box:hover {
+  background-color: #e8f4fc; /* Light blue hover effect */
+  border-color: #1d72b8; /* Darker blue for better emphasis */
 }
 
 /* for items which need leftward breathing room: */
@@ -542,16 +579,6 @@ h3.ui_head {
 
 h3.ui_head:hover {
   background-color: rgb(2, 2, 2);
-}
-
-span.toggleable {
-  background-color: var(--bg-pale);
-  color: black;
-  padding: 0.1em 0.2em;
-  border: var(--border-light);
-  border-radius: 0.3em;
-  font-style: italic;
-  vertical-align: middle;
 }
 
 span.toggleable:hover {
@@ -1265,42 +1292,43 @@ fieldset.simple {
   color: #f7f4f4;
 }
 
-/* Styling for dropdown content */
 .dropdown-content {
   display: none; /* Hidden by default */
   list-style: none; /* Remove bullet points */
   margin: 0;
   padding: 0;
-  background-color: #f9f9f9; /* Light background for dropdown */
-  border: 1px solid #ccc; /* Border for dropdown */
-  box-shadow: 0 4px 8px rgba(112, 111, 111, 0.2);
+  background-color: #ffffff; /* Clean white background */
+  border: 1px solid #ddd; /* Softer border color */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   position: absolute;
-  width: 200px; /* Fixed width for dropdown */
+  width: 220px; /* Slightly wider dropdown */
   z-index: 1000;
+  border-radius: 6px; /* Rounded corners for a modern look */
+  overflow: hidden; /* Ensures items don’t overflow rounded edges */
 }
 
 /* Styling for dropdown items */
 .dropdown-content li {
-  margin: 0; /* Remove gaps between items */
+  margin: 0; /* No gaps between list items */
   padding: 0;
 }
 
 .dropdown-content button {
   width: 100%; /* Full width buttons */
-  padding: 10px; /* Padding for buttons */
+  padding: 12px 16px; /* Increased padding for better spacing */
   text-align: left; /* Align text to the left */
   border: none; /* Remove button borders */
-  background-color: #fff; /* White background for items */
-  color: #333; /* Text color */
+  background-color: #ffffff; /* White background */
+  color: #333; /* Modern text color */
   cursor: pointer; /* Pointer cursor on hover */
-  font-size: 14px; /* Adjust font size */
-  transition: background-color 0.3s ease; /* Smooth hover effect */
+  font-size: 15px; /* Slightly larger text */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effect */
 }
 
 /* Hover effect for dropdown items */
 .dropdown-content button:hover {
-  background-color: #797c80; /* Blue background on hover */
-  color: #f9f4f4; /* White text on hover */
+  background-color: #007bff; /* Modern blue for hover */
+  color: #ffffff; /* White text on hover */
 }
 
 /* Show dropdown when parent is active */
@@ -1311,10 +1339,541 @@ fieldset.simple {
 
 /* Arrow rotation */
 .arrow {
-  margin-left: 5px;
-  transition: transform 0.3s ease;
+  margin-left: 8px;
+  transition: transform 0.3s ease; /* Smooth rotation */
 }
 
 .arrow.down {
   transform: rotate(180deg);
 }
+
+/* Styling nested lists inside the dropdown */
+.dropdown-content ul {
+  list-style: none; /* Remove bullets */
+  margin: 0;
+  padding: 0;
+  background-color: inherit; /* Inherit parent styles */
+}
+
+.dropdown-content ul li {
+  padding-left: 20px; /* Indent nested items */
+  font-size: 14px; /* Slightly smaller font for nested items */
+}
+
+/* Separator between items */
+.dropdown-content li:not(:last-child) {
+  border-bottom: 1px solid #eee; /* Subtle separator */
+}
+
+/* Style for "more" text */
+.toggleable small {
+  font-size: 14px; /* Adjust the text size */
+  font-weight: bold; /* Make the text bold */
+  color: #000; /* Set the text color to black */
+}
+
+/* Style for "+" and "-" indicator */
+.indicator1 {
+  font-size: 16px; /* Adjust the size of the indicator */
+  font-weight: bold; /* Make the indicator stand out */
+  color: #000; /* Set the color to black */
+  margin-right: 5px; /* Add space between the indicator and "more" */
+}
+
+/* Style for the three dots */
+#png_size_options_hint {
+  font-size: 14px; /* Adjust size to match "more" */
+  color: #000; /* Set the color to black */
+  margin-left: 5px; /* Add space between "more" and the dots */
+}
+
+/* Optional: Hover effect for all elements */
+.toggleable:hover small,
+.toggleable:hover .indicator1,
+.toggleable:hover #png_size_options_hint {
+  color: #063bd8; /* Slightly lighter black on hover */
+}
+
+.ash-ribbon {
+  display: flex;
+  align-items: center; /* Vertically center the content */
+  background-color: #f4f4f4; /* Light modern gray for a clean look */
+  padding: 8px 16px; /* Add padding for better spacing */
+  border-bottom: 2px solid #d0d0d0; /* Softer, modern border color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+}
+
+/* Add hover effects for buttons within the ribbon */
+.ash-ribbon .ribbon-button {
+  background-color: #007bff; /* Primary color for buttons */
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px; /* Rounded corners */
+  margin-right: 8px; /* Space between buttons */
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.ash-ribbon .ribbon-button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+.ash-ribbon .ribbon-button:last-child {
+  margin-right: 0; /* Remove margin for the last button */
+}
+
+.button-wrapper {
+  position: relative;
+  display: flex; /* Flexbox layout */
+  justify-content: flex-start; /* Align buttons to the left */
+  align-items: center; /* Vertically center buttons */
+  flex-wrap: nowrap; /* Ensure buttons stay on the same row */
+  gap: 0; /* Completely remove flex gap */
+  padding: 0; /* Remove padding inside the wrapper if any */
+}
+
+.ribbon-button {
+  flex: 0 0 auto; /* Prevent buttons from growing or shrinking */
+  padding: 10px 12px; /* Adjust padding for button size */
+  background-color: #007bff; /* Button background */
+  color: white; /* Text color */
+  border: none; /* Remove button borders */
+  border-radius: 4px; /* Optional rounded corners */
+  cursor: pointer;
+  margin: 0; /* Remove default margins */
+}
+
+.ribbon-button + .ribbon-button {
+  margin-left: 2px; /* Add minimal spacing between adjacent buttons */
+}
+
+.ribbon-button:hover {
+  background-color: #0056b3; /* Change color on hover */
+}
+
+.content-box {
+  display: none; /* Initially hidden */
+  position: absolute;
+  top: 100%; /* Directly below the button */
+  left: 0;
+  width: 600%;
+  padding: 16px; /* Increase padding for better spacing */
+  border: 1px solid #ddd; /* Softer border */
+  border-top: none;
+  background-color: #ffffff; /* Clean white background */
+  color: #444; /* Softer, modern text color */
+  z-index: 10; /* Ensure it's above other elements */
+  box-sizing: border-box;
+
+  /* Modern shadow for depth */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+
+  /* Add border-radius for rounded corners */
+  border-radius: 6px 6px 0 0;
+
+  /* Smooth slide-down effect */
+  animation: slideDown 0.3s ease-in-out;
+}
+
+/* Refined typography */
+.content-box p {
+  margin: 0 0 8px; /* Space between paragraphs */
+  line-height: 1.6; /* Improve readability */
+  font-size: 14px; /* Modern, clean text size */
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Overwriting the base button styles */
+button {
+  background-color: #3498db; /* Modern blue background */
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 8px; /* Rounded corners */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for 3D effect */
+}
+
+/* Button hover effect */
+button:hover {
+  background-color: #2980b9; /* Darker blue on hover */
+  transform: translateY(-3px); /* Lift the button on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+}
+
+/* Focus state */
+button:focus {
+  outline: none;
+  border: 2px solid #3498db; /* Focus border */
+  box-shadow: 0 0 10px rgba(52, 152, 219, 0.5); /* Soft glow effect */
+}
+
+/* Secondary button style (outline button) */
+button.secondary {
+  background-color: transparent;
+  color: #3498db; /* Blue text */
+  border: 2px solid #3498db;
+}
+
+button.secondary:hover {
+  background-color: #3498db; /* Blue background on hover */
+  color: white; /* White text on hover */
+}
+
+button.secondary:focus {
+  border-color: #2980b9; /* Darker blue border on focus */
+  box-shadow: 0 0 10px rgba(41, 128, 185, 0.5); /* Glow effect */
+}
+
+/* Outline button style */
+button.outline {
+  background-color: transparent;
+  color: #3498db;
+  border: 2px solid #3498db;
+  padding: 10px 20px;
+}
+
+button.outline:hover {
+  background-color: #3498db;
+  color: white;
+}
+
+/* Icon button style (with icons) */
+button.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #3498db;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 50px; /* Round button shape */
+}
+
+button.icon:hover {
+  background-color: #2980b9;
+  transform: translateY(-3px);
+}
+
+/* Disabled button */
+button:disabled {
+  background-color: #dfe6e9; /* Greyed-out background */
+  color: #b2bec3; /* Grey text */
+  cursor: not-allowed;
+  box-shadow: none; /* No shadow */
+  border: 2px solid #dfe6e9; /* Grey border */
+}
+
+/* Loading button style */
+button.loading {
+  background-color: #f39c12; /* Orange background */
+  color: white;
+  pointer-events: none; /* Prevent clicking */
+}
+
+button.loading:after {
+  content: "..."; /* Loading indicator */
+  animation: loading 1.5s infinite; /* Simple animation */
+}
+
+@keyframes loading {
+  0% {
+    content: "...";
+  }
+  50% {
+    content: "..";
+  }
+  100% {
+    content: ".";
+  }
+}
+
+/* Hide the default checkbox */
+input[type="checkbox"] {
+  display: none; /* Hide the native checkbox */
+}
+
+/* Create a custom checkbox */
+input[type="checkbox"] + label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #2c3e50; /* Label text color */
+  padding-left: 30px; /* Space for the custom checkbox */
+}
+
+/* Style the custom checkbox */
+input[type="checkbox"] + label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-color: #ecf0f1; /* Light grey background */
+  border: 2px solid #bdc3c7; /* Light grey border */
+  border-radius: 4px; /* Rounded corners for modern feel */
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+/* Style for the checked state */
+input[type="checkbox"]:checked + label::before {
+  background-color: #3498db; /* Blue background when checked */
+  border-color: #2980b9; /* Darker blue border */
+  box-shadow: 0 0 5px rgba(41, 128, 185, 0.5); /* Glow effect */
+}
+
+/* Add a checkmark icon when checked */
+input[type="checkbox"]:checked + label::after {
+  content: "✓"; /* Unicode checkmark */
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect for the custom checkbox */
+input[type="checkbox"] + label:hover::before {
+  border-color: #3498db; /* Blue border on hover */
+}
+
+/* Focus state for accessibility */
+input[type="checkbox"]:focus + label::before {
+  outline: 2px solid #3498db; /* Focus outline */
+  outline-offset: 2px;
+}
+/* Hide the default radio button */
+input[type="radio"] {
+  display: none; /* Hide native radio buttons */
+}
+
+/* Custom radio button container */
+input[type="radio"] + label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px; /* Base font size */
+  color: #2c3e50; /* Label text color */
+  padding-left: 30px; /* Space for custom radio button */
+  font-family: "Roboto", sans-serif; /* Modern font */
+}
+
+/* Style the custom radio button */
+input[type="radio"] + label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-color: #ecf0f1; /* Light grey background */
+  border: 2px solid #bdc3c7; /* Grey border */
+  border-radius: 50%; /* Round shape for radio button */
+  transition: all 0.3s ease;
+}
+
+/* Style for checked radio button */
+input[type="radio"]:checked + label::before {
+  background-color: #3498db; /* Blue background when selected */
+  border-color: #2980b9; /* Darker blue border */
+  box-shadow: 0 0 5px rgba(41, 128, 185, 0.5); /* Glow effect */
+}
+
+/* Inner dot for checked radio button */
+input[type="radio"]:checked + label::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: white; /* White inner dot */
+  border-radius: 50%; /* Round inner dot */
+}
+
+/* Hover effect for radio button */
+input[type="radio"] + label:hover::before {
+  border-color: #3498db; /* Blue border on hover */
+}
+
+/* Focus state for accessibility */
+input[type="radio"]:focus + label::before {
+  outline: 2px solid #3498db; /* Focus outline */
+  outline-offset: 2px;
+}
+/* Base font styles */
+body {
+  font-family: "Roboto", sans-serif; /* Modern, clean font */
+  font-size: 15px;
+  line-height: 1.6; /* Better readability */
+  color: #2c3e50; /* Neutral dark color for text */
+  background-color: #f9f9f9; /* Light background for better contrast */
+  margin: 0;
+  padding: 0;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Poppins", sans-serif; /* Modern and elegant font for headings */
+  font-weight: 600; /* Bold for emphasis */
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+/* Paragraphs */
+p {
+  margin-bottom: 1em;
+}
+
+/* Links */
+a {
+  color: #3498db; /* Modern blue color */
+  text-decoration: none; /* Remove underline */
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #2980b9; /* Darker blue on hover */
+}
+/* General styles for the form */
+input[type="number"] {
+  width: 40%;
+  max-width: 200px; /* Limit the max-width to prevent large inputs */
+  padding: 8px 12px; /* Adjust padding to fit within layout */
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+input[type="number"]:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+
+label {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 4px; /* Reduced margin */
+  font-weight: 500;
+  display: block;
+}
+
+/* Style for the container of each input */
+.no_wrap {
+  display: inline-block;
+  margin-right: 12px; /* Reduced spacing between elements */
+  margin-bottom: 12px; /* Reduced bottom margin */
+}
+
+.header {
+  background-color: rgb(0, 0, 0);
+  padding: 15px;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.main-content {
+  display: flex;
+  flex: 1; /* Take up the available space */
+}
+
+.left {
+  width: 50%; /* Left section width */
+  background-color: rgb(229, 231, 232);
+  padding: 10px;
+}
+
+.center {
+  flex: 1; /* Take the remaining space in the middle */
+  background-color: lightgray;
+  padding: 10px;
+}
+
+.right {
+  width: 50%; /* Right section width */
+  background-color: rgb(255, 255, 255);
+  padding: 10px;
+}
+
+.bottom {
+  background-color: lightcoral;
+  padding: 10px;
+  text-align: center;
+}
+
+.menu-container {
+  position: relative;
+  display: inline-block;
+}
+
+.menu-button {
+  background-color: #4caf50;
+  color: white;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  margin-right: 10px; /* Adds gap between the buttons */
+}
+
+.menu-button:hover {
+  background-color: #45a049;
+  margin-right: 15px; /* Adds gap between buttons */
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  min-width: 150px;
+  z-index: 1;
+}
+
+.dropdown-menu button {
+  background-color: white;
+  color: black;
+  padding: 12px 16px;
+  text-align: left;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+}
+
+.dropdown-menu button:hover {
+  background-color: #ddd;
+}
+
