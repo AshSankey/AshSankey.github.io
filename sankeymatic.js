@@ -1,7 +1,5 @@
 /*
-SankeyMATIC
-A Sankey diagram builder for everyone
-by Steve Bogart (@nowthis; http://nowthis.com/; sbogart@sankeymatic.com)
+
 
 Requires:
   D3.js
@@ -10,7 +8,7 @@ Requires:
     - https://github.com/canvg/canvg v3.0.9
 */
 
-(function sankeymatic(glob) {
+(function Viroet(glob) {
   "use strict";
 
   // 'glob' points to the global object, either 'window' (browser) or 'global' (node.js)
@@ -272,7 +270,7 @@ Requires:
 
   // ep = "Enough Precision". Converts long decimals to have just 5 digits.
   // Why?:
-  // SVG diagrams produced by SankeyMATIC don't really benefit from specifying
+  // SVG diagrams produced by Viroet don't really benefit from specifying
   // values with more than 3 decimal places, but by default the output has *13*.
   // This is frankly hard to read and actually inflates the size of the SVG
   // output by quite a bit.
@@ -384,7 +382,7 @@ Requires:
     const [size, pngURL] = scaledPNG(scale);
     downloadADataURL(
       pngURL,
-      `sankeymatic_${glob.fileTimestamp()}_${size.w}x${size.h}.png`
+      `Viroet_${glob.fileTimestamp()}_${size.w}x${size.h}.png`
     );
   };
 
@@ -408,12 +406,12 @@ Requires:
       .replace(
         />/,
         ">\r\n<title>Your Diagram Title</title>\r\n" +
-          `<!-- Generated with SankeyMATIC: ${glob.humanTimestamp()} -->\r\n`
+          `<!-- Generated with Viroet: ${glob.humanTimestamp()} -->\r\n`
       )
       // Add some line breaks to highlight where [g]roups start/end
       // and where each path/text/rect begins:
       .replace(/><(g|\/g|path|text|rect)/g, ">\r\n<$1");
-    downloadATextFile(svgForExport, `sankeymatic_${glob.fileTimestamp()}.svg`);
+    downloadATextFile(svgForExport, `Viroet_${glob.fileTimestamp()}.svg`);
   };
 
   // MARK SVG path specification functions
@@ -2100,7 +2098,7 @@ Requires:
     const verboseDiagramDef = getDiagramDefinition(true);
     downloadATextFile(
       verboseDiagramDef,
-      `sankeymatic_${glob.fileTimestamp()}_source.txt`
+      `Viroet_${glob.fileTimestamp()}_source.txt`
     );
   };
 
@@ -2298,7 +2296,7 @@ Requires:
 
     // Note: Checking the 'Transparent' background-color box *no longer* means
     // that the background-color-picker is pointless; it still affects the color
-    // value which will be given to "Made with SankeyMATIC".
+    
     // Therefore, we no longer disable the Background Color element, even when
     // 'Transparent' is checked.
 
