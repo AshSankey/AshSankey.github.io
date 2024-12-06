@@ -1116,3 +1116,72 @@ function option2() {
 function option3() {
   alert("Option 3 clicked");
 }
+
+const audio = document.getElementById("welcomeAudio");
+const timings = [
+  { time: 18, buttonId: "load_example_simple" }, // Play Start Simple at 2 seconds
+  { time: 21, buttonId: "load_example_financial_results" }, // Play Financial Results at 5 seconds
+  { time: 26, buttonId: "load_example_job_search" }, // Play Job Search at 8 seconds
+  { time: 30, buttonId: "load_example_election" }, // Play Ranked Election at 12 seconds
+  { time: 34, buttonId: "load_example_journey" }, // Play Journey at 15 seconds
+  { time: 40, buttonId: "load_example_basic_budget" }, // Play Budget at 20 seconds
+];
+
+let timeouts = []; // Store timeouts to clear them later
+let timerRunning = false; // Track if the timer is running
+
+// Function to simulate button click
+function simulateButtonClick(buttonId) {
+  const button = document.getElementById(buttonId);
+  if (button) {
+    console.log(`Triggering button: ${buttonId}`);
+    button.click(); // Simulates a button click
+  } else {
+    console.error(`Button with ID ${buttonId} not found.`);
+  }
+}
+
+// Sync button clicks with audio timings
+function syncButtonClicks() {
+  timings.forEach(({ time, buttonId }) => {
+    const timeoutId = setTimeout(() => {
+      simulateButtonClick(buttonId);
+    }, time * 1000); // Convert seconds to milliseconds
+    timeouts.push(timeoutId); // Store the timeout ID
+  });
+}
+
+// Reset the sequence (clear timeouts, pause audio, reset time)
+function resetSequence() {
+  // Clear any active timeouts
+  timeouts.forEach((timeoutId) => clearTimeout(timeoutId));
+  timeouts = []; // Clear timeouts array
+  timerRunning = false;
+
+  // Reset audio
+  audio.pause();
+  audio.currentTime = 0;
+}
+
+// Play audio and sync button clicks on hover
+const logo = document.getElementById("logo");
+logo.addEventListener("mouseenter", () => {
+  if (audio.paused) {
+    audio.play();
+    if (!timerRunning) {
+      syncButtonClicks();
+      timerRunning = true;
+    }
+  }
+});
+
+// Pause and reset the audio when leaving the logo
+logo.addEventListener("mouseleave", () => {
+  resetSequence(); // Reset everything when mouse leaves the logo
+});
+
+// Replace graph function (example implementation)
+function replaceGraph(graphName) {
+  console.log(`Graph replaced with: ${graphName}`);
+  // Add your graph replacement logic here
+}
