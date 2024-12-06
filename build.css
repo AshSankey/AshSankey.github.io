@@ -6,7 +6,7 @@
   --medium-blue: rgb(12, 13, 13);
   --button-blue: #131313;
   --light-blue: rgb(4, 4, 4);
-  --lighter-blue: #d5f0f0;
+  --lighter-blue: #74b4b4;
   --gray-blue: rgb(31, 31, 31);
   --pale-blue-0: #090909;
   --pale-blue-1: #e7f7ff;
@@ -534,7 +534,6 @@ dfn {
 
 .form_elements3:hover {
   background-color: #f9fafb; /* Slight hover color change */
-  border: 1px solid #3498db; /* Accent color for interaction */
 }
 
 .share-box {
@@ -677,8 +676,19 @@ p.lastrow {
 }
 
 .expandable_box {
-  max-width: fit-content;
-  min-width: 30em;
+  max-width: fit-content; /* Width adjusts to content, but not larger than the content size */
+  min-width: 20em; /* Minimum width of 50em, ensuring it doesn't shrink smaller than this */
+  padding: 16px; /* Added padding for better spacing inside */
+  background-color: #ffffff; /* Clean white background */
+  border: 1px solid #ddd; /* Subtle border */
+  border-radius: 8px; /* Rounded corners for a modern look */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.expandable_box:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Darker shadow on hover */
+  transform: translateY(-4px); /* Slight upward movement on hover */
 }
 
 .form_chunk {
@@ -984,13 +994,6 @@ input:checked ~ label.ropt,
   background-color: #888;
 }
 
-#getLinkDialog header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border: none;
-}
-
 #getLinkDialog section {
   max-width: 50em;
   display: flex;
@@ -1008,13 +1011,6 @@ input:checked ~ label.ropt,
   border: 1px solid #600;
   padding: 0.5em;
   max-width: 45em;
-}
-
-#closeDialogHeader {
-  font-size: x-large;
-  background-color: white;
-  border: none;
-  cursor: pointer;
 }
 
 #getLinkDialog footer {
@@ -1051,17 +1047,6 @@ input:checked ~ label.ropt,
   overflow-wrap: anywhere;
 }
 
-.header {
-  color: white;
-  background-color: var(--nav-level-1-bg);
-  padding: 0.25em 1em 0.1em;
-  border-bottom: var(--border-base);
-}
-
-.header a {
-  color: white;
-}
-
 .header__nav {
   max-width: var(--screen-lg);
   width: 100%;
@@ -1069,15 +1054,52 @@ input:checked ~ label.ropt,
   padding: 3px;
 }
 
+/* Apply a clean and professional font */
 .header__logo {
-  text-decoration: none;
-  font-size: 1.1em;
-  font-weight: bold;
+  font-family: "Roboto", sans-serif; /* Modern sans-serif font for readability */
+  font-weight: 500; /* Balanced weight for a professional look */
+  font-size: 2.5rem; /* Suitable size for logo text */
+  color: #bcbcbb; /* Gold */ /* Soft, professional color */
+  text-decoration: none; /* Remove underline */
+  letter-spacing: 1px; /* Increased letter-spacing for a sleek, modern look */
+  text-transform: capitalize; /* Keep text style clean */
+  display: inline-flex; /* Align elements inline */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease,
+    letter-spacing 0.3s ease; /* Enhanced smooth transitions */
 }
 
+/* Hover effect: subtle color change, soft shadow, and slight lift */
 .header__logo:hover {
-  color: inherit;
-  text-decoration: none;
+  color: #ffffff; /* White color for a crisp contrast */
+  transform: translateY(-4px) scale(1.05); /* Slight lift and subtle scaling for emphasis */
+  letter-spacing: 2px; /* Increase letter-spacing for more dynamic look */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+}
+
+/* Focus effect for accessibility: subtle color change */
+.header__logo:focus {
+  outline: none; /* Remove default outline */
+  color: #f9fafb; /* Blue-ish white for focus */
+  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.5); /* Blue border for focus state */
+}
+
+/* Animation for smooth text appearance on page load */
+.header__logo {
+  animation: fadeInLogo 1s ease-out; /* Fade-in effect on page load */
+}
+
+/* Keyframes for fade-in animation */
+@keyframes fadeInLogo {
+  0% {
+    opacity: 0;
+    transform: translateY(10px); /* Start from a slightly lower position */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* End at the normal position */
+  }
 }
 
 .header__logo img {
@@ -1085,44 +1107,8 @@ input:checked ~ label.ropt,
   padding-bottom: 3px;
 }
 
-.header__links {
-  list-style: none;
-  padding: 0;
-  margin: 0 1em;
-  font-size: 1.1em;
-}
-
-.header__links a {
-  color: inherit;
-  margin-left: 1.5em;
-  font-weight: 500;
-  text-decoration: underline;
-  text-decoration-color: transparent;
-  text-decoration-thickness: 0.1em;
-  text-underline-offset: 0.1em;
-}
-
 .header__links li:first-child a {
   margin-left: 0;
-}
-
-.header__links a:hover {
-  text-decoration-color: var(--lighter-blue);
-}
-
-hr.ad_divider {
-  border-top: 4px double var(--medium-blue);
-}
-
-.ad_center {
-  margin: 0.5em auto;
-  text-align: center;
-}
-
-.reset-fonts {
-  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji";
-  font-size: initial;
 }
 
 .footer {
@@ -1247,11 +1233,6 @@ fieldset.simple {
     flex-direction: column;
   }
 
-  .header__links {
-    margin-top: 0.75em;
-    margin-bottom: 0;
-  }
-
   .footer__nav ul li {
     margin: 0.3em;
   }
@@ -1280,39 +1261,49 @@ fieldset.simple {
 
 .nav-link {
   text-decoration: none;
-  color: #ffffff;
-  font-weight: bold;
-  padding: 10px 15px;
-  border-radius: 5px;
-  transition: background-color 0.3s, color 0.3s;
+  color: #ffffff; /* White text for clarity */
+  font-weight: 500; /* Slightly lighter weight for readability */
+  padding: 12px 24px; /* Balanced padding for a modern button feel */
+  border-radius: 12px; /* Increased border-radius for a more modern, smooth look */
+  background-color: transparent; /* Transparent background initially */
+  font-family: "Roboto", sans-serif; /* Clean, modern font */
+  letter-spacing: 0.5px; /* Subtle letter-spacing for clarity */
+  display: inline-block; /* Keeps the link inline with other elements */
+  text-transform: uppercase; /* Uppercase text for a more tech-focused vibe */
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease,
+    box-shadow 0.3s ease; /* Smooth transitions */
 }
 
-.nav-link:hover {
-  background-color: #848789;
-  color: #f7f4f4;
+/* Active or selected state */
+.nav-link.active {
+  background-color: #007bff; /* Distinct background color for active links */
+  color: #eaeaea; /* Softer text color for active links */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow for active links */
 }
 
+/* Dropdown container */
 .dropdown-content {
   display: none; /* Hidden by default */
   list-style: none; /* Remove bullet points */
   margin: 0;
   padding: 0;
   background-color: #ffffff; /* Clean white background */
-  border: 1px solid #ddd; /* Softer border color */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   position: absolute;
   width: 220px; /* Slightly wider dropdown */
   z-index: 1000;
-  border-radius: 6px; /* Rounded corners for a modern look */
+  border-radius: 8px; /* More rounded corners for a modern look */
   overflow: hidden; /* Ensures items don’t overflow rounded edges */
+  animation: fadeIn 0.3s ease; /* Smooth fade-in animation */
 }
 
-/* Styling for dropdown items */
+/* Dropdown items container */
 .dropdown-content li {
   margin: 0; /* No gaps between list items */
   padding: 0;
 }
 
+/* Dropdown buttons */
 .dropdown-content button {
   width: 100%; /* Full width buttons */
   padding: 12px 16px; /* Increased padding for better spacing */
@@ -1321,14 +1312,39 @@ fieldset.simple {
   background-color: #ffffff; /* White background */
   color: #333; /* Modern text color */
   cursor: pointer; /* Pointer cursor on hover */
-  font-size: 15px; /* Slightly larger text */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effect */
+  font-size: 16px; /* Slightly larger text for better readability */
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease; /* Smooth hover and click effects */
 }
 
 /* Hover effect for dropdown items */
 .dropdown-content button:hover {
   background-color: #007bff; /* Modern blue for hover */
   color: #ffffff; /* White text on hover */
+  transform: translateX(5px); /* Subtle slide effect on hover */
+}
+
+/* Active dropdown item */
+.dropdown-content button:active {
+  background-color: #0056b3; /* Darker blue for active state */
+  color: #ffffff; /* White text on active */
+  box-shadow: 0 0 0 2px #0056b3 inset; /* Consistent active border effect */
+}
+
+/* Keyboard focus effect for accessibility */
+.dropdown-content button:focus {
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Modern blue focus effect */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Show dropdown when parent is active */
@@ -1337,14 +1353,19 @@ fieldset.simple {
   display: block;
 }
 
-/* Arrow rotation */
+/* Ensure the arrow is inline with the text */
 .arrow {
   margin-left: 8px;
-  transition: transform 0.3s ease; /* Smooth rotation */
+  display: inline-block; /* Inline block for smooth rotation */
+  transition: transform 0.3s ease; /* Smooth rotation transition */
 }
 
-.arrow.down {
-  transform: rotate(180deg);
+/* Rotate the arrow when hovering over the <a> element and change its color to green */
+#toggleDropdown:hover .arrow {
+  transform: rotate(
+    180deg
+  ); /* Rotate the arrow 180 degrees when the <a> is hovered */
+  color: rgb(244, 69, 5); /* Change the arrow color to green */
 }
 
 /* Styling nested lists inside the dropdown */
@@ -1397,7 +1418,12 @@ fieldset.simple {
 .ash-ribbon {
   display: flex;
   align-items: center; /* Vertically center the content */
-  background-color: #f4f4f4; /* Light modern gray for a clean look */
+  background: linear-gradient(
+    to left,
+    /* Changes direction to flow from right to left */ #0078d4,
+    /* Blue starts on the right */ #00c9a7,
+    /* Green transitions in the middle */ #f4d03f /* Yellow ends on the left */
+  );
   padding: 8px 16px; /* Add padding for better spacing */
   border-bottom: 2px solid #d0d0d0; /* Softer, modern border color */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
@@ -1426,7 +1452,7 @@ fieldset.simple {
 .button-wrapper {
   position: relative;
   display: flex; /* Flexbox layout */
-  justify-content: flex-start; /* Align buttons to the left */
+  justify-content: flex-end; /* Align buttons to the left */
   align-items: center; /* Vertically center buttons */
   flex-wrap: nowrap; /* Ensure buttons stay on the same row */
   gap: 0; /* Completely remove flex gap */
@@ -1798,7 +1824,7 @@ label {
 }
 
 .header {
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(8, 1, 30, 255);
   padding: 15px;
   text-align: center;
   font-size: 1.5em;
@@ -1811,8 +1837,9 @@ label {
 }
 
 .left {
-  width: 50%; /* Left section width */
-  background-color: rgb(229, 231, 232);
+  order: 2; /* Push left content to the right */
+  width: 60%; /* Adjust width for left content */
+  background-color: rgb(18, 11, 41);
   padding: 10px;
 }
 
@@ -1823,9 +1850,11 @@ label {
 }
 
 .right {
-  width: 50%; /* Right section width */
+  order: 0; /* Move the right content visually to the left */
+  width: 40%; /* Right section width */
+  display: flex;
   background-color: rgb(255, 255, 255);
-  padding: 10px;
+  flex-direction: column; /* Divide into 60% and 40% horizontally */
 }
 
 .bottom {
@@ -1877,3 +1906,20 @@ label {
   background-color: #ddd;
 }
 
+footer {
+  background: linear-gradient(
+    to right,
+    #3498db,
+    #2ecc71,
+    #f39c12
+  ); /* Multiple colors */
+  color: white; /* Text color */
+  text-align: center; /* Center the content */
+  padding: 20px 0; /* Add padding for spacing */
+  font-family: Arial, sans-serif; /* Professional font */
+  font-size: 14px; /* Font size */
+}
+
+footer p {
+  margin: 0; /* Remove paragraph margin */
+}
