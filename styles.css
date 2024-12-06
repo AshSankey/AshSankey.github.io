@@ -6,7 +6,7 @@ h1 {
   text-align: center !important;
 }
 .table-container1 {
-  width: 100%;
+  width: 97%;
   max-height: 60vh; /* Table occupies half the screen height */
   overflow-y: auto; /* Enable vertical scrolling */
   margin: 20px auto;
@@ -69,4 +69,51 @@ table td input.to {
   height: 40px !important; /* Adjust the height */
   padding: 10px !important; /* Add padding to make the input feel more spacious */
   width: 100% !important; /* Ensure the input takes the full width of the cell */
+}
+
+.corner-gif {
+  width: 100px; /* Make the GIF smaller */
+  height: auto; /* Maintain aspect ratio */
+}
+
+#addRowBtn {
+  background: linear-gradient(
+    145deg,
+    #4caf50,
+    #388e3c
+  ); /* Green gradient for a fresh look */
+  color: white; /* White text for contrast */
+  text-transform: uppercase; /* Uppercase text for a modern touch */
+  cursor: pointer; /* Pointer cursor on hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: all 0.3s ease; /* Smooth transition for all changes */
+  outline: none; /* Remove outline on focus */
+  min-width: 120px; /* Ensure the button is not too wide */
+  max-width: 200px; /* Optional: Set a max width if you want to restrict how wide the button can be */
+}
+
+/* Hover state */
+#addRowBtn:hover {
+  background: linear-gradient(
+    145deg,
+    #388e3c,
+    #4caf50
+  ); /* Reverse the gradient on hover */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover */
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+/* Active state */
+#addRowBtn:active {
+  background: linear-gradient(
+    145deg,
+    #388e3c,
+    #4caf50
+  ); /* Keep the gradient on click */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Smaller shadow on active state */
+  transform: translateY(2px); /* Slight downward effect when clicked */
+}
+
+#addRowBtn2 {
+  max-width: 200px;
 }
