@@ -29,47 +29,44 @@
     />
     <meta property="og:title" content="SankeyAsh: Build a Sankey Diagram" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://sankeymatic.com/build/" />
+    <meta property="og:url" content="https://Viroet.com" />
     <meta
       property="og:description"
       content="Make beautiful flow diagrams. Export them as images or SVG."
     />
-    <meta property="og:site_name" content="SankeyMATIC.com" />
+    <meta property="og:site_name" content="Viroet.com" />
     <meta property="og:locale" content="en_US" />
     <meta
       property="og:image"
-      content="https://sankeymatic.com/build/i/2024-01-04-card-image.png"
+      content="https://Viroet.com/build/i/2024-01-04-card-image.png"
     />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="2700" />
     <meta property="og:image:height" content="1350" />
     <meta
       property="og:image:alt"
-      content="Screenshot of the SankeyMATIC diagram-building interface"
+      content="Screenshot of the Viroet diagram-building interface"
     />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@SankeyMATIC" />
-    <meta name="twitter:creator" content="@nowthis" />
+    
   </head>
   <body>
     
     <header class="header vs f-middle">
       <nav class="header__nav hs-sm-vs space-between">
         <a
-          href="/"
-          title="SankeyAsh home page"
-          class="header__logo hs f-middle align-center"
-          href="#" style="color: var(--lighter-blue);"
-        >
-  
-          <img
-            alt="SankeyMATIC logo"
-            src="i/1123.png"
-            height="29"
-            width="29"
-            class="skm_logo_small"
-          />&nbsp;SankeyAsh
-        </a>
+        
+        href="/"
+        title="Viroet home page"
+        class="header__logo hs f-middle align-center"
+        id="logo"
+      >
+        <img src="aibutton new .gif" alt="Looping GIF" class="corner-gif">
+        SankeyAsh
+      </a>
+
+      <!-- Audio element to load the MP3 -->
+      <audio id="welcomeAudio" src="pilot project.mp3" preload="auto"></audio>
+        
     
         <ul class="nav-menu">
           <li class="nav-item dropdown">
@@ -220,7 +217,7 @@
                 </p>
                 <dialog id="getLinkDialog">
                   <header>
-                    <h3>Get a public link to this SankeyMATIC diagram</h3>
+                    <h3>Get a public link to this Viroet diagram</h3>
                     <button
                       onclick="closeDialog('getLink');"
                       id="closeDialogHeader"
@@ -247,7 +244,7 @@
                               the data you have entered to
                               <strong>any observer</strong> who can see your
                               Internet traffic, up to and including the
-                              SankeyMATIC server itself (which, like all web
+                              Viroet server itself (which, like all web
                               servers, keeps a record of every visited link).
                             </p>
                             <p class="text_left">
@@ -324,10 +321,6 @@
         <button class="menu-button" onclick="toggleMenu()">☰</button>
         <div class="dropdown-menu" id="dropdownMenu">
           <button onclick="option1()">Option 1</button>
-          
-
-
-          
           <button onclick="option2()">Option 2</button>
           <button onclick="option3()">Option 3</button>
         </div>
@@ -1858,12 +1851,12 @@ Budget [160] Other Necessities #0F0
                   <p class="form_elements1 text_center">
                     <input
                       type="checkbox"
-                      id="meta_mentionsankeymatic"
+                      id="meta_mentionViroet"
                       value="1"
                       onchange="process_sankey();"
                       checked
                     />
-                    <label class="smalllabel ropt" for="meta_mentionsankeymatic"
+                    <label class="smalllabel ropt" for="meta_mentionViroet"
                       >Include &ldquo;Made at Viroet.Inc&rdquo;</label
                     >
                   </p>
@@ -1886,8 +1879,8 @@ Budget [160] Other Necessities #0F0
                   <tr>
                     <td id="imbalances_area">
                       <div id="imbalance_control">
-                        <span class="underline"
-                          ><strong
+                        
+                          <strong
                             ><em
                               >When Total Inputs &ne; Total Outputs:</em
                             ></strong
@@ -1960,14 +1953,14 @@ Budget [160] Other Necessities #0F0
 
         <div class="right">
 
-          <h1>Excel-Like Editable Table</h1>
+          <h1>Data Insights</h1>
           <div class="table-container1">
             <table id="dynamicTable">
               <thead>
                 <tr>
-                  <th>From (A)</th>
-                  <th>To (B)</th>
-                  <th>Amount (C)</th>
+                  <th>From </th>
+                  <th>To </th>
+                  <th>Amount </th>
                   <th>Generated (D)</th>
                 </tr>
                 
@@ -1990,7 +1983,7 @@ Budget [160] Other Necessities #0F0
               </tbody>
             </table>
           </div>
-          <button id="addRowBtn">Add More Rows</button>
+          <button id="addRowBtn">Add More Rows</button> &nbsp;<button id="addRowBtn2">GO</button>&nbsp;
 
           
         
@@ -1998,9 +1991,9 @@ Budget [160] Other Necessities #0F0
           <!-- SIZE & SPACING & BACKGROUND -->
 
           <div class="expandable_box">
-            <h2 class="ui_head" onclick="togglePanel('diagram_options');">
+            <h2 >
               <span id="diagram_options_indicator" class="indicator"
-                >&ndash;</span
+                ></span
               >
               Diagram Size &amp; Background<span id="diagram_options_hint"
                 >:</span
@@ -2128,11 +2121,10 @@ Budget [160] Other Necessities #0F0
       <!-- ====================== Bottom Matter ====================== -->
     </main>
 
-    <hr class="ad_divider" />
-    <div class="ad_center"></div>
+ 
 
      <footer>
-      <p>&copy; 2024 SankeyAsh. All rights reserved.</p>
+      <p>&copy; 2024 Viroet. All rights reserved.</p>
     
                
           
