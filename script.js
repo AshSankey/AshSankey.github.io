@@ -3,14 +3,17 @@ document.addEventListener("DOMContentLoaded", function () {
   let selectedCell = null; // Track the selected cell
 
   // Add more rows
-  document.getElementById("addRowBtn").addEventListener("click", function () {
+  document.getElementById("addRowBtn")?.addEventListener("click", function () {
     const newRow = document.createElement("tr");
     newRow.innerHTML = `
-    <td><input type="text" class="from"></td>
-    <td><input type="text" class="to"></td>
-    <td><input type="number" step="0.01" class="amount"></td>
-    <td class="generated"></td>
-  `;
+      <td><input type="text" class="from"></td>
+      <td><input type="text" class="to"></td>
+      <td><input type="number" step="0.01" class="amount"></td>
+      <td class="generated">
+        
+    
+      </td>
+    `;
     tableBody.appendChild(newRow);
   });
 
@@ -50,8 +53,13 @@ document.addEventListener("DOMContentLoaded", function () {
           const cell = tableRow.cells[startCol + colIndex];
           if (cell) {
             const input = cell.querySelector("input");
-            if (input) input.value = cellData.trim();
-            autoGenerate(input); // Trigger auto-generate after pasting
+            if (input) {
+              input.value = cellData.trim();
+              // Only auto-generate for columns 1, 2, and 3 (not the color picker column)
+              if (colIndex < 3) {
+                autoGenerate(input); // Trigger auto-generate after pasting
+              }
+            }
           }
         });
       }
@@ -60,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault(); // Prevent default paste behavior
   });
 
-  // Auto-generate Column D
+  // Auto-generate logic: Only for first three columns
   function autoGenerate(inputCell) {
     const row = inputCell.parentElement.parentElement; // Get the parent row
     const from = row.querySelector(".from").value;
@@ -68,17 +76,24 @@ document.addEventListener("DOMContentLoaded", function () {
     const amount = row.querySelector(".amount").value;
     const generatedCell = row.querySelector(".generated");
 
+    // Skip the 4th column (color picker) for auto-generation
     if (from && to && amount) {
-      generatedCell.textContent = `${from} [${amount}] ${to}`;
+      // Logic for columns 1, 2, 3
+      if (!generatedCell.querySelector("input")) {
+        generatedCell.textContent = `${from} [${amount}] ${to}`;
+      }
     } else {
       generatedCell.textContent = ""; // Clear if incomplete
     }
   }
 
-  // Trigger auto-generate on input
+  // Trigger auto-generate on input (only for the first three columns)
   tableBody.addEventListener("input", function (e) {
     if (e.target.tagName === "INPUT") {
-      autoGenerate(e.target);
+      // Ensure we don't auto-generate in the 4th column (color picker)
+      if (!e.target.classList.contains("colorPicker")) {
+        autoGenerate(e.target);
+      }
     }
   });
 });
