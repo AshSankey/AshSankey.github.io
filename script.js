@@ -9,10 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
       <td><input type="text" class="from"></td>
       <td><input type="text" class="to"></td>
       <td><input type="number" step="0.01" class="amount"></td>
-      <td class="generated">
-        
-    
-      </td>
+      <td class="generated"></td>
     `;
     tableBody.appendChild(newRow);
   });
@@ -54,11 +51,16 @@ document.addEventListener("DOMContentLoaded", function () {
           if (cell) {
             const input = cell.querySelector("input");
             if (input) {
-              input.value = cellData.trim();
-              // Only auto-generate for columns 1, 2, and 3 (not the color picker column)
-              if (colIndex < 3) {
-                autoGenerate(input); // Trigger auto-generate after pasting
+              // Sanitize pasted data for numeric input
+              if (input.type === "number") {
+                const numericValue = parseFloat(cellData.trim());
+                if (!isNaN(numericValue)) {
+                  input.value = numericValue;
+                }
+              } else {
+                input.value = cellData.trim();
               }
+              autoGenerate(input); // Trigger auto-generate after pasting
             }
           }
         });
@@ -68,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault(); // Prevent default paste behavior
   });
 
-  // Auto-generate logic: Only for first three columns
+  // Auto-generate logic
   function autoGenerate(inputCell) {
     const row = inputCell.parentElement.parentElement; // Get the parent row
     const from = row.querySelector(".from").value;
@@ -76,23 +78,44 @@ document.addEventListener("DOMContentLoaded", function () {
     const amount = row.querySelector(".amount").value;
     const generatedCell = row.querySelector(".generated");
 
-    // Skip the 4th column (color picker) for auto-generation
     if (from && to && amount) {
-      // Logic for columns 1, 2, 3
-      if (!generatedCell.querySelector("input")) {
-        generatedCell.textContent = `${from} [${amount}] ${to}`;
-      }
+      generatedCell.textContent = `${from} [${amount}] ${to}`;
     } else {
       generatedCell.textContent = ""; // Clear if incomplete
     }
   }
 
-  // Trigger auto-generate on input (only for the first three columns)
+  // Trigger auto-generate on input
   tableBody.addEventListener("input", function (e) {
-    if (e.target.tagName === "INPUT") {
-      // Ensure we don't auto-generate in the 4th column (color picker)
-      if (!e.target.classList.contains("colorPicker")) {
-        autoGenerate(e.target);
+    if (
+      e.target.tagName === "INPUT" &&
+      !e.target.classList.contains("colorPicker")
+    ) {
+      autoGenerate(e.target);
+    }
+  });
+
+  // Enable keyboard navigation
+  tableBody.addEventListener("keydown", function (e) {
+    const inputs = Array.from(tableBody.querySelectorAll("input"));
+    const currentIndex = inputs.indexOf(e.target);
+
+    if (currentIndex !== -1) {
+      let nextIndex = -1;
+
+      if (e.key === "ArrowRight" || e.key === "Tab") {
+        nextIndex = currentIndex + 1;
+      } else if (e.key === "ArrowLeft") {
+        nextIndex = currentIndex - 1;
+      } else if (e.key === "ArrowDown") {
+        nextIndex = currentIndex + 3; // Assuming 3 columns
+      } else if (e.key === "ArrowUp") {
+        nextIndex = currentIndex - 3; // Assuming 3 columns
+      }
+
+      if (nextIndex >= 0 && nextIndex < inputs.length) {
+        inputs[nextIndex].focus();
+        e.preventDefault(); // Prevent default tabbing behavior
       }
     }
   });
