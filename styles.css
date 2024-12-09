@@ -1,74 +1,86 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif; /* Modern font */
+  background-color: #f9f9f9; /* Subtle background for better readability */
+  margin: 0;
+  padding: 0;
 }
 
 h1 {
   text-align: center !important;
+  font-size: 2em !important; /* Larger, bold header */
+  color: #333 !important; /* Neutral color for text */
+  margin-top: 20px !important;
 }
+
 .table-container1 {
   width: 97%;
-  max-height: 60vh; /* Table occupies half the screen height */
-  overflow-y: auto; /* Enable vertical scrolling */
-  margin: 20px auto;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-height: 60vh !important; /* Table occupies half the screen height */
+  overflow-y: auto !important; /* Enable vertical scrolling */
+  margin: 20px auto !important;
+  border: 1px solid #ddd !important;
+  border-radius: 8px !important; /* Rounded edges */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important; /* Softer shadow */
+  background-color: #ffffff !important; /* White background for contrast */
   position: relative;
+  z-index: 1; /* Set a lower z-index to ensure it stays below other elements */
 }
+
 table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate !important; /* Ensure borders stay visible */
+  border-spacing: 0 !important; /* Ensure no gap between cells */
   position: relative;
 }
+
 thead th {
-  position: sticky;
-  top: 0;
-  background-color: #f4f4f4;
-  z-index: 2;
-  border: 1px solid #ddd;
+  position: sticky !important;
+  top: 0 !important;
+  background-color: #0078d4 !important; /* Modern blue for headers */
+  color: #ffffff !important; /* White text for contrast */
+  font-weight: bold !important;
+  border: 1px solid #0078d4 !important; /* Same color as header for a clean look */
+  text-transform: uppercase !important; /* Modern text style */
+  padding: 12px !important; /* Add more padding */
+  z-index: 2 !important; /* Ensure header stays above rows, but below buttons */
 }
+
 th,
 td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
+  border: 1px solid #ddd !important;
+  padding: 10px !important; /* Slightly larger padding for modern spacing */
+  text-align: left !important;
+  position: relative !important;
+  color: #555 !important; /* Neutral text color */
+}
+
+tbody {
   position: relative;
+  z-index: 1; /* Ensure the tbody has a lower z-index than the sticky header */
 }
+
 td input {
-  width: 100%;
-  border: none;
-  outline: none;
-  padding: 4px;
-  box-sizing: border-box;
+  width: 100% !important;
+  border: 1px solid #ffffff !important; /* Subtle gray border */
+  border-radius: 6px !important; /* Rounded corners */
+  outline: none !important;
+  padding: 8px !important; /* Spacious padding */
+  box-sizing: border-box !important;
+  font-size: 14px !important;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease !important; /* Modern interaction effects */
 }
-td input:focus {
-  border: none; /* No border for the input element */
-}
+
 td.selected {
-  border: 2px solid #0078d4; /* Highlight selected cells */
+  border: 2px solid #ff9800 !important; /* Modern orange for highlighting */
+  transition: border-color 0.3s ease !important; /* Smooth transition */
 }
 
-table td input.amount {
-  background-color: #ffffff !important;
-  font-size: 16px !important; /* Change the font size */
-  height: 40px !important; /* Adjust the height */
-  padding: 10px !important; /* Add padding to make the input feel more spacious */
-  width: 100% !important; /* Ensure the input takes the full width of the cell */
-}
-
-table td input.from {
-  background-color: #ffffff !important;
-  font-size: 16px !important; /* Change the font size */
-  height: 40px !important; /* Adjust the height */
-  padding: 10px !important; /* Add padding to make the input feel more spacious */
-  width: 100% !important; /* Ensure the input takes the full width of the cell */
-}
-
+table td input.amount,
+table td input.from,
 table td input.to {
-  background-color: #ffffff !important;
-  font-size: 16px !important; /* Change the font size */
-  height: 40px !important; /* Adjust the height */
-  padding: 10px !important; /* Add padding to make the input feel more spacious */
-  width: 100% !important; /* Ensure the input takes the full width of the cell */
+  background-color: #ffffff !important; /* Subtle gray for clarity */
+  font-size: 16px !important; /* Larger font for clarity */
+  height: 44px !important; /* Spacious height */
+  padding: 10px !important;
 }
 
 .corner-gif {
