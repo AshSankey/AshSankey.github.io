@@ -160,16 +160,16 @@ div > span.output_container > input[list] + output {
 
 /* Sizes for various controls: */
 .slider_xxsmall {
-  width: 3em;
+  width: 16em;
 }
 .slider_xsmall {
-  width: 4.5em;
+  width: 17.5em;
 }
 .slider_small {
-  width: 6em;
+  width: 18em;
 }
 .slider_medium {
-  width: 9.5em;
+  width: 20em;
 }
 
 /* The output 'width' here refers to the size of the value which might
@@ -258,30 +258,54 @@ be shown, not the size of the slider. */
   position: absolute; /* don't take up space in the visible layout */
 }
 
-/* START WEBKIT TWEAKS
-   Make WebKit (Safari/Chrome) sliders a tiny bit more accessible:
-   (Firefox doesn't have this issue.) */
+/* START WEBKIT SLIDER MODERNIZATION */
 
-/* 1. Replace the regular slider track with a color-customizable one: */
+/* Base slider track styling with improved contrast and accessibility */
 input[type="range"]::-webkit-slider-runnable-track {
   -webkit-appearance: none;
-  height: 4px;
-  background-color: #aaa;
+  height: 6px; /* Slightly thicker for better visibility */
+  border-radius: 3px; /* Rounded edges for a modern look */
+  background: linear-gradient(
+    90deg,
+    #0078d4,
+    #aaa
+  ); /* Gradient for visual depth */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth interactions */
 }
 
-/* 2. Align the 'thumb' with the revised slider track: */
+/* Align the thumb with the track, ensuring cross-browser compatibility */
 input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
   margin-top: -6px;
+  height: 14px; /* Larger thumb for accessibility */
+  width: 14px;
+  border-radius: 50%; /* Circular thumb */
+  background-color: #fff; /* Neutral color for thumb */
+  border: 2px solid #0078d4; /* Accent border for visibility */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  cursor: pointer; /* Show pointer for interactivity */
+  transition: transform 0.2s ease, box-shadow 0.3s ease; /* Smooth hover effects */
 }
 
-/* 3. When selected with the keyboard OR mouse, highlight the slider
-      background with an accent color: */
+/* Add hover and active states for improved interaction feedback */
+input[type="range"]::-webkit-slider-thumb:hover,
+input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(1.2); /* Slightly enlarge the thumb */
+  box-shadow: 0 4px 8px rgba(0, 120, 212, 0.4); /* Glow effect on hover/active */
+}
+
+/* Focus and active states for better keyboard and mouse interactions */
 input[type="range"]:focus::-webkit-slider-runnable-track,
 input[type="range"]:active::-webkit-slider-runnable-track {
-  background-color: rgb(76, 77, 78);
+  background: linear-gradient(
+    90deg,
+    #005a9e,
+    #555
+  ); /* Darker gradient on focus/active */
+  box-shadow: 0 0 6px rgba(0, 120, 212, 0.5); /* Focus ring for better visibility */
 }
 
-/* END WEBKIT TWEAKS */
+/* END WEBKIT SLIDER MODERNIZATION */
 
 [aria-disabled="true"] {
   opacity: 0.5;
@@ -879,13 +903,28 @@ button#save_as_svg:hover {
 }
 
 #replace_graph_warning {
-  background-color: #ffa;
-  color: var(--warning);
-  margin: 0.2em 3em 0;
-  padding: 0.3em;
-  border-radius: 0.5em;
+  background: linear-gradient(
+    135deg,
+    rgb(255, 120, 120),
+    rgb(255, 180, 180)
+  ); /* Gradient background for modern look */
+  color: rgb(2, 2, 2); /* Contrasting text color */
+  margin: 0.2em auto; /* Center the notification */
+  padding: 1em; /* Add generous padding */
+  border-radius: 0.5em; /* Smooth corners */
+  text-align: center; /* Center the text */
+  font-family: "Segoe UI", Arial, sans-serif; /* Modern font */
+  font-size: 16px; /* Readable font size */
+  font-weight: bold; /* Emphasize text */
+  width: 90%; /* Responsive width */
+  max-width: 600px; /* Limit the width for large screens */
+  box-shadow: 0 4px 12px rgba(2, 2, 2, 0.2); /* Elevation effect */
+  position: fixed; /* Fix position to the screen */
+  top: 20%; /* Adjust vertical positioning */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Center align */
+  z-index: 1000; /* Ensure it appears above all other elements */
 }
-
 #replace_graph_yes {
   color: var(--warning);
 }
@@ -1866,6 +1905,7 @@ label {
 .menu-container {
   position: relative;
   display: inline-block;
+  z-index: 10; /* Ensure menu-container is on a baseline level */
 }
 
 .menu-button {
@@ -1889,7 +1929,7 @@ label {
   background-color: #f1f1f1;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   min-width: 150px;
-  z-index: 1;
+  z-index: 1000;
 }
 
 .dropdown-menu button {
@@ -1922,4 +1962,12 @@ footer {
 
 footer p {
   margin: 0; /* Remove paragraph margin */
+}
+
+.center-box {
+  width: 1000px; /* Fixed width for the box */
+  margin: 0 auto; /* Automatically adjusts left and right margins */
+
+  padding: 20px;
+  text-align: center;
 }
