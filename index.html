@@ -342,7 +342,7 @@
                  <label for="flow_opacity"
                    ><strong>Opacity:</strong></label
                  >
-                 <span class="smalllabel">0</span
+                 <span class="smalllabel">🌑</span
                  ><span class="output_container"
                    ><input
                      id="flow_opacity"
@@ -362,7 +362,7 @@
                      class="fade-init output_3"
                      >-</output
                    ></span
-                 ><span class="smalllabel">1</span></span
+                 ><span class="smalllabel">☀️</span></span
                >
 
                <span
@@ -372,7 +372,7 @@
                >
                  <label for="flow_curvature" class="spaced_label"
                    ><strong>Curviness:</strong></label
-                 >&nbsp; |<span class="output_container"
+                 >&nbsp; 🔵<span class="output_container"
                    ><input
                      id="flow_curvature"
                      class="slider_small"
@@ -391,7 +391,7 @@
                      class="fade-init output_3"
                      >-</output
                    ></span
-                 >(</span
+                 >🔴</span
                >
              </p>
 
@@ -1289,7 +1289,7 @@ Budget [160] Other Necessities #0F0
                 onmouseout="fadeVal('node_h');"
               >
                 <label for="node_h"><strong>Height:</strong></label>
-                .<span class="output_container"
+                0%<span class="output_container"
                   ><input
                     id="node_h"
                     class="slider_small"
@@ -1308,7 +1308,7 @@ Budget [160] Other Necessities #0F0
                     class="fade-init output_6"
                     >-</output
                   ></span
-                >|</span
+                >100%</span
               >
 
               <span
@@ -1319,7 +1319,7 @@ Budget [160] Other Necessities #0F0
                 <label for="node_spacing" class="spaced_label"
                   ><strong>Spacing:</strong></label
                 >
-                <span class="smalllabel">0</span
+                <span class="smalllabel">0%</span
                 ><span class="output_container"
                   ><input
                     id="node_spacing"
@@ -1339,7 +1339,7 @@ Budget [160] Other Necessities #0F0
                     class="fade-init output_6"
                     >-</output
                   ></span
-                ><span class="smalllabel">Max</span></span
+                ><span class="smalllabel">100%</span></span
               >
             </p>
 
@@ -1847,27 +1847,17 @@ Budget [160] Other Necessities #0F0
                   width="600"
                   style="background-color: transparent; display: none"
                 ></canvas>
-                <div id="chartfooter">
-                  <p class="form_elements1 text_center">
-                    <input
-                      type="checkbox"
-                      id="meta_mentionViroet"
-                      value="1"
-                      onchange="process_sankey();"
-                      checked
-                    />
-                    <label class="smalllabel ropt" for="meta_mentionViroet"
-                      >Include &ldquo;Made at Viroet.Inc&rdquo;</label
-                    >
+               
+                    
                   </p>
-                </div>
+                
                 <table id="messages" class="expandable_box">
-                  <tr>
+                  
                     <td>
-                      <div id="messages_area">
+                      
                         <h4>About this diagram</h4>
                         <div id="totals_area"></div>
-                      </div>
+                     
                       <div id="console_area" style="display: none">
                         <details>
                           <summary>Console</summary>
@@ -1976,6 +1966,8 @@ Budget [160] Other Necessities #0F0
                         <td><input type="text" class="to"></td>
                         <td><input type="number" step="0.01" class="amount"></td>
                         <td class="generated"></td>
+                        
+                        
                       </tr>
                     `);
                   }
@@ -1989,13 +1981,12 @@ Budget [160] Other Necessities #0F0
         
 
           <!-- SIZE & SPACING & BACKGROUND -->
-
+          <div class="center-box">
           <div class="expandable_box">
             <h2 >
               <span id="diagram_options_indicator" class="indicator"
                 ></span
-              >
-              Diagram Size &amp; Background<span id="diagram_options_hint"
+              > Diagram Size &amp; Background<span id="diagram_options_hint"
                 >:</span
               >
             </h2>
@@ -2098,7 +2089,7 @@ Budget [160] Other Necessities #0F0
                 /></span>
               </p>
             </div>
-          </div>
+          </div></div>
  <!-- MOVING NODES -->
  <p id="reset_moves_area" class="form_elements1">
   Move Nodes by <em>dragging</em>. Double-click a Node to reset,
