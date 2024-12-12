@@ -1,1 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> </title>
+    <!-- DataTables CSS for modern table -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css"
+    />
+    <!-- Bootstrap for modern, responsive design -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #030c29;
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+
+      .gallery {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 40px;
+        justify-content: center;
+      }
+
+      .gallery img {
+        width: 350px;
+        height: 350px;
+        object-fit: cover;
+        cursor: pointer;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .gallery img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+      }
+
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.75);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        color: white;
+      }
+
+      .modal.show {
+        display: flex;
+      }
+
+      .modal img {
+        width: 100%; /* Make image fit within modal width */
+        max-height: 90vh; /* Limit the image height to 80% of the viewport */
+        object-fit: contain; /* Ensure the image aspect ratio is preserved */
+        margin-bottom: 20px;
+        border-radius: 12px;
+        margin-top: 300px; /* Add margin at the top */
+      }
+
+      .modal .modal-header {
+        font-size: 28px;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .modal .close-button {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 28px;
+        color: white;
+        cursor: pointer;
+      }
+
+      .modal .download-button {
+        background-color: #007bff;
+        color: white;
+        padding: 12px 24px;
+        text-decoration: none;
+        border-radius: 8px;
+        margin-top: 10px;
+        transition: background-color 0.3s;
+      }
+
+      .modal .download-button:hover {
+        background-color: #0056b3;
+      }
+
+      .dataTables_wrapper .dt-buttons {
+        margin-top: 20px;
+        text-align: right;
+      }
+      .chart-title {
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        padding: 10px; /* Adds space inside the box */
+        background-color: #f4f4f4; /* Example background color */
+        color: #333;
+        border-radius: 5px; /* Optional: Adds rounded corners */
+      }
+      .dataTables_wrapper .dt-buttons button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 14px;
+        border: none;
+        transition: background-color 0.3s;
+      }
+
+      .dataTables_wrapper .dt-buttons button:hover {
+        background-color: #0056b3;
+      }
+
+      /* Styling for modern chart images */
+      .modern-chart {
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      #details-table {
+        width: 100%; /* Make the table take up the full width of the container */
+        table-layout: fixed; /* Fix column widths */
+      }
+
+      #details-table thead th,
+      #details-table tbody td {
+        text-align: left; /* Align text to the left */
+        padding: 10px; /* Add some padding for better readability */
+      }
+
+      .modern-chart:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <img
+    src="aibutton new .gif"
+    alt="Looping GIF"
+    id="scrollingLogo"
+    style="position: absolute; top: 0; right: 20px; width: 80px; height: auto"
+  />
+
+  <script>
+    window.addEventListener("scroll", () => {
+      const scrollPosition = window.scrollY; // Get current scroll position
+      const logo = document.getElementById("scrollingLogo");
+      logo.style.top = `${scrollPosition + 20}px`; // Move the logo down as you scroll
+    });
+  </script>
+  <body>
+    <div class="gallery">
+      <div class="modern-chart">
+        <img
+          src="Alphabet Q3 FY24 Income Statement.png"
+          alt="Chart 1"
+          onclick="openModal('Alphabet Q3 FY24 Income Statement.png', 'Chart 1', rowsData1)"
+        />
+        <div class="chart-title">Alphabet Q3 FY24 Income Statement</div>
+      </div>
+      <div class="modern-chart">
+        <img
+          src="TSMC Q3 FY24 Income Statement.png"
+          alt="Chart 2"
+          onclick="openModal('TSMC Q3 FY24 Income Statement.png', 'Chart 2', rowsData2)"
+        />
+        <div class="chart-title">TSMC Q3 FY24 Income Statement</div>
+      </div>
+      <div class="modern-chart">
+        <img
+          src="Apple FY24 Income Statement.png"
+          alt="Chart 3"
+          onclick="openModal('Apple FY24 Income Statement.png', 'Chart 3', rowsData3)"
+        />
+        <div class="chart-title">Apple FY24 Income Statement</div>
+      </div>
+
+      <div class="modern-chart">
+        <img
+          src="Berkshire Hathaway Q3 FY24 Income Statement.png"
+          alt="Chart 1"
+          onclick="openModal('Berkshire Hathaway Q3 FY24 Income Statement.png', 'Chart 4', rowsData4)"
+        />
+        <div class="chart-title">
+          Berkshire Hathaway Q3 FY24 Income Statement
+        </div>
+      </div>
+
+      <div class="modern-chart">
+        <img
+          src="Accenture Q3 FY24 Income Statement.png"
+          alt="Chart 1"
+          onclick="openModal('Accenture Q3 FY24 Income Statement.png', 'Chart 5', rowsData5)"
+        />
+        <div class="chart-title">Accenture Q3 FY24 Income Statement</div>
+      </div>
+
+      <div class="modern-chart">
+        <img
+          src="Viroet_20241211_235956_1800x1200.png"
+          alt="Chart 1"
+          onclick="openModal('Viroet_20241211_235956_1800x1200.png', 'Chart 1', rowsData1)"
+        />
+        <div class="chart-title">Sales Overview</div>
+      </div>
+
+      <div class="modern-chart">
+        <img
+          src="Viroet_20241211_235956_1800x1200.png"
+          alt="Chart 1"
+          onclick="openModal('Viroet_20241211_235956_1800x1200.png', 'Chart 1', rowsData1)"
+        />
+        <div class="chart-title">Sales Overview</div>
+      </div>
+    </div>
+
+    <div id="modal" class="modal">
+      <span class="close-button" onclick="closeModal()">&times;</span>
+      <div class="modal-header" id="modal-title">Modal Title</div>
+      <img id="modal-image" src="" alt="Modal Image" />
+      <a id="download-button" href="#" download class="download-button"
+        >Download</a
+      >
+      <table
+        id="details-table"
+        class="display"
+        style="width: 100%; background: white; color: black"
+      ></table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+
+    <script>
+      const rowsData1 = [
+        { from: "Search advertising", to: "Ad revenue", amount: "49.385" },
+        { from: "YouTube", to: "Ad revenue", amount: "8.921" },
+        { from: "AdMob, AdSense & other", to: "Ad revenue", amount: "7.548" },
+        { from: "Ad revenue", to: "Revenue", amount: "65.854" },
+        { from: "Playstore & other", to: "Revenue", amount: "10.656" },
+        { from: "Google Cloud", to: "Revenue", amount: "11.353" },
+        { from: "Other revenue", to: "Revenue", amount: "0.388" },
+        { from: "Hedging gains", to: "Revenue", amount: "0.017" },
+        { from: "Revenue", to: "Gross profit", amount: "51.794" },
+        { from: "Revenue", to: "Cost of revenue", amount: "36.474" },
+        { from: "Gross profit", to: "Operating profit", amount: "28.521" },
+        { from: "Gross profit", to: "Operating expenses", amount: "23.273" },
+        {
+          from: "Cost of revenue",
+          to: "Traffic acquisition costs",
+          amount: "13.719",
+        },
+        {
+          from: "Cost of revenue",
+          to: "Content acquisition, data centers, other",
+          amount: "22.755",
+        },
+        { from: "Operating profit", to: "Net profit", amount: "26.301" },
+        { from: "Operating profit", to: "Tax", amount: "5.405" },
+        { from: "Other income", to: "Operating profit", amount: "3.185" },
+        { from: "Operating expenses", to: "R&D", amount: "12.447" },
+        {
+          from: "Operating expenses",
+          to: "Sales & marketing",
+          amount: "7.227",
+        },
+        { from: "Operating expenses", to: "General & admin", amount: "3.599" },
+      ];
+
+      const rowsData2 = [
+        { from: "HPC", to: "Revenue", amount: "11.98704" },
+        { from: "Smartphone", to: "Revenue", amount: "7.99136" },
+        { from: "IoT", to: "Revenue", amount: "1.64528" },
+        { from: "Automotive", to: "Revenue", amount: "1.1752" },
+        { from: "Digital CE", to: "Revenue", amount: "0.23504" },
+        { from: "Others", to: "Revenue", amount: "0.47008" },
+        { from: "Revenue", to: "Cost of revenue", amount: "9.911" },
+        { from: "Revenue", to: "Gross profit", amount: "13.593" },
+        { from: "Gross profit", to: "Operating costs", amount: "2.447" },
+        { from: "Operating costs", to: "R&D", amount: "1.633" },
+        { from: "Operating costs", to: "SG&A", amount: "0.814" },
+        { from: "Operating profit", to: "Tax", amount: "1.828" },
+        {
+          from: "Non operating profit",
+          to: "Operating profit",
+          amount: "0.724",
+        },
+        { from: "Other profit", to: "Operating profit", amount: "0.016" },
+        { from: "Gross profit", to: "Operating profit", amount: "11.146" },
+        { from: "Operating profit", to: "Net profit", amount: "10.058" },
+      ];
+
+      const rowsData3 = [
+        { from: "iPhone", to: "Products", amount: "201.183" },
+        { from: "MacBook", to: "Products", amount: "29.984" },
+        { from: "iPad", to: "Products", amount: "26.694" },
+        { from: "Watch and AirPods", to: "Products", amount: "37.005" },
+        { from: "Products", to: "Revenue", amount: "294.866" },
+        { from: "Services", to: "Revenue", amount: "96.169" },
+        { from: "Revenue", to: "Gross profit", amount: "180.683" },
+        { from: "Revenue", to: "Cost of revenue", amount: "210.352" },
+        { from: "Gross profit", to: "Operating profit", amount: "123.216" },
+        { from: "Gross profit", to: "Operating expenses", amount: "57.467" },
+        { from: "Cost of revenue", to: "Product costs", amount: "185.233" },
+        { from: "Cost of revenue", to: "Service costs", amount: "25.119" },
+        { from: "Operating profit", to: "Net profit", amount: "93.467" },
+        { from: "Operating profit", to: "Tax", amount: "29.749" },
+        { from: "Other", to: "Net profit", amount: "0.269" },
+        { from: "Operating expenses", to: "R&D", amount: "31.37" },
+        { from: "Operating expenses", to: "SG&A", amount: "26.097" },
+      ];
+
+      const rowsData4 = [
+        { from: "Insurance & corporate", to: "Revenue", amount: "27.104" },
+        { from: "BNSF", to: "Revenue", amount: "5.92" },
+        { from: "Energy", to: "Revenue", amount: "7.323" },
+        { from: "Pilot", to: "Revenue", amount: "10.623" },
+        { from: "Manufacturing", to: "Revenue", amount: "19.67" },
+        { from: "McLane", to: "Revenue", amount: "12.527" },
+        { from: "Service & retailing", to: "Revenue", amount: "9.828" },
+        { from: "Revenue", to: "Expenses", amount: "81.223" },
+        { from: "Expenses", to: "Insurance & other", amount: "60.758" },
+        {
+          from: "Expenses",
+          to: "Railroad, utilities & energy",
+          amount: "20.465",
+        },
+        {
+          from: "Insurance & other",
+          to: "Losses & loss adjustment",
+          amount: "15.163",
+        },
+        {
+          from: "Insurance & other",
+          to: "Life, annuity & health benefits",
+          amount: "0.925",
+        },
+        {
+          from: "Insurance & other",
+          to: "Underwriting expenses",
+          amount: "4.934",
+        },
+        { from: "Insurance & other", to: "Sales & services", amount: "30.323" },
+        { from: "Insurance & other", to: "Leasing", amount: "1.774" },
+        {
+          from: "Insurance & other",
+          to: "Selling, gen. & admin.",
+          amount: "7.324",
+        },
+        { from: "Insurance & other", to: "Interest", amount: "0.315" },
+        { from: "Revenue", to: "Gross profit", amount: "11.772" },
+        {
+          from: "Railroad, utilities & energy",
+          to: "Freight rail transportation",
+          amount: "3.855",
+        },
+        {
+          from: "Railroad, utilities & energy",
+          to: "Utilities & energy",
+          amount: "14.607",
+        },
+        { from: "Railroad, utilities & energy", to: "Other", amount: "1.104" },
+        {
+          from: "Railroad, utilities & energy",
+          to: "Interest expenses",
+          amount: "0.899",
+        },
+        { from: "Gross profit", to: "Operating profit", amount: "32.286" },
+        { from: "Investment gains", to: "Gross profit", amount: "20.514" },
+        { from: "Equity", to: "Operating profit", amount: "0.222" },
+        { from: "Operating profit", to: "Tax", amount: "6.028" },
+        { from: "Operating profit", to: "Net profit", amount: "26.48" },
+      ];
+
+      const rowsData5 = [
+        { from: "North America", to: "Revenue", amount: "7.834206" },
+        { from: "Europe, M East, Africa", to: "Revenue", amount: "5.776624" },
+        { from: "Rest of world", to: "Revenue", amount: "2.855998" },
+        { from: "Revenue", to: "Operating profit", amount: "2.630865" },
+        { from: "Revenue", to: "Operating expenses", amount: "13.835963" },
+        { from: "Interest", to: "Net profit", amount: "0.042356" },
+        { from: "Operating profit", to: "Net profit", amount: "1.938992" },
+        { from: "Operating profit", to: "Tax", amount: "0.673022" },
+        { from: "Operating profit", to: "Other", amount: "0.018851" },
+        {
+          from: "Operating expenses",
+          to: "Cost of services",
+          amount: "10.968377",
+        },
+        {
+          from: "Operating expenses",
+          to: "Sales & marketing",
+          amount: "1.750366",
+        },
+        {
+          from: "Operating expenses",
+          to: "General & admin.",
+          amount: "1.0398",
+        },
+        {
+          from: "Operating expenses",
+          to: "Business optimization",
+          amount: "0.07742",
+        },
+      ];
+
+      function openModal(imageSrc, title, rows) {
+        const modal = document.getElementById("modal");
+        const modalImage = document.getElementById("modal-image");
+        const modalTitle = document.getElementById("modal-title");
+        const downloadButton = document.getElementById("download-button");
+        const detailsTable = $("#details-table").DataTable();
+
+        modalImage.src = imageSrc;
+        modalTitle.textContent = title;
+        downloadButton.href = imageSrc;
+
+        detailsTable.clear().draw();
+        rows.forEach((row) => {
+          detailsTable.row.add([row.from, row.to, row.amount]).draw();
+        });
+
+        modal.classList.add("show");
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("modal");
+        modal.classList.remove("show");
+      }
+
+      $(document).ready(function () {
+        $("#details-table").DataTable({
+          paging: false, // Disable pagination
+          searching: false, // Disable search functionality
+          info: false, // Disable info display
+          select: true, // Enable row selection
+          dom: "Bfrtip", // Buttons and other elements
+          buttons: [
+            {
+              extend: "copy",
+              text: "Copy",
+              exportOptions: {
+                columns: ":visible", // Include only visible columns
+                rows: ":visible", // Include only visible rows
+                modifier: {
+                  selected: true, // Only include selected rows
+                },
+                header: false, // Exclude the header row from being copied
+              },
+            },
+          ],
+          columns: [{ title: "From" }, { title: "To" }, { title: "Amount" }],
+          scrollY: "200px", // Set the height of the table to make it scrollable
+          scrollCollapse: true, // Allow the table to collapse when fewer rows are present
+          scroller: true, // Enable smooth scrolling
+        });
+      });
+    </script>
+  </body>
+</html>
 
