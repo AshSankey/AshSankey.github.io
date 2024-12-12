@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     newRow.innerHTML = `
       <td><input type="text" class="from"></td>
       <td><input type="text" class="to"></td>
-      <td><input type="number" step="0.01" class="amount"></td>
+      <td><input type="number" step="0.00000001" class="amount"></td>
       <td class="generated"></td>
     `;
     tableBody.appendChild(newRow);
