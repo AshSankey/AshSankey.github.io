@@ -129,3 +129,27 @@ table td input.to {
 #addRowBtn2 {
   max-width: 200px;
 }
+
+/* Modern Highlight Effect */
+.highlight {
+  background: linear-gradient(90deg, #3086f7, #8dc9f3); /* Smooth gradient */
+  border-radius: 5px; /* Rounded corners for a sleek look */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  transition: background 1.5s ease, box-shadow 1.5s ease;
+}
+
+@keyframes fadeOutHighlight {
+  0% {
+    background: linear-gradient(90deg, #ffe500, #fff5cc);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  100% {
+    background: transparent;
+    box-shadow: none;
+  }
+}
+
+.highlight {
+  animation: fadeOutHighlight 1.5s forwards;
+  border-radius: 5px;
+}
