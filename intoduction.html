@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sankey Chart Creator - About Us</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background-color: #f9f9f9;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      header {
+        background: linear-gradient(90deg, #12123b, #0b0438);
+        color: #fff;
+        padding: 20px 15px;
+        text-align: center;
+      }
+
+      header h1 {
+        font-size: 2.5rem;
+      }
+
+      header p {
+        font-size: 1.2rem;
+        margin-top: 10px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 15px;
+      }
+
+      .section {
+        margin-bottom: 30px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .section h2 {
+        margin-bottom: 15px;
+        font-size: 1.8rem;
+        color: #0f0c38;
+      }
+
+      .section p {
+        margin-bottom: 10px;
+      }
+
+      .features {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .feature {
+        flex: 1 1 30%;
+        background: #f1f1f1;
+        padding: 15px;
+        margin: 10px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .feature h3 {
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .feature p {
+        font-size: 0.9rem;
+        color: #555;
+      }
+
+      .cta {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .cta a {
+  background: linear-gradient(135deg, #45a049, #26d62f); /* Gradient background */
+  color: #fff;
+  padding: 15px 40px; /* Increased padding for a larger button */
+  text-decoration: none;
+  border-radius: 50px; /* Rounded corners for a modern look */
+  font-size: 1.2rem; /* Larger font size */
+  font-weight: 600; /* Bold text */
+  text-transform: uppercase; /* Uppercase text for emphasis */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+  transition: all 0.3s ease; /* Smooth transition */
+  display: inline-block;
+  margin-top: 30px; /* Increase space above button */
+}
+
+.cta a:hover {
+  background: linear-gradient(135deg, #26d62f, #45a049); /* Reversed gradient on hover */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+  transform: translateY(-6px); /* Slight lift effect */
+}
+
+.cta a:focus {
+  outline: none; /* Remove focus outline */
+  box-shadow: 0 0 0 3px rgba(38, 214, 47, 0.4); /* Add focus shadow for accessibility */
+}
+
+footer {
+  background: linear-gradient(
+    to right,
+    #3498db,
+    #2ecc71,
+    #f39c12
+  ); /* Multiple colors */
+  color: white; /* Text color */
+  text-align: center; /* Center the content */
+  padding: 20px 0; /* Add padding for spacing */
+  font-family: Arial, sans-serif; /* Professional font */
+  font-size: 14px; /* Font size */
+}
+
+      .ai-feature {
+        background: linear-gradient(90deg, #673ab7, #3f51b5);
+        color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        margin: 10px 0;
+      }
+
+      .ai-feature h3 {
+        margin-bottom: 15px;
+        font-size: 1.5rem;
+      }
+
+      .ai-feature p {
+        font-size: 1rem;
+      }
+
+      .hero-image {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .hero-image img {
+        width: 100%;
+        max-width: 800px;
+        border-radius: 10px;
+      }
+      .container {
+  width: 100%;
+  padding: 20px;
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Allows content to stack on smaller screens */
+  gap: 20px; /* Adds space between text and gif */
+}
+
+.ai-text {
+  flex: 1;
+  max-width: 50%; /* Ensures the text takes up 50% of the container */
+  padding-right: 20px; /* Adds some space to the right of the text */
+}
+
+.hero-gif {
+  flex: 1;
+  max-width: 50%; /* Ensures the GIF takes up 50% of the container */
+}
+
+.hero-gif img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+      
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Welcome to SankeyAsh </h1>
+      <p>From historical insights to advanced AI-driven chart creation</p>
+    </header>
+
+    <div class="container">
+        <div class="hero-content">
+          <!-- Left section for text -->
+          <div class="ai-text">
+            <div class="section ai-feature">
+              <h3>Experience the Power of AI</h3>
+              <p>
+                Our advanced AI tools enable you to transform raw data into compelling
+                visuals in seconds. Upload your data, and let our algorithms do the
+                rest—providing you with actionable insights and professional-grade
+                charts.
+              </p>
+            </div>
+      
+            <div class="cta">
+              <a href="index.html">Start Creating Your Sankey Chart</a>
+            </div>
+          </div>
+      
+          <!-- Right section for GIF -->
+          <div class="hero-gif">
+            <img src="intro.gif" alt="Dynamic and Looping Sankey Chart Animation" />
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Our Story</h2>
+        <p>
+          Tracing its origins back to the 19th century, the Sankey chart was
+          first used for visualizing energy flows. Over time, it has evolved
+          into a versatile tool for illustrating complex relationships and data
+          flows. At Sankey Chart Creator, we bring this legacy into the modern
+          era with cutting-edge AI and intuitive design tools.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>Features</h2>
+        <div class="features">
+          <div class="feature">
+            <h3>AI-Driven Recommendations</h3>
+            <p>
+              Automatically generate insights and optimize your charts for
+              clarity and impact.
+            </p>
+          </div>
+          <div class="feature">
+            <h3>Customizable Visuals</h3>
+            <p>
+              Choose colors, styles, and layouts to match your branding and
+              presentation needs.
+            </p>
+          </div>
+          <div class="feature">
+            <h3>Real-Time Collaboration</h3>
+            <p>
+              Work with your team to create and edit charts simultaneously from
+              anywhere.
+            </p>
+          </div>
+          <div class="feature">
+            <h3>Historical and Predictive Analysis</h3>
+            <p>
+              Blend historical data with AI-driven predictions to unlock future
+              possibilities.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2024 Viroet. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
