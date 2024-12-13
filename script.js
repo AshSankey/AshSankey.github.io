@@ -12,6 +12,16 @@ document.addEventListener("DOMContentLoaded", function () {
       <td class="generated"></td>
     `;
     tableBody.appendChild(newRow);
+
+    // Add fade-in animation and highlight
+    newRow.classList.add("fade-in", "highlight");
+    tableBody.appendChild(newRow);
+
+    // Remove highlight after 1.5 seconds
+    setTimeout(() => newRow.classList.remove("highlight"), 1500);
+
+    // Auto-scroll to the new row
+    newRow.scrollIntoView({ behavior: "smooth", block: "center" });
   });
 
   // Highlight selected cell
