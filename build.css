@@ -1971,3 +1971,28 @@ footer p {
   padding: 20px;
   text-align: center;
 }
+
+ /* Responsive Design for Mobile */
+    @media (max-width: 768px) {
+      .main-content {
+        flex-direction: column; /* Stack all sections vertically */
+      }
+
+      .left,
+      .center,
+      .right {
+        width: 100%; /* Full width for each section */
+        flex: none; /* Disable flex-grow */
+      }
+
+      .right {
+        flex-direction: column; /* Stack the right sections vertically */
+      }
+
+      .right-top,
+      .right-bottom,
+      .right-bottom-top,
+      .right-bottom-bottom {
+        flex: none; /* Disable flex-grow */
+        width: 100%; /* Full width for each subsection */
+      }
