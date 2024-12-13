@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Handle pasting data from Excel or clipboard
   tableBody.addEventListener("paste", function (e) {
     const clipboardData = e.clipboardData || window.clipboardData;
     const pastedData = clipboardData.getData("text/plain").trim();
@@ -51,16 +50,22 @@ document.addEventListener("DOMContentLoaded", function () {
           if (cell) {
             const input = cell.querySelector("input");
             if (input) {
-              // Sanitize pasted data for numeric input
               if (input.type === "number") {
                 const numericValue = parseFloat(cellData.trim());
                 if (!isNaN(numericValue)) {
                   input.value = numericValue;
+
+                  // Trigger both 'input' and 'change' events
+                  input.dispatchEvent(new Event("input", { bubbles: true }));
+                  input.dispatchEvent(new Event("change", { bubbles: true }));
                 }
               } else {
                 input.value = cellData.trim();
+
+                // Trigger both 'input' and 'change' events
+                input.dispatchEvent(new Event("input", { bubbles: true }));
+                input.dispatchEvent(new Event("change", { bubbles: true }));
               }
-              autoGenerate(input); // Trigger auto-generate after pasting
             }
           }
         });
