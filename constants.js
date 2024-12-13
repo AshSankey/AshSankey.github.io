@@ -257,7 +257,7 @@ labels relativesize 100
           "// Enter Flows between Nodes, like this:\n//         Source [AMOUNT] Target\n\nWages [1500] Budget\nOther [250] Budget\n\nBudget [450] Taxes\nBudget [420] Housing\nBudget [400] Food\nBudget [295] Transportation\nBudget [25] Savings\n\n// You can set a Node's color, like this:\n:Budget #708090\n//            ...or a color for a single Flow:\nBudget [160] Other Necessities #0F0\n\n// Use the controls below to customize\n// your diagram's appearance...",
         settings: {
           size_h: 600,
-          size_w: 600,
+          size_w: 900,
           node_w: 12,
           node_h: 50,
           node_spacing: 75,
@@ -290,7 +290,7 @@ labels relativesize 100
           "// Sample Ranked Election diagram\n\nGH\\nRound 1 [300000] GH\\nRound 2\nEF\\nRound 1 [220000] EF\\nRound 2\nCD\\nRound 1 [200000] CD\\nRound 2\nAB\\nRound 1 [10000] GH\\nRound 2\nAB\\nRound 1 [25000] EF\\nRound 2\nAB\\nRound 1 [20000] CD\\nRound 2\n\nGH\\nRound 2 [310000] GH\\nRound 3\\nProjected Winner\nEF\\nRound 2 [245000] EF\\nRound 3\nCD\\nRound 2 [50000] GH\\nRound 3\\nProjected Winner\nCD\\nRound 2 [95000] EF\\nRound 3\n\n// This line sets a custom gray color:\n:No further votes #555 <<\nCD\\nRound 2 [75000] No further votes\nAB\\nRound 1 [20000] No further votes",
         settings: {
           size_h: 600,
-          size_w: 700,
+          size_w: 900,
           node_w: 10,
           node_h: 76,
           node_spacing: 85,
@@ -323,7 +323,7 @@ labels relativesize 100
           "// Sample Job Search diagram:\n\nApplications [4] 1st Interviews\nApplications [9] Rejected\nApplications [4] No Answer\n\n1st Interviews [2] 2nd Interviews\n1st Interviews [2] No Offer\n\n2nd Interviews [2] Offers\n\nOffers [1] Accepted\nOffers [1] Declined",
         settings: {
           size_h: 600,
-          size_w: 700,
+          size_w: 900,
           node_w: 8,
           node_h: 60,
           node_spacing: 55,
@@ -419,8 +419,8 @@ labels relativesize 100
         flows:
           '// List each player\'s moves all at once\n// Use one color for each player\n// Use an amount of 1 for each move\n// Check "Using the exact input order" below\n\n// Experiment with reordering players!\n\n:Player 1: #76a\nPlayer 1: [1] 1A #76a\n1A [1] 2C #76a\n2C [1] 3E #76a\n3E [1] Player 1 #76a\n:Player 1 #76a\n\n:Player 2: #e37\nPlayer 2: [1] 1B #e37\n1B [1] 2D #e37\n2D [1] 3E #e37\n3E [1] Player 2 #e37\n:Player 2 #e37\n\n:Player 3: #bb2\nPlayer 3: [1] 1A #bb2\n1A [1] 2D #bb2\n2D [1] 3E #bb2\n3E [1] Player 3 #bb2\n:Player 3 #bb2\n',
         settings: {
-          size_h: 400,
-          size_w: 600,
+          size_h: 600,
+          size_w: 900,
           node_w: 12,
           node_h: 23,
           node_spacing: 46,
