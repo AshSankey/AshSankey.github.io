@@ -138,5 +138,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Option 1: Redirect to a specific page
 function option1() {
-  window.location.href = "mobile-patent-suits/mobile.html";
+  window.location.href = "/mobile-patent-suits/mobile.html";
 }
