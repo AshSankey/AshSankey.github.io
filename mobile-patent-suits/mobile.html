@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mobile Patent Suits</title>
+    <script src="https://cdn.jsdelivr.net/npm/handsontable@12.2.0/dist/handsontable.full.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/handsontable@12.2.0/dist/handsontable.full.min.css"
+    />
+    <link rel="stylesheet" href="inspector.css" />
+    <style>
+      #table-container {
+        width: 100%;
+        margin: 20px auto;
+        max-width: 700px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Data Input</h1>
+    <div id="table-container"></div>
+
+    <script type="module">
+      import define from "./index.js";
+      import { Runtime, Inspector } from "./runtime.js";
+
+      // Declare variables
+      let hot;
+      const runtime = new Runtime();
+      const main = runtime.module(define, Inspector.into(document.body));
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const container = document.getElementById("table-container");
+
+        // Initialize Handsontable only after the DOM is ready
+        hot = new Handsontable(container, {
+          data: [
+            ["Microsoft", "Amazon", "licensing"],
+            ["Microsoft", "HTC", "licensing"],
+            ["Samsung", "Apple", "suit"],
+            ["Motorola", "Apple", "suit"],
+            ["Nokia", "Apple", "resolved"],
+            ["HTC", "Apple", "suit"],
+            ["Kodak", "Apple", "suit"],
+            ["Microsoft", "Barnes & Noble", "suit"],
+            ["Microsoft", "Foxconn", "suit"],
+            ["Oracle", "Google", "suit"],
+            ["Apple", "HTC", "suit"],
+            ["Microsoft", "Inventec", "suit"],
+            ["Samsung", "Kodak", "resolved"],
+            ["LG", "Kodak", "resolved"],
+            ["RIM", "Kodak", "suit"],
+          ],
+          colHeaders: ["Source", "Target", "Type"],
+          rowHeaders: true,
+          stretchH: "all",
+          columns: [
+            { type: "text" },
+            { type: "text" },
+            { type: "dropdown", source: ["licensing", "suit", "resolved"] },
+          ],
+          contextMenu: true,
+          manualRowResize: true,
+          manualColumnResize: true,
+          licenseKey: "non-commercial-and-evaluation",
+          afterChange: function () {
+            updateGraph(); // Trigger graph update on data change
+          },
+        });
+
+        // Initial graph render after table is initialized
+        updateGraph();
+      });
+
+      // Function to update graph data dynamically
+      function updateGraph() {
+        const graphData = getGraphData(); // Get updated data from Handsontable
+        console.log(graphData); // Debug: Check if data is correctly fetched
+        main.redefine("suits", () => graphData); // Redefine the "suits" variable dynamically
+      }
+
+      // Convert Handsontable data to suits-compatible format
+      function getGraphData() {
+        if (!hot) return []; // Ensure hot is initialized before accessing it
+        return hot
+          .getData()
+          .filter((row) => row[0] && row[1] && row[2]) // Remove empty rows
+          .map(([source, target, type]) => ({ source, target, type }));
+      }
+    </script>
+  </body>
+</html>
