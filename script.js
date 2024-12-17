@@ -140,3 +140,8 @@ document.addEventListener("DOMContentLoaded", function () {
 function option1() {
   window.location.href = "/mobile-patent-suits/mobile.html";
 }
+
+// Option 1: Redirect to a specific page
+function option1() {
+  window.location.href = "/Tree.html";
+}
