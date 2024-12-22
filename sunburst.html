@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enhanced Sunburst Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <style>
+      body {
+        font-family: "Roboto", Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+      }
+
+      #main-container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+      }
+
+      #top-bar {
+        background-color: #2c3e50;
+        color: white;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      #content {
+        flex: 1;
+        display: flex;
+        gap: 20px;
+        padding: 20px;
+      }
+
+      #left-panel,
+      #right-panel {
+        flex: 1;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      #chart {
+        flex: 1;
+        height: 100%;
+        width: 100%;
+      }
+
+      #table-container {
+        flex: 1;
+        overflow: auto;
+      }
+
+      .controls {
+        display: flex;
+        gap: 10px;
+        padding: 10px;
+        background: #f4f4f4;
+      }
+
+      button {
+        padding: 10px 15px;
+        background: #3498db;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      button:hover {
+        background: #2980b9;
+      }
+
+      button:disabled {
+        background: #bdc3c7;
+        cursor: not-allowed;
+      }
+
+      #chart-title-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background: #f4f4f4;
+      }
+
+      #chart-title {
+        font-size: 1.5em;
+        font-weight: bold;
+      }
+     /* Container Styles */
+#table-container {
+  flex: 1;
+  overflow-y: auto;  /* Enables vertical scroll */
+  max-height: 400px;  /* Adjust the height to fit your needs */
+  border-radius: 10px;  /* Rounded corners for container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Subtle shadow effect */
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  background-color: white;
+  border-radius: 8px;  /* Rounded corners for table */
+  overflow: hidden;  /* Ensure no overflow outside of the rounded corners */
+}
+
+/* Table Header */
+thead {
+  background-color: #007bff;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  height: 40px; /* Adjust the height of the header */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow below the header */
+}
+
+/* Table Header Cells */
+th {
+  padding: 15px 20px;
+  height: 60px;
+  text-align: center;
+  font-size: 16px;
+  background-color: #2980b9;
+  color: white;
+  line-height: 30px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+/* Table Body Cells */
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px 20px;
+  text-align: center;
+  font-size: 14px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+td {
+  font-size: 14px;
+  color: #333;
+}
+
+/* Hover effect for table rows */
+tr:hover td {
+  background-color: #f5f5f5;
+}
+
+/* Select Dropdown */
+select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;  /* Rounded corners for select */
+  background-color: #f9f9f9;
+  font-size: 14px;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+select:focus {
+  border-color: #3498db;
+  background-color: #eef7ff;
+}
+
+      /* General Styles */
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f4f7fb;
+        margin: 0;
+        padding: 0;
+      }
+
+      .controls,
+      .label-options {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin: 20px;
+        max-width: 400px;
+        width: 100%;
+        transition: box-shadow 0.3s ease-in-out;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+      }
+
+      .label-options {
+        display: flex;
+        flex-direction: column;
+      }
+
+      h4 {
+        font-size: 18px;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      /* Button Styles */
+      .btn {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 8px 0;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      .btn:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+      }
+
+      .btn:focus {
+        outline: none;
+      }
+
+      /* Input and Select Styles */
+      .input-field {
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        width: 100%;
+        transition: border-color 0.3s ease, background-color 0.3s ease;
+      }
+
+      .input-field:focus {
+        border-color: #4caf50;
+        background-color: #f4f8f1;
+      }
+
+      /* Checkbox Styles */
+      .checkbox {
+        margin-right: 8px;
+        cursor: pointer;
+      }
+
+      /* Hover Effects */
+      .label-options label {
+        font-weight: bold;
+        color: #444;
+        margin-bottom: 8px;
+        cursor: pointer;
+      }
+
+      .label-options label:hover {
+        color: #4caf50;
+      }
+
+      .input-field:focus,
+      .checkbox:focus,
+      .btn:focus {
+        outline: none;
+      }
+
+      .controls:hover,
+      .label-options:hover {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 600px) {
+        .controls,
+        .label-options {
+          width: 100%;
+          margin: 10px;
+        }
+
+        .controls {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+      /* Logo Styling */
+#logo {
+  height: 80px;  /* Adjust the size of the logo */
+  width: auto;
+  margin-right: 20px;  /* Optional space between logo and right side */
+}
+    </style>
+  </head>
+  <body>
+    <div id="main-container">
+      <div id="top-bar">
+        <img src="SunBurst ASH_transparent-.png" alt="Logo" id="logo" />
+        <h1></h1>
+        <div>
+          <button id="zoom-in">Zoom In</button>
+          <button id="zoom-out">Zoom Out</button>
+          <button id="choose-bg-color">Choose Background Color</button>
+          <input type="color" id="bg-color-picker" style="display: none" />
+
+          <button id="export-chart">Export Chart as JPG</button>
+        </div>
+
+        <button onclick="goBack()">Go Back</button>
+      </div>
+
+      <div id="content">
+        <!-- Left Panel: Table -->
+        <div id="left-panel">
+          <h3 style="margin: 15px">Data Table</h3>
+          <div id="table-container">
+            <table id="data-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Value</th>
+                  <th>Parent</th>
+                  <th>Color</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td contenteditable="true">Root</td>
+                  <td contenteditable="true">1000</td>
+                  <td contenteditable="true"></td>
+                  <td>
+                    <select>
+                      <option>LightPink</option>
+                      <option>LightCoral</option>
+                      <option>PeachPuff</option>
+                      <option>LightGoldenRodYellow</option>
+                      <option>PaleGreen</option>
+                      <option>LightSkyBlue</option>
+                      <option>Lavender</option>
+                      <option>Thistle</option>
+                      <option>MintCream</option>
+                      <option>HoneyDew</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td contenteditable="true">Category A</td>
+                  <td contenteditable="true">300</td>
+                  <td contenteditable="true">Root</td>
+                  <td>
+                    <select>
+                      <option>LightCoral</option>
+                      <option>LightPink</option>
+                      <option>PeachPuff</option>
+                      <option>LightGoldenRodYellow</option>
+                      <option>PaleGreen</option>
+                      <option>LightSkyBlue</option>
+                      <option>Lavender</option>
+                      <option>Thistle</option>
+                      <option>MintCream</option>
+                      <option>HoneyDew</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td contenteditable="true">Category B</td>
+                  <td contenteditable="true">200</td>
+                  <td contenteditable="true">Root</td>
+                  <td>
+                    <select>
+                      <option>PeachPuff</option>
+                      <option>LightPink</option>
+                      <option>LightCoral</option>
+
+                      <option>LightGoldenRodYellow</option>
+                      <option>PaleGreen</option>
+                      <option>LightSkyBlue</option>
+                      <option>Lavender</option>
+                      <option>Thistle</option>
+                      <option>MintCream</option>
+                      <option>HoneyDew</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td contenteditable="true">Category C</td>
+                  <td contenteditable="true">150</td>
+                  <td contenteditable="true">Root</td>
+                  <td>
+                    <select>
+                      <option>LightGoldenRodYellow</option>
+                      <option>LightPink</option>
+                      <option>LightCoral</option>
+                      <option>PeachPuff</option>
+                      <option>PaleGreen</option>
+                      <option>LightSkyBlue</option>
+                      <option>Lavender</option>
+                      <option>Thistle</option>
+                      <option>MintCream</option>
+                      <option>HoneyDew</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td contenteditable="true">Subcategory A1</td>
+                  <td contenteditable="true">100</td>
+                  <td contenteditable="true">Category A</td>
+                  <td>
+                    <select>
+                      <option>PaleGreen</option>
+                      <option>LightPink</option>
+                      <option>LightCoral</option>
+                      <option>PeachPuff</option>
+                      <option>LightGoldenRodYellow</option>
+                      <option>LightSkyBlue</option>
+                      <option>Lavender</option>
+                      <option>Thistle</option>
+                      <option>MintCream</option>
+                      <option>HoneyDew</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td contenteditable="true">Subcategory A2</td>
+                  <td contenteditable="true">200</td>
+                  <td contenteditable="true">Category A</td>
+                  <td>
+                    <select>
+                      <option>LightSkyBlue</option>
+                      <option>LightPink</option>
+                      <option>LightCoral</option>
+                      <option>PeachPuff</option>
+                      <option>LightGoldenRodYellow</option>
+                      <option>PaleGreen</option>
+                      <option>Lavender</option>
+                      <option>Thistle</option>
+                      <option>MintCream</option>
+                      <option>HoneyDew</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td contenteditable="true">Subcategory B1</td>
+                  <td contenteditable="true">100</td>
+                  <td contenteditable="true">Category B</td>
+                  <td>
+                    <select>
+                      <option>Lavender</option>
+                      <option>LightPink</option>
+                      <option>LightCoral</option>
+                      <option>PeachPuff</option>
+                      <option>LightGoldenRodYellow</option>
+                      <option>PaleGreen</option>
+                      <option>LightSkyBlue</option>
+                      <option>Thistle</option>
+                      <option>MintCream</option>
+                      <option>HoneyDew</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td contenteditable="true">Subcategory C1</td>
+                  <td contenteditable="true">50</td>
+                  <td contenteditable="true">Category C</td>
+                  <td>
+                    <select>
+                      <option>Thistle</option>
+                      <option>LightPink</option>
+                      <option>LightCoral</option>
+                      <option>PeachPuff</option>
+                      <option>LightGoldenRodYellow</option>
+                      <option>PaleGreen</option>
+                      <option>LightSkyBlue</option>
+                      <option>Lavender</option>
+                      <option>MintCream</option>
+                      <option>HoneyDew</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td contenteditable="true">Subcategory D1</td>
+                  <td contenteditable="true">60</td>
+                  <td contenteditable="true">Category B</td>
+                  <td>
+                    <select>
+                      <option>LightCoral</option>
+                      <option>MintCream</option>
+                      <option>LightPink</option>
+
+                      <option>PeachPuff</option>
+                      <option>LightGoldenRodYellow</option>
+                      <option>PaleGreen</option>
+                      <option>LightSkyBlue</option>
+                      <option>Lavender</option>
+                      <option>Thistle</option>
+                      <option>HoneyDew</option>
+                    </select>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            
+          </div><div class="controls">
+            <button id="add-row" class="btn">Add Row</button>
+            <button id="update-chart" class="btn">Update Chart</button>
+          </div>
+        </div>
+
+        <!-- Right Panel: Chart -->
+        <div id="right-panel">
+          <div id="chart-title-container">
+            <span>Chart Title:</span>
+            <input
+              type="text"
+              id="chart-title-input"
+              placeholder="Enter chart title"
+            />
+          </div>
+          <div id="chart"></div>
+        </div>
+      </div>
+    </div>
+  
+    </div>
+    <div id="label-options" class="label-options">
+      <h4>Label Customization</h4>
+
+      <label for="label-font-family">Font Family:</label>
+      <select id="label-font-family" class="input-field">
+        <option value="Arial">Arial</option>
+        <option value="Verdana">Verdana</option>
+        <option value="Times New Roman">Times New Roman</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Courier New">Courier New</option>
+      </select>
+
+      <label for="label-font-size">Font Size:</label>
+      <input
+        type="number"
+        id="label-font-size"
+        min="10"
+        max="50"
+        value="12"
+        class="input-field"
+      />
+
+      <label for="label-font-color">Font Color:</label>
+      <input
+        type="color"
+        id="label-font-color"
+        value="#000000"
+        class="input-field"
+      />
+
+      <label for="label-width">Max Width (px):</label>
+      <input
+        type="number"
+        id="label-width"
+        min="50"
+        max="300"
+        value="100"
+        class="input-field"
+      />
+
+      <label>
+        <input type="checkbox" id="label-show-percentage" class="checkbox" />
+        Show Percentage
+      </label>
+
+      <button id="update-labels" class="btn">Update Labels</button>
+    </div>
+    <script>
+      const table = document.getElementById("data-table");
+      const chart = echarts.init(document.getElementById("chart"));
+      let zoomLevel = 1;
+
+      // Debounce function for better performance
+      let debounceTimeout;
+      const debounce = (callback, delay = 300) => {
+        clearTimeout(debounceTimeout);
+        debounceTimeout = setTimeout(callback, delay);
+      };
+
+      // Build hierarchical tree for the Sunburst Chart
+      const buildTree = (data) => {
+        const nodes = {};
+        const root = { name: "Root", children: [] };
+
+        data.forEach(({ name, value, parent, color }) => {
+          const node = { name, value, itemStyle: { color }, children: [] };
+          nodes[name] = node;
+
+          if (!parent) {
+            root.children.push(node);
+          } else {
+            nodes[parent]?.children.push(node);
+          }
+        });
+
+        return root;
+      };
+
+      // Render the Sunburst Chart
+      const renderChart = () => {
+        const rows = [...table.querySelectorAll("tbody tr")];
+        const data = rows.map((row) => {
+          const cells = [...row.cells];
+          return {
+            name: cells[0].innerText.trim(),
+            value: parseInt(cells[1].innerText.trim()) || 0,
+            parent: cells[2].innerText.trim(),
+            color: cells[3].querySelector("select").value,
+          };
+        });
+
+        const rootNode = buildTree(data);
+
+        chart.setOption({
+          title: {
+            text:
+              document.getElementById("chart-title-input").value ||
+              "Sunburst Chart",
+            left: "center",
+          },
+          series: [
+            {
+              type: "sunburst",
+              data: rootNode.children,
+              radius: [0, `${zoomLevel * 90}%`],
+              label: { show: true, rotate: "radial" },
+              itemStyle: { borderWidth: 1, borderColor: "#fff" },
+            },
+          ],
+          tooltip: { formatter: "{b}: {c}" },
+        });
+      };
+
+      // Add event listeners for contenteditable cells
+      const addEditableCellListeners = (row) => {
+        row.querySelectorAll("td[contenteditable='true']").forEach((cell) => {
+          cell.addEventListener("input", () => debounce(renderChart));
+          cell.addEventListener("keydown", (e) =>
+            handleKeyboardNavigation(e, cell)
+          );
+          cell.addEventListener(
+            "focus",
+            () => (cell.style.backgroundColor = "#e8f0fe")
+          );
+          cell.addEventListener(
+            "blur",
+            () => (cell.style.backgroundColor = "")
+          );
+        });
+      };
+
+      // Add event listeners for select dropdowns
+      const addSelectListeners = (row) => {
+        row.querySelectorAll("select").forEach((select) => {
+          select.addEventListener("change", () => debounce(renderChart));
+        });
+      };
+
+      // Handle keyboard navigation in the table
+      const handleKeyboardNavigation = (e, cell) => {
+        const row = cell.parentElement;
+        const colIndex = Array.from(row.children).indexOf(cell);
+        const table = row.parentElement.parentElement;
+        let targetCell;
+
+        switch (e.key) {
+          case "ArrowRight":
+            targetCell = cell.nextElementSibling;
+            break;
+          case "ArrowLeft":
+            targetCell = cell.previousElementSibling;
+            break;
+          case "ArrowUp":
+            targetCell = table.rows[row.rowIndex - 1]?.cells[colIndex];
+            break;
+          case "ArrowDown":
+            targetCell = table.rows[row.rowIndex + 1]?.cells[colIndex];
+            break;
+          case "Delete":
+            cell.innerText = ""; // Clear the cell
+            e.preventDefault();
+            break;
+          case "c":
+          case "C":
+            if (e.ctrlKey || e.metaKey) {
+              navigator.clipboard.writeText(cell.innerText).then(() => {
+                console.log("Copied to clipboard:", cell.innerText);
+              });
+              e.preventDefault();
+            }
+            break;
+          case "v":
+          case "V":
+            if (e.ctrlKey || e.metaKey) {
+              navigator.clipboard.readText().then((text) => {
+                cell.innerText = text;
+                console.log("Pasted from clipboard:", text);
+                renderChart(); // Update the chart if needed
+              });
+              e.preventDefault();
+            }
+            break;
+        }
+
+        if (targetCell && targetCell.contentEditable === "true") {
+          e.preventDefault();
+          targetCell.focus();
+        }
+      };
+
+      // Add a new row to the table
+      const addNewRow = () => {
+        const tbody = table.querySelector("tbody");
+        const row = tbody.insertRow();
+
+        for (let i = 0; i < 4; i++) {
+          const cell = row.insertCell();
+          if (i === 3) {
+            cell.innerHTML =
+              "<select><option>Thistle</option><option>LightPink</option><option>LightCoral</option><option>PeachPuff</option><option>LightGoldenRodYellow</option><option>PaleGreen</option><option>LightSkyBlue</option><option>Lavender</option><option>MintCream</option><option>HoneyDew</option></select>";
+          } else {
+            cell.contentEditable = true;
+          }
+        }
+
+        addEditableCellListeners(row);
+        addSelectListeners(row);
+      };
+
+      // Initialize the table and event listeners
+      const initializeTable = () => {
+        document.querySelectorAll("table tbody tr").forEach((row) => {
+          addEditableCellListeners(row);
+          addSelectListeners(row);
+        });
+
+        document.getElementById("add-row").addEventListener("click", addNewRow);
+      };
+
+      // Zoom controls
+      document.getElementById("zoom-in").addEventListener("click", () => {
+        if (zoomLevel < 2) {
+          zoomLevel += 0.1;
+          renderChart();
+        }
+      });
+
+      document.getElementById("zoom-out").addEventListener("click", () => {
+        if (zoomLevel > 0.5) {
+          zoomLevel -= 0.1;
+          renderChart();
+        }
+      });
+
+      // Export chart as JPG
+      document.getElementById("export-chart").addEventListener("click", () => {
+        const url = chart.getDataURL({ type: "jpg", pixelRatio: 2 });
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "sunburst_chart.jpg";
+        link.click();
+      });
+
+      // Go back functionality
+      function goBack() {
+        window.location.href = "https://www.viroet.com/intoduction.html";
+      }
+
+      // Initialize on page load
+      initializeTable();
+      renderChart();
+
+      // Button to choose background color
+      document
+        .getElementById("choose-bg-color")
+        .addEventListener("click", () => {
+          document.getElementById("bg-color-picker").click(); // Show the color picker
+        });
+
+      // Event listener for the color picker
+      document
+        .getElementById("bg-color-picker")
+        .addEventListener("input", (e) => {
+          const selectedColor = e.target.value;
+          updateChartBackground(selectedColor); // Update chart background with the selected color
+        });
+
+      // Function to update the background color of the chart
+      const updateChartBackground = (color) => {
+        chart.setOption({
+          backgroundColor: color, // Set the background color for the chart
+        });
+      };
+
+      // Export chart as JPG with the updated background color
+      document.getElementById("export-chart").addEventListener("click", () => {
+        const url = chart.getDataURL({ type: "jpg", pixelRatio: 2 });
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "sunburst_chart.jpg";
+        link.click();
+      });
+
+      // Function to update chart labels dynamically
+      const applyLabelCustomization = () => {
+        const fontFamily = document.getElementById("label-font-family").value;
+        const fontSize = document.getElementById("label-font-size").value;
+        const fontColor = document.getElementById("label-font-color").value;
+        const maxWidth = document.getElementById("label-width").value;
+        const showPercentage = document.getElementById(
+          "label-show-percentage"
+        ).checked;
+
+        chart.setOption({
+          series: [
+            {
+              type: "sunburst",
+              label: {
+                show: true,
+                fontFamily,
+                fontSize: parseInt(fontSize, 10),
+                color: fontColor,
+                width: parseInt(maxWidth, 10),
+                formatter: (params) => {
+                  const value = params.value || 0;
+                  const percentage = params.percent || 0;
+                  return showPercentage
+                    ? `${params.name}: ${value} (${percentage.toFixed(1)}%)`
+                    : `${params.name}: ${value}`;
+                },
+              },
+            },
+          ],
+        });
+      };
+
+      // Add event listeners to all label customization controls
+      const initializeLabelCustomizationListeners = () => {
+        document
+          .getElementById("label-font-family")
+          .addEventListener("change", applyLabelCustomization);
+        document
+          .getElementById("label-font-size")
+          .addEventListener("input", applyLabelCustomization);
+        document
+          .getElementById("label-font-color")
+          .addEventListener("input", applyLabelCustomization);
+        document
+          .getElementById("label-width")
+          .addEventListener("input", applyLabelCustomization);
+        document
+          .getElementById("label-show-percentage")
+          .addEventListener("change", applyLabelCustomization);
+      };
+
+      // Initialize label customization listeners on page load
+      initializeLabelCustomizationListeners();
+
+      
+
+      
+    </script>
+  </body>
+</html>
