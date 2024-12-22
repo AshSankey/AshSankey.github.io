@@ -158,17 +158,21 @@ footer {
         max-width: 800px;
         border-radius: 10px;
       }
-      .container {
-  width: 100%;
-  padding: 20px;
-}
+     
 
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
 .hero-content {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap; /* Allows content to stack on smaller screens */
-  gap: 20px; /* Adds space between text and gif */
+  flex-direction: row; /* Positions text and GIF side by side */
+  align-items: flex-start; /* Aligns items at the top */
+  justify-content: space-between; /* Ensures spacing between elements */
+  width: 100%;
+  gap: 20px; /* Adds space between the GIF and text */
 }
 
 .ai-text {
@@ -182,6 +186,17 @@ footer {
   max-width: 50%; /* Ensures the GIF takes up 50% of the container */
 }
 
+.hero-giff {
+  flex: 0 0 50%; /* Ensures the GIF takes 50% of the width */
+  max-width: 50%;
+}
+
+.ai-textt {
+  flex: 0 0 50%; /* Ensures the text takes 50% of the width */
+  max-width: 50%;
+  text-align: left; /* Aligns text to the left inside the container */
+}
+
 .hero-gif img {
   width: 100%;
   height: auto;
@@ -193,7 +208,7 @@ footer {
   </head>
   <body>
     <header>
-      <h1>Welcome to SankeyASH </h1>
+      <h1>Welcome to Viroet Analysis </h1>
       <p>From historical insights to advanced AI-driven chart creation</p>
     </header>
 
@@ -212,7 +227,7 @@ footer {
             </div>
       
             <div class="cta">
-              <a href="index.html">Start Creating Your Sankey Chart</a>
+              <a href="sankey.html">Start Creating Your Sankey Chart</a>
             </div>
           </div>
       
@@ -223,14 +238,73 @@ footer {
         </div>
       </div>
 
+
+      <div class="container">
+        <div class="hero-content">
+          <!-- Left section for text -->
+          <div class="ai-textt">
+            <div class="section ai-feature">
+              <h3>Experience the Power of AI</h3>
+              <p>
+                Our intuitive tools allow you to convert complex datasets into visually striking treemaps within seconds. Simply upload your hierarchical data, and watch it transform into a dynamic chart that highlights proportions, trends, and relationships—perfect for financial analyses, market shares, or resource allocation.
+              </p>
+            </div>
+      
+            <div class="cta">
+              <a href="Tree.html">Start Creating Your Treemap</a>
+            </div>
+          </div>
+      
+          <!-- Right section for GIF -->
+          <div class="hero-giff">
+            <img src="Tree.gif" alt="Dynamic and Looping Sankey Chart Animation" />
+          </div>
+        </div>
+      </div>
+
+
+      <div class="container">
+        <div class="hero-content">
+          <!-- Left section for text -->
+          <div class="ai-text">
+            <div class="section ai-feature">
+              <h3>Experience the Power of AI</h3>
+              <p>
+                Effortlessly create stunning sunburst charts that showcase your data’s hierarchical structure in a radial layout. With just a few clicks, our advanced tools bring your data to life, offering an engaging and clear way to explore layers of information and uncover hidden insights.
+              </p>
+            </div>
+      
+            <div class="cta">
+              <a href="sunburst.html">Start Creating Your Sunburst</a>
+            </div>
+          </div>
+      
+          <!-- Right section for GIF -->
+          <div class="hero-gif">
+            <img src="Sunburst.gif" alt="Dynamic and Looping Sankey Chart Animation" />
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
       <div class="section">
         <h2>Our Story</h2>
         <p>
-          Tracing its origins back to the 19th century, the Sankey chart was
-          first used for visualizing energy flows. Over time, it has evolved
-          into a versatile tool for illustrating complex relationships and data
-          flows. At Sankey Chart Creator, we bring this legacy into the modern
-          era with cutting-edge AI and intuitive design tools.
+          Tracing its origins back to the 19th century, the Sankey chart was first used for visualizing energy flows. Over time, it has evolved into a versatile tool for illustrating complex relationships and data flows, helping individuals and organizations make sense of intricate systems with clarity and precision.
+
+At Sankey Chart Creator, we bring this legacy into the modern era with cutting-edge AI and intuitive design tools, enabling users to visualize not only energy flows but also financial data, process maps, and user journeys. We believe in the power of data storytelling, transforming raw numbers into impactful visuals that drive understanding and decision-making.
+
+Recognizing the diversity of visualization needs, we’ve expanded our offerings to include Treemap and Sunburst charts, two complementary tools that empower users to explore hierarchical data effectively:</p><p>
+
+Treemaps: Perfect for displaying large datasets in a compact form, treemaps use nested rectangles to represent hierarchical structures. They excel at showing proportional data, making it easy to identify trends, relationships, and outliers at a glance. Whether analyzing financial portfolios, market shares, or resource allocations, treemaps bring clarity to complex datasets.
+
+Sunburst Charts: As a radial alternative to treemaps, sunburst charts visualize hierarchical data in concentric circles. </p><p>Layer represents a level of the hierarchy, making it ideal for showing the depth and structure of data in an intuitive, visually appealing way. From website navigation paths to organizational structures, sunburst charts turn hierarchies into compelling stories.
+
+Our mission is to simplify data visualization for everyone—from beginners to seasoned analysts—by offering tools that are both powerful and user-friendly. Join us as we continue to innovate and inspire, making data visualization a seamless and engaging experience.
         </p>
       </div>
 
