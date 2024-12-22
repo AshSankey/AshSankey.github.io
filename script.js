@@ -148,6 +148,6 @@ function option2() {
 
 
 // Option 3: Redirect to a specific page
-function option2() {
+function option3() {
   window.location.href = "/sunburst.html";
 }
