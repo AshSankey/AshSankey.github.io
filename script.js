@@ -145,3 +145,9 @@ function option1() {
 function option2() {
   window.location.href = "/Tree.html";
 }
+
+
+// Option 3: Redirect to a specific page
+function option2() {
+  window.location.href = "/sunburst.html";
+}
