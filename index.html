@@ -20,7 +20,7 @@
       }
 
       header {
-        background: linear-gradient(90deg, #12123b, #0b0438);
+        background: linear-gradient(90deg,#050505,#0b0438);
         color: #fff;
         padding: 20px 15px;
         text-align: center;
@@ -181,36 +181,101 @@ footer {
   padding-right: 20px; /* Adds some space to the right of the text */
 }
 
-.hero-gif {
-  flex: 1;
-  max-width: 50%; /* Ensures the GIF takes up 50% of the container */
+.corner-gif {
+    
+    top: 10; /* Adjust as needed */
+    left: 0; /* Aligns it to the left corner */
+    width: 100px; /* Adjust size as needed */
+    height: auto;
+    z-index: 1000; /* Ensures it stays on top of other elements */
+    margin-left: 30px; /* Adds space to the left */
+}
+.header__nav {
+  max-width: var(--screen-lg);
+  width: 100%;
+  font-size: initial;
+  padding: 3px;
 }
 
-.hero-giff {
-  flex: 0 0 50%; /* Ensures the GIF takes 50% of the width */
-  max-width: 50%;
+/* Apply a clean and professional font */
+.header__logo {
+  font-family: 'Anton', sans-serif;
+  font-weight: 500; /* Balanced weight for a professional look */
+  font-size: 2.5rem; /* Suitable size for logo text */
+  color: #bcbcbb; /* Gold */ /* Soft, professional color */
+  text-decoration: none; /* Remove underline */
+  letter-spacing: 1px; /* Increased letter-spacing for a sleek, modern look */
+  text-transform: capitalize; /* Keep text style clean */
+  display: inline-flex; /* Align elements inline */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease,
+    letter-spacing 0.3s ease; /* Enhanced smooth transitions */
 }
 
-.ai-textt {
-  flex: 0 0 50%; /* Ensures the text takes 50% of the width */
-  max-width: 50%;
-  text-align: left; /* Aligns text to the left inside the container */
+/* Hover effect: subtle color change, soft shadow, and slight lift */
+.header__logo:hover {
+  color: #ffffff; /* White color for a crisp contrast */
+  transform: translateY(-4px) scale(1.05); /* Slight lift and subtle scaling for emphasis */
+  letter-spacing: 2px; /* Increase letter-spacing for more dynamic look */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+}
+
+/* Focus effect for accessibility: subtle color change */
+.header__logo:focus {
+  outline: none; /* Remove default outline */
+  color: #f9fafb; /* Blue-ish white for focus */
+  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.5); /* Blue border for focus state */
+}
+
+/* Animation for smooth text appearance on page load */
+.header__logo {
+  animation: fadeInLogo 1s ease-out; /* Fade-in effect on page load */
+}
+
+/* Keyframes for fade-in animation */
+@keyframes fadeInLogo {
+  0% {
+    opacity: 0;
+    transform: translateY(10px); /* Start from a slightly lower position */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* End at the normal position */
+  }
+}
+
+.header__logo img {
+  margin-right: 0.5em;
+  padding-bottom: 3px;
+}
+
+.header__links li:first-child a {
+  margin-left: 0;
 }
 
 .hero-gif img {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
+    width: 600px; /* Set the desired width */
+    height: auto; /* Maintain aspect ratio */
 }
 
       
     </style>
   </head>
   <body>
-    <header>
-      <h1>Welcome to Viroet Analysis </h1>
-      <p>From historical insights to advanced AI-driven chart creation</p>
-    </header>
+    <header class="header vs f-middle">
+      <nav class="header__nav hs-sm-vs space-between">
+        <a
+        
+        href="/"
+        title="Viroet home page"
+        class="header__logo hs f-middle align-center"
+        id="logo"
+      >
+        <img src="aibutton new .gif" alt="Looping GIF" class="corner-gif">
+        <img src="Welcome to Viroet Analysis_transparent-.png"alt="SankeyASH Logo" style="width: 400px; height: auto;">
+        
+      </a>
 
     <div class="container">
         <div class="hero-content">
@@ -242,7 +307,7 @@ footer {
       <div class="container">
         <div class="hero-content">
           <!-- Left section for text -->
-          <div class="ai-textt">
+          <div class="ai-text">
             <div class="section ai-feature">
               <h3>Experience the Power of AI</h3>
               <p>
@@ -256,7 +321,7 @@ footer {
           </div>
       
           <!-- Right section for GIF -->
-          <div class="hero-giff">
+          <div class="hero-gif">
             <img src="Tree.gif" alt="Dynamic and Looping Sankey Chart Animation" />
           </div>
         </div>
