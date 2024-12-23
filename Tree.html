@@ -32,15 +32,17 @@
 
       /* Layout Sections */
       #top-section {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-        background-color: #34495e;
-        color: #fff;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        font-weight: 500;
-      }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #34495e;
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-weight: 500;
+  width: 100%; /* Increase width to extend beyond parent */
+
+}
 
       #bottom-section {
         display: flex;
@@ -53,11 +55,9 @@
       /* Left Section for Table */
       #left-section {
         flex: 1;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
       }
 
       #left-section table {
@@ -322,16 +322,94 @@
           margin-bottom: 5px;
         }
       }
+      /* Media Query for Mobile Screens */
+@media (max-width: 768px) {
+  #top-section {
+    flex-direction: column;
+    text-align: center;
+   
+  }
+
+  #bottom-section {
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto; /* Enable scrolling for smaller screens */
+  }
+
+  #left-section,
+  #right-section {
+    flex: 1 1 100%; /* Make sections stack vertically */
+    width: 100%;
+  }
+
+  #controls-ribbon {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  #controls {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  button {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  #table-container {
+    overflow-x: auto; /* Enable horizontal scrolling for table */
+    max-height: 300px; /* Limit table height on small screens */
+  }
+
+  #chart-container {
+    height: 300px; /* Limit chart height on small screens */
+  }
+}
+/* Default Logo Styling */
+#logo {
+  height: 40px; /* Adjust height for visibility */
+  width: auto; /* Maintain aspect ratio */
+  margin: 0; /* Remove unnecessary margins */
+  display: block; /* Ensure block-like behavior */
+}
+
+/* Logo Container Styling */
+#logo-container {
+  display: flex;
+  justify-content: flex-start; /* Align logo to the left */
+  align-items: center; /* Vertically center logo within container */
+  padding: 10px; /* Add padding for spacing */
+  width: 100%; /* Ensure the container spans full width */
+  box-sizing: border-box; /* Include padding in the container width */
+}
+
+/* Responsive Adjustments for Mobile */
+@media (max-width: 768px) {
+  #logo-container {
+    justify-content: flex-start; /* Ensure logo stays aligned to the left */
+    padding-left: 10px; /* Optional: Add some space on the left for aesthetics */
+  }
+}
+
+
     </style>
+    
   </head>
 
   <body>
-    
+    <div id="top-section" id="logo-container">
+      <img src="TreeMAP_transparent-.png" alt="Logo" id="logo" />
+      
+    </div>
 
     <div id="controls-ribbon">
       <!-- Add Row Button -->
-      <button id="add-row" class="ribbon-button">FAQ</button>
+      <button id="add-row" class="ribbon-button">
 
+      
       <!-- Update Chart Button -->
       <button id="update-chart" class="ribbon-button">Update Chart</button>
 
@@ -367,12 +445,14 @@
         <button id="save-jpg" class="ribbon-button">Save as JPG</button>
         <button id="save-excel" class="ribbon-button">Save as Excel</button>
       </div>
-      <button onclick="goBack()">Go Back</button>
-    </div>
-
-    <div id="top-section">
       
     </div>
+    
+    
+    
+
+
+
 
     <div id="bottom-section">
       <!-- Left Section: Table -->
@@ -386,9 +466,10 @@
         <div id="chart-container">
           <div id="chart"></div>
         </div>
+   
 
       
-    <div id="footer">© 2024 Viroet. All rights reserved.</div>
+    <div id="footer">2024 Viroet. All rights reserved.</div>
 
     <script>
     
@@ -429,9 +510,10 @@
       const hot = new Handsontable(tableContainer, {
         data: initialData,
         rowHeaders: true,
+        colheaders: ["Name", "Value", "Parent", ],
         licenseKey: "non-commercial-and-evaluation",
         stretchH: "all",
-        minSpareRows: 1,
+        minSpareRows: 10,
         height: "100%",
         width: "100%",
         columns: [{ type: "text" }, { type: "numeric" }, { type: "text" }],
@@ -583,11 +665,16 @@
           updateChart(); // Update chart when table changes
         }
       });
+      // Dynamically resize the chart on window resize
+window.addEventListener("resize", () => {
+  chart.resize();
+});
+
     </script>
-        <script>
-    function goBack() {
-      window.location.href = "https://www.viroet.com/index.html"; // Navigate to the specified URL
-    }
-  </script>
+
+    
+   
+  
+  
   </body>
 </html>
