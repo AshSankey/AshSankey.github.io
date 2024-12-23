@@ -294,7 +294,48 @@ footer {
     width: 100%;
     padding: 15px;
   }
+/* For smaller screens (max-width: 768px) */
+@media (max-width: 768px) {
+  .header__logo {
+    font-size: 1.8rem; /* Smaller logo font size */
+    flex-direction: row; /* Keep the elements side by side */
+    align-items: center; /* Center vertically */
+    justify-content: flex-start; /* Align left */
+    gap: 10px; /* Reduce space between logo and GIF */
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
 
+  .header__logo img {
+    max-width: 70%; /* Scale down logo for small screens */
+    height: auto; /* Maintain aspect ratio */
+    max-height: 150px; /* Limit height to prevent it from becoming too large */
+  }
+
+  .corner-gif {
+    width: 15vw; /* Use viewport width (15% of screen width) to scale GIF */
+    max-width: 50px; /* Limit maximum size */
+    height: auto; /* Keep height proportional to width */
+    margin-top: 0; /* Remove top margin */
+  }
+}
+
+/* For very small screens (max-width: 480px) */
+@media (max-width: 480px) {
+  .header__logo {
+    font-size: 1.5rem; /* Further decrease the font size for very small screens */
+  }
+
+  .header__logo img {
+    max-width: 60%; /* Further scale down the logo */
+    max-height: 120px; /* Limit the maximum height of the logo */
+  }
+
+  .corner-gif {
+    width: 12vw; /* Use viewport width (12% of screen width) to scale GIF */
+    max-width: 40px; /* Further reduce the size of the corner GIF */
+    height: auto; /* Ensure the GIF scales correctly */
+  }
+}
       
     </style>
   </head>
