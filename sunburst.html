@@ -66,7 +66,7 @@
 
       button {
         padding: 10px 15px;
-        background: #3498db;
+        background: #007bff;
         color: white;
         border: none;
         border-radius: 5px;
@@ -300,6 +300,108 @@ select:focus {
   width: auto;
   margin-right: 20px;  /* Optional space between logo and right side */
 }
+.dropdown {
+    position: relative;
+    display: inline-block;
+    
+  }
+
+  .dropdown-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    
+  }
+
+  .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #657080;
+  min-width: 300px; /* Increases width of dropdown */
+  max-width: 100%; /* Ensures content doesn't exceed container width */
+  padding: 10px 15px; /* Adds more space inside the box */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  border: 1px solid #ddd; /* Optional: Adds a border for better visibility */
+  border-radius: 5px;
+  box-sizing: border-box; /* Ensures padding doesn't add to the total width */
+}
+
+  .dropdown-content label,
+  .dropdown-content input,
+  .dropdown-content select {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .dropdown-content h4 {
+    margin-top: 0;
+  }
+
+  
+  /* Responsive Styles */
+@media (max-width: 768px) {
+  #content {
+    flex-direction: column; /* Stack panels vertically */
+    gap: 10px;
+  }
+
+  #left-panel,
+  #right-panel {
+    flex: none; /* Ensure panels take full width */
+    width: 100%; /* Panels span the entire screen width */
+  }
+
+  #top-bar {
+    flex-wrap: wrap; /* Adjust elements in the top bar */
+    padding: 15px;
+    text-align: center;
+  }
+
+  #table-container {
+    max-height: 300px; /* Reduce table container height for smaller screens */
+  }
+
+  th, td {
+    font-size: 12px; /* Adjust table font size */
+    padding: 8px; /* Reduce padding in cells */
+  }
+
+  button {
+    padding: 8px 10px; /* Smaller button size */
+    font-size: 12px;
+  }
+
+  select, .input-field {
+    font-size: 14px;
+    padding: 6px; /* Adjust input size */
+  }
+
+  h4 {
+    font-size: 16px;
+  }
+}
+
+/* For very small screens like mobile phones */
+@media (max-width: 480px) {
+  #chart {
+    height: 200px; /* Adjust chart height */
+  }
+
+  #top-bar {
+    flex-direction: column;
+    gap: 10px; /* Add space between elements */
+  }
+
+  button {
+    width: 100%; /* Buttons take full width */
+  }
+}
+
     </style>
   </head>
   <body>
@@ -310,6 +412,56 @@ select:focus {
         <div>
           <button id="zoom-in">Zoom In</button>
           <button id="zoom-out">Zoom Out</button>
+
+        </div>
+        <div id="label-options" class="dropdown">
+          <button id="toggle-label-options" class="dropdown-button">Label Customization</button>
+          <div id="label-options-content" class="dropdown-content">
+           
+        
+            <label for="label-font-family">Font Family:</label>
+            <select id="label-font-family" class="input-field">
+              <option value="Arial">Arial</option>
+              <option value="Verdana">Verdana</option>
+              <option value="Times New Roman">Times New Roman</option>
+              <option value="Georgia">Georgia</option>
+              <option value="Courier New">Courier New</option>
+            </select>
+        
+            <label for="label-font-size">Font Size:</label>
+            <input
+              type="number"
+              id="label-font-size"
+              min="10"
+              max="50"
+              value="12"
+              class="input-field"
+            />
+        
+            <label for="label-font-color">Font Color:</label>
+            <input
+              type="color"
+              id="label-font-color"
+              value="#000000"
+              class="input-field"
+            />
+        
+            <label for="label-width">Max Width (px):</label>
+            <input
+              type="number"
+              id="label-width"
+              min="50"
+              max="300"
+              value="100"
+              class="input-field"
+            />
+        
+            <label>
+              <input type="checkbox" id="label-show-percentage" class="checkbox" />
+              Show Percentage
+            </label>
+          </div>
+
           <button id="choose-bg-color">Choose Background Color</button>
           <input type="color" id="bg-color-picker" style="display: none" />
 
@@ -531,53 +683,7 @@ select:focus {
       </div>
     </div>
   
-    </div>
-    <div id="label-options" class="label-options">
-      <h4>Label Customization</h4>
-
-      <label for="label-font-family">Font Family:</label>
-      <select id="label-font-family" class="input-field">
-        <option value="Arial">Arial</option>
-        <option value="Verdana">Verdana</option>
-        <option value="Times New Roman">Times New Roman</option>
-        <option value="Georgia">Georgia</option>
-        <option value="Courier New">Courier New</option>
-      </select>
-
-      <label for="label-font-size">Font Size:</label>
-      <input
-        type="number"
-        id="label-font-size"
-        min="10"
-        max="50"
-        value="12"
-        class="input-field"
-      />
-
-      <label for="label-font-color">Font Color:</label>
-      <input
-        type="color"
-        id="label-font-color"
-        value="#000000"
-        class="input-field"
-      />
-
-      <label for="label-width">Max Width (px):</label>
-      <input
-        type="number"
-        id="label-width"
-        min="50"
-        max="300"
-        value="100"
-        class="input-field"
-      />
-
-      <label>
-        <input type="checkbox" id="label-show-percentage" class="checkbox" />
-        Show Percentage
-      </label>
-
-      <button id="update-labels" class="btn">Update Labels</button>
+    
     </div>
     <script>
       const table = document.getElementById("data-table");
@@ -777,7 +883,7 @@ select:focus {
 
       // Go back functionality
       function goBack() {
-        window.location.href = "https://www.viroet.com/index.html";
+        window.location.href = "https://www.viroet.com/intoduction.html";
       }
 
       // Initialize on page load
@@ -871,6 +977,25 @@ select:focus {
       initializeLabelCustomizationListeners();
 
       
+      const toggleButton = document.getElementById("toggle-label-options");
+const dropdownContent = document.getElementById("label-options-content");
+
+// Toggle dropdown visibility on button click
+toggleButton.addEventListener("click", function (event) {
+  // Prevent click from propagating to document
+  event.stopPropagation();
+  dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
+});
+
+// Prevent dropdown from closing when clicking inside
+dropdownContent.addEventListener("click", function (event) {
+  event.stopPropagation();
+});
+
+// Close dropdown if clicking outside
+document.addEventListener("click", function () {
+  dropdownContent.style.display = "none";
+});
 
       
     </script>
