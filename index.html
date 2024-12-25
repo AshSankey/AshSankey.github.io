@@ -17,6 +17,7 @@
         background-color: #f9f9f9;
         color: #ffffff;
         line-height: 1.6;
+        
       }
 
       header {
@@ -258,7 +259,7 @@ footer {
     width: 600px; /* Set the desired width */
     height: auto; /* Maintain aspect ratio */
 }
-      @media (max-width: 768px) {
+@media (max-width: 768px) {
     .hero-content {
       flex-direction: column;
       align-items: center;
@@ -336,6 +337,51 @@ footer {
     height: auto; /* Ensure the GIF scales correctly */
   }
 }
+
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px; /* Increase the maximum width for a larger video */
+  margin: 0 auto; /* Center the video */
+  padding-bottom: 56.25%; /* Aspect ratio 16:9 */
+  height: 0;
+  overflow: hidden;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-section {
+  display: flex; /* Use Flexbox for modern alignment */
+  flex-direction: column; /* Stack content vertically */
+  align-items: center; /* Center align the content horizontally */
+  justify-content: center; /* Center align the content vertically */
+  padding: 20px; /* Reduce padding to shrink the section */
+  background: linear-gradient(
+    to right,
+    #3498db,
+    #2ecc71,
+    #f39c12); /* Subtle background color */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  max-width: 1000px; /* Limit the section's width */
+  margin: 20px auto; /* Center section with reduced spacing */
+}
+
+
+.video-section h2 {
+  font-family: 'Arial', sans-serif;
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 1.5rem; /* Adjust title size for better balance */
+}
+
+
       
     </style>
   </head>
@@ -353,6 +399,7 @@ footer {
         <img src="Welcome to Viroet Analysis_transparent-.png"alt="SankeyASH Logo" style="width: 400px; height: auto;">
         
       </a>
+      
 
     <div class="container">
         <div class="hero-content">
@@ -431,7 +478,13 @@ footer {
 
 
 
-
+      <section class="video-section">
+        <h2>"Check out our tutorial videos to master the tools and make the most out of them."</h2>
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/0jaWNP-qUfY?si=bcix4fJXHzvN7v8e" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </section>
+      
 
       <div class="section">
         <h2>Our Story</h2>
