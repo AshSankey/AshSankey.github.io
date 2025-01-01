@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enhanced Reactor Chart</title>
+
+    <meta
+      name="description"
+      content="Effortlessly create stunning sunburst charts that showcase your data’s hierarchical structure in a radial layout. With just a few clicks, our advanced tools bring your data to life, offering an engaging and clear way to explore layers of information and uncover hidden insights."
+    />
+    <meta
+      property="og:title"
+      content="Effortlessly create stunning sunburst charts that showcase your data’s hierarchical structure in a radial layout. With just a few clicks, our advanced tools bring your data to life, offering an engaging and clear way to explore layers of information and uncover hidden insights."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.Viroet.com/sunburst.html" />
+    <meta
+      property="og:description"
+      content="Make beautiful flow diagrams. Export them as images or SVG."
+    />
+    <meta property="og:site_name" content="www.Viroet.com/sunburst.html" />
+    <meta property="og:locale" content="en_US" />
+    <meta
+      property="og:image"
+      content="https://www.Viroet.com/reactor%20screenshot
+      .png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="2700" />
+    <meta property="og:image:height" content="1350" />
+    <meta
+      property="og:image:alt"
+      content="Screenshot of the Viroet diagram-building interface"
+    />
+
+    <link rel="icon" href="favicon.png" type="image/png" />
+    <title>Interactive Graph with Drag-and-Drop and Dynamic Node Sizing</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <style>
+      /* General body styles */
+      /* Body styles */
+      body {
+        font-family: "Roboto", sans-serif;
+        background: linear-gradient(to bottom, #1c1f4f, #1b1c3f);
+        color: #f4f7fc;
+        display: flex;
+        flex-direction: column; /* Stack elements vertically */
+        align-items: center;
+        padding: 20px;
+        margin: 0;
+        gap: 20px; /* Space between the top section, graph, and table */
+      }
+
+      /* Graph container styles */
+      #container {
+        width: 80%;
+        height: 600px;
+        background: #ffffff;
+        border: 2px solid #2e2f57;
+        border-radius: 15px;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Table container for better alignment */
+      table {
+        width: 80%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-family: "Roboto", sans-serif;
+        background: #24254b;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+        margin-left: auto;
+        margin-right: auto; /* Centers the table horizontally */
+      }
+
+      /* Table headers and cells */
+      th,
+      td {
+        padding: 12px 15px;
+        text-align: center;
+        border-bottom: 1px solid #3a3d85;
+        color: #ffffff;
+        word-wrap: break-word; /* Prevent text from overflowing */
+      }
+
+      th {
+        background: #313366;
+        font-weight: bold;
+        text-transform: uppercase;
+        cursor: pointer;
+        position: sticky; /* Keep header visible on scroll */
+        top: 0;
+        z-index: 1;
+      }
+
+      td {
+        background: #2b2c5e;
+        word-wrap: break-word; /* Ensures long text wraps within the cell */
+        max-width: 200px; /* Adjust for extra width issues */
+      }
+
+      /* Editable table cell styles */
+      td[contenteditable="true"]:empty:before {
+        content: "Click to Edit";
+        color: #777;
+        font-style: italic;
+      }
+
+      td[contenteditable="true"] {
+        background: rgba(237, 227, 227, 0.1);
+        border: 1px solid #3a3d85;
+        border-radius: 5px;
+        transition: background 0.3s ease;
+      }
+
+      td[contenteditable="true"]:focus {
+        background: #3a3d85;
+        outline: none;
+      }
+
+      /* Scrollable tbody */
+      tbody {
+        display: block;
+        max-height: 400px; /* Limit height to make the table scrollable */
+        overflow-y: auto;
+        width: 100%; /* Ensure tbody aligns with the table width */
+      }
+
+      tbody tr {
+        display: table;
+        table-layout: fixed; /* Maintain consistent cell sizes */
+        width: 100%;
+      }
+
+      thead,
+      tbody tr {
+        width: 100%;
+        display: table;
+        table-layout: fixed; /* Prevent column misalignment */
+      }
+
+      /* Controls button styles */
+      .controls {
+        margin-top: 20px;
+        display: flex; /* Use flexbox for centering */
+        justify-content: center; /* Center horizontally */
+        gap: 10px; /* Space between buttons */
+      }
+
+      .controls button {
+        padding: 12px 20px;
+        background: linear-gradient(to right, #4e67eb, #984ff5);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 14px;
+        margin-right: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .controls button:hover {
+        background: linear-gradient(to right, #6878f5, #af64f7);
+        transform: translateY(-2px);
+        box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      input[type="color"] {
+        padding: 6px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        background: transparent;
+        box-shadow: inset 0px 0px 5px rgba(255, 255, 255, 0.2);
+      }
+
+      input[type="color"]:focus {
+        outline: none;
+        box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.5);
+      }
+
+      /* Title for the editable table */
+      h2 {
+        font-size: 1.5rem;
+        color: #f4f7fc;
+        text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      button:active {
+        transform: translateY(1px);
+      }
+
+      button:focus {
+        outline: none;
+      }
+
+      /* Top section styles */
+      .top-section {
+        background-color: #0b4c92;
+        color: white;
+        padding: 20px;
+
+        border-radius: 0px; /* Make the borders rounded */
+        margin-bottom: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+        width: 100%; /* Extend to fill the container */
+      }
+
+      .top-section h1 {
+        margin: 0;
+        font-size: 2rem; /* Adjust font size for better readability */
+      }
+
+      .top-section p {
+        font-size: 1.2rem; /* Adjust font size for smaller text */
+        margin: 10px 0 0 0; /* Add some space above the text */
+      }
+      /* Logo Styling */
+      #logo {
+        height: 80px; /* Adjust the size of the logo */
+        width: auto;
+        margin-right: 20px; /* Optional space between logo and right side */
+      }
+
+      table#data-table td.selected {
+        background-color: #122640 !important; /* Light blue background for selected cells */
+        border: 1px solid #007bff !important; /* Blue border for better visibility */
+      }
+      .node {
+        stroke: #fff;
+        stroke-width: 1.5px;
+      }
+
+      .link {
+        stroke: #999;
+        stroke-opacity: 0.6;
+      }
+
+      .highlighted {
+        stroke: red;
+        stroke-width: 3px;
+      }
+
+      .node-label {
+        font-size: 12px;
+        pointer-events: none;
+      }
+      svg {
+        background-color: #f0f0f0; /* Set your preferred background color */
+        border-radius: 15px; /* Round the corners */
+        width: 80%; /* Make the width responsive */
+        height: 70vh; /* Make the height responsive to the viewport */
+        display: block; /* Removes any unwanted space below the SVG */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-section">
+      <img src="ReactorASHlogo1.png" alt="Logo" id="logo" />
+      <h1></h1>
+      <p>(This page under construction...)</p>
+    </div>
+
+    <div id="container"></div>
+    <svg width="1200" height="600"></svg>
+
+    <div>
+      <h2>Dynamic Node Sizing (upto 30 million data)</h2>
+      <table id="data-table">
+        <thead>
+          <tr>
+            <th>Source Node</th>
+            <th>Target Node</th>
+            <th>Edge Weight</th>
+            <th>Node Color</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td contenteditable="true">Marketing Manager</td>
+            <td contenteditable="true">Marketing Assistant</td>
+            <td contenteditable="true">5</td>
+            <td>
+              <input
+                type="color"
+                value="#F44336"
+                onchange="updateNodeColor('Marketing Manager', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Marketing Assistant</td>
+            <td contenteditable="true">Marketing Intern</td>
+            <td contenteditable="true">4</td>
+            <td>
+              <input
+                type="color"
+                value="#F44336"
+                onchange="updateNodeColor('Marketing Assistant', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">HR Director</td>
+            <td contenteditable="true">HR Manager</td>
+            <td contenteditable="true">5</td>
+            <td>
+              <input
+                type="color"
+                value="#2196F3"
+                onchange="updateNodeColor('HR Director', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">HR Manager</td>
+            <td contenteditable="true">HR Assistant</td>
+            <td contenteditable="true">4</td>
+            <td>
+              <input
+                type="color"
+                value="#2196F3"
+                onchange="updateNodeColor('HR Manager', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Finance Manager</td>
+            <td contenteditable="true">Finance Analyst</td>
+            <td contenteditable="true">5</td>
+            <td>
+              <input
+                type="color"
+                value="#4CAF50"
+                onchange="updateNodeColor('Finance Manager', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Finance Analyst</td>
+            <td contenteditable="true">Finance Intern</td>
+            <td contenteditable="true">4</td>
+            <td>
+              <input
+                type="color"
+                value="#4CAF50"
+                onchange="updateNodeColor('Finance Analyst', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Legal Counsel</td>
+            <td contenteditable="true">Legal Assistant</td>
+            <td contenteditable="true">5</td>
+            <td>
+              <input
+                type="color"
+                value="#9C27B0"
+                onchange="updateNodeColor('Legal Counsel', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Legal Assistant</td>
+            <td contenteditable="true">Legal Intern</td>
+            <td contenteditable="true">4</td>
+            <td>
+              <input
+                type="color"
+                value="#9C27B0"
+                onchange="updateNodeColor('Legal Assistant', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Procurement Director</td>
+            <td contenteditable="true">Procurement Manager</td>
+            <td contenteditable="true">5</td>
+            <td>
+              <input
+                type="color"
+                value="#FF9800"
+                onchange="updateNodeColor('Procurement Director', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Procurement Manager</td>
+            <td contenteditable="true">Procurement Officer</td>
+            <td contenteditable="true">4</td>
+            <td>
+              <input
+                type="color"
+                value="#FF9800"
+                onchange="updateNodeColor('Procurement Manager', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Finance Director</td>
+            <td contenteditable="true">Finance Manager</td>
+            <td contenteditable="true">6</td>
+            <td>
+              <input
+                type="color"
+                value="#4CAF50"
+                onchange="updateNodeColor('Finance Director', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Marketing Director</td>
+            <td contenteditable="true">Marketing Coordinator</td>
+            <td contenteditable="true">5</td>
+            <td>
+              <input
+                type="color"
+                value="#F44336"
+                onchange="updateNodeColor('Marketing Director', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">HR Assistant</td>
+            <td contenteditable="true">HR Intern</td>
+            <td contenteditable="true">3</td>
+            <td>
+              <input
+                type="color"
+                value="#2196F3"
+                onchange="updateNodeColor('HR Assistant', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Procurement Officer</td>
+            <td contenteditable="true">Procurement Assistant</td>
+            <td contenteditable="true">4</td>
+            <td>
+              <input
+                type="color"
+                value="#FF9800"
+                onchange="updateNodeColor('Procurement Officer', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Marketing Intern</td>
+            <td contenteditable="true">Marketing Assistant</td>
+            <td contenteditable="true">3</td>
+            <td>
+              <input
+                type="color"
+                value="#F44336"
+                onchange="updateNodeColor('Marketing Intern', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Finance Intern</td>
+            <td contenteditable="true">Finance Analyst</td>
+            <td contenteditable="true">3</td>
+            <td>
+              <input
+                type="color"
+                value="#4CAF50"
+                onchange="updateNodeColor('Finance Intern', this.value)"
+              />
+            </td>
+          </tr>
+
+          <tr>
+            <td contenteditable="true">HR Intern</td>
+            <td contenteditable="true">HR Assistant</td>
+            <td contenteditable="true">2</td>
+            <td>
+              <input
+                type="color"
+                value="#2196F3"
+                onchange="updateNodeColor('HR Intern', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Legal Counsel</td>
+            <td contenteditable="true">Legal Advisor</td>
+            <td contenteditable="true">6</td>
+            <td>
+              <input
+                type="color"
+                value="#9C27B0"
+                onchange="updateNodeColor('Legal Counsel', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Procurement Assistant</td>
+            <td contenteditable="true">Procurement Officer</td>
+            <td contenteditable="true">3</td>
+            <td>
+              <input
+                type="color"
+                value="#FF9800"
+                onchange="updateNodeColor('Procurement Assistant', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Finance Analyst</td>
+            <td contenteditable="true">Finance Manager</td>
+            <td contenteditable="true">5</td>
+            <td>
+              <input
+                type="color"
+                value="#4CAF50"
+                onchange="updateNodeColor('Finance Analyst', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Legal Advisor</td>
+            <td contenteditable="true">Legal Assistant</td>
+            <td contenteditable="true">4</td>
+            <td>
+              <input
+                type="color"
+                value="#9C27B0"
+                onchange="updateNodeColor('Legal Advisor', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Marketing Manager</td>
+            <td contenteditable="true">Marketing Executive</td>
+            <td contenteditable="true">5</td>
+            <td>
+              <input
+                type="color"
+                value="#F44336"
+                onchange="updateNodeColor('Marketing Manager', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">HR Director</td>
+            <td contenteditable="true">HR Coordinator</td>
+            <td contenteditable="true">6</td>
+            <td>
+              <input
+                type="color"
+                value="#2196F3"
+                onchange="updateNodeColor('HR Director', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Procurement Manager</td>
+            <td contenteditable="true">Procurement Analyst</td>
+            <td contenteditable="true">5</td>
+            <td>
+              <input
+                type="color"
+                value="#FF9800"
+                onchange="updateNodeColor('Procurement Manager', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Legal Assistant</td>
+            <td contenteditable="true">Legal Counsel</td>
+            <td contenteditable="true">4</td>
+            <td>
+              <input
+                type="color"
+                value="#9C27B0"
+                onchange="updateNodeColor('Legal Assistant', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Finance Analyst</td>
+            <td contenteditable="true">Finance Director</td>
+            <td contenteditable="true">6</td>
+            <td>
+              <input
+                type="color"
+                value="#4CAF50"
+                onchange="updateNodeColor('Finance Analyst', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Procurement Officer</td>
+            <td contenteditable="true">Procurement Manager</td>
+            <td contenteditable="true">5</td>
+            <td>
+              <input
+                type="color"
+                value="#FF9800"
+                onchange="updateNodeColor('Procurement Officer', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">HR Manager</td>
+            <td contenteditable="true">HR Director</td>
+            <td contenteditable="true">5</td>
+            <td>
+              <input
+                type="color"
+                value="#2196F3"
+                onchange="updateNodeColor('HR Manager', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Finance Director</td>
+            <td contenteditable="true">Finance Analyst</td>
+            <td contenteditable="true">7</td>
+            <td>
+              <input
+                type="color"
+                value="#4CAF50"
+                onchange="updateNodeColor('Finance Director', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Marketing Executive</td>
+            <td contenteditable="true">Marketing Manager</td>
+            <td contenteditable="true">5</td>
+            <td>
+              <input
+                type="color"
+                value="#F44336"
+                onchange="updateNodeColor('Marketing Executive', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">HR Assistant</td>
+            <td contenteditable="true">HR Coordinator</td>
+            <td contenteditable="true">4</td>
+            <td>
+              <input
+                type="color"
+                value="#2196F3"
+                onchange="updateNodeColor('HR Assistant', this.value)"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Procurement Officer</td>
+            <td contenteditable="true">Procurement Officer</td>
+            <td contenteditable="true">4</td>
+            <td>
+              <input
+                type="color"
+                value="#FF9800"
+                onchange="updateNodeColor('Procurement Officer', this.value)"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="controls">
+        <button onclick="addRow()">Add Row</button>
+        <button onclick="updateGraph()">Update Graph</button>
+        <button onclick="exportGraphsAsJPG()">Export as JPG</button>
+      </div>
+    </div>
+
+    <script>
+      let nodes = [];
+      let links = [];
+      const svg = d3.select("svg").attr("viewBox", [0, 0, 800, 600]);
+
+      // Create a group inside SVG for zoomable content
+      const container = svg.append("g");
+
+      // Function to generate nodes and links from the table
+      function generateDataFromTable() {
+        nodes = [];
+        links = [];
+        const rows = document.querySelectorAll("#data-table tbody tr");
+        rows.forEach((row) => {
+          const sourceNode = row.cells[0]?.textContent.trim();
+          const targetNode = row.cells[1]?.textContent.trim();
+          const edgeWeight = parseInt(row.cells[2]?.textContent.trim(), 10);
+          const color =
+            row.cells[3]?.querySelector("input")?.value || "#000000";
+
+          if (!sourceNode || !targetNode || isNaN(edgeWeight)) {
+            console.warn("Skipping invalid row:", row);
+            return;
+          }
+
+          if (!nodes.find((n) => n.id === sourceNode)) {
+            nodes.push({ id: sourceNode, color });
+          }
+          if (!nodes.find((n) => n.id === targetNode)) {
+            nodes.push({ id: targetNode, color });
+          }
+          links.push({
+            source: sourceNode,
+            target: targetNode,
+            value: edgeWeight,
+          });
+        });
+      }
+
+      // Function to update the graph
+      function updateGraph() {
+        generateDataFromTable();
+        container.selectAll("*").remove(); // Clear existing graph
+
+        const simulation = d3
+          .forceSimulation(nodes)
+          .force(
+            "link",
+            d3
+              .forceLink(links)
+              .id((d) => d.id)
+              .distance(80)
+          )
+          .force("charge", d3.forceManyBody().strength(-40))
+          .force("center", d3.forceCenter(400, 300));
+
+        const link = container
+          .append("g")
+          .attr("stroke", "#999")
+          .attr("stroke-opacity", 0.6)
+          .selectAll("line")
+          .data(links)
+          .join("line")
+          .attr("stroke-width", (d) => Math.sqrt(d.value));
+
+        const node = container
+          .append("g")
+          .attr("stroke", "#fff")
+          .attr("stroke-width", 1.5)
+          .selectAll("circle")
+          .data(nodes)
+          .join("circle")
+          .attr("r", 8)
+          .attr("fill", (d) => d.color)
+          .call(
+            d3
+              .drag()
+              .on("start", (event, d) => {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                d.fx = d.x;
+                d.fy = d.y;
+              })
+              .on("drag", (event, d) => {
+                d.fx = event.x;
+                d.fy = event.y;
+              })
+              .on("end", (event, d) => {
+                if (!event.active) simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
+              })
+          )
+          .on("click", (event, d) => {
+            // Highlight the clicked node
+            node.attr("fill", (n) => (n === d ? "orange" : n.color));
+
+            // Highlight connected links
+            link
+              .attr("stroke", (l) =>
+                l.source.id === d.id || l.target.id === d.id ? "red" : "#999"
+              )
+              .attr("stroke-width", (l) =>
+                l.source.id === d.id || l.target.id === d.id ? 3 : 1
+              );
+          });
+
+        const label = container
+          .append("g")
+          .selectAll("text")
+          .data(nodes)
+          .join("text")
+          .attr("class", "node-label")
+          .attr("dy", -10)
+          .text((d) => d.id);
+
+        simulation.on("tick", () => {
+          link
+            .attr("x1", (d) => d.source.x)
+            .attr("y1", (d) => d.source.y)
+            .attr("x2", (d) => d.target.x)
+            .attr("y2", (d) => d.target.y);
+
+          node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
+
+          label.attr("x", (d) => d.x).attr("y", (d) => d.y);
+        });
+      }
+
+      // Define zoom behavior
+      const zoom = d3
+        .zoom()
+        .scaleExtent([0.005, 3]) // Set zoom limits
+        .on("zoom", (event) => {
+          container.attr("transform", event.transform); // Apply zoom to the group
+        });
+
+      // Apply zoom to SVG
+      svg.call(zoom);
+
+      // Initial graph rendering
+      updateGraph();
+
+      // Reapply event listeners whenever the table changes
+      const table = document.querySelector("#data-table");
+      table.addEventListener("input", updateGraph);
+      table.addEventListener("change", updateGraph); // For color input changes
+    </script>
+
+    <script>
+      const graph = new graphology.Graph();
+      let sigmaInstance;
+
+      // Function to dynamically calculate node size based on degree
+      function calculateNodeSizes() {
+        graph.forEachNode((node) => {
+          const degree = graph.degree(node);
+          const size = Math.min(10 + degree * 2, 50); // Minimum size 10, scales with degree, max size 50
+          graph.setNodeAttribute(node, "size", size);
+        });
+      }
+
+      function updateGraph() {
+        // Clear existing nodes and edges
+        graph.clear();
+        const table = document.getElementById("data-table");
+        const rows = table.querySelectorAll("tbody tr");
+
+        rows.forEach((row) => {
+          const source = row.cells[0].innerText.trim();
+          const target = row.cells[1].innerText.trim();
+          const weight = parseInt(row.cells[2].innerText.trim(), 10);
+          const sourceColor = row.cells[3].querySelector("input").value;
+
+          if (source && target) {
+            if (!graph.hasNode(source)) {
+              graph.addNode(source, {
+                label: source,
+                color: sourceColor,
+                x: Math.random(),
+                y: Math.random(),
+              });
+            }
+            if (!graph.hasNode(target)) {
+              graph.addNode(target, {
+                label: target,
+                color: "#FA5A3D", // Default color for target node
+                x: Math.random(),
+                y: Math.random(),
+              });
+            }
+            graph.addEdge(source, target, {
+              size: weight,
+              color: "#B2B2B2", // Edge color
+            });
+          }
+        });
+
+        // Calculate node sizes
+        calculateNodeSizes();
+
+        if (!sigmaInstance) {
+          sigmaInstance = new Sigma(
+            graph,
+            document.getElementById("container")
+          );
+
+          // Apply ForceAtlas2 layout to avoid overlap and distribute nodes
+          sigmaInstance.startForceAtlas2({
+            iterations: 100,
+            barnesHutOptimize: true,
+            gravity: 0.3,
+          });
+
+          // Apply edge curving settings in Sigma.js 2.x
+          sigmaInstance.settings({
+            edgeCurved: true, // Ensure it's set to true to curve edges
+            defaultEdgeType: "curved", // Use "curved" for edges
+            defaultEdgeColor: "#B2B2B2", // Default edge color
+            edgeLabelSize: "proportional", // Label size depending on edge weight
+            edgeLabelColor: "black", // Color for edge labels
+          });
+
+          // After ForceAtlas2 completes
+          setTimeout(() => {
+            sigmaInstance.killForceAtlas2();
+            sigmaInstance.refresh();
+          }, 5000);
+        }
+
+        sigmaInstance.refresh();
+      }
+
+      // Function to add a new row
+      function addRow() {
+        const table = document.getElementById("data-table");
+        const newRow = table.insertRow();
+        const sourceCell = newRow.insertCell(0);
+        const targetCell = newRow.insertCell(1);
+        const weightCell = newRow.insertCell(2);
+        const colorCell = newRow.insertCell(3);
+
+        sourceCell.contentEditable = "true";
+        targetCell.contentEditable = "true";
+        weightCell.contentEditable = "true";
+        colorCell.innerHTML = `<input type="color" value="#5A75DB" onchange="updateNodeColor('Node ${table.rows.length}', this.value)" />`;
+
+        sourceCell.innerText = `Node ${table.rows.length}`;
+        targetCell.innerText = `Node ${table.rows.length + 1}`;
+        weightCell.innerText = Math.floor(Math.random() * 10) + 1;
+        sourceCell.focus();
+
+        // Trigger updateGraph to update the graph with the new row's data
+        updateGraph();
+      }
+
+      // Function to update the node color dynamically
+      function updateNodeColor(nodeId, newColor) {
+        if (graph.hasNode(nodeId)) {
+          graph.setNodeAttribute(nodeId, "color", newColor);
+          sigmaInstance.refresh();
+        }
+      }
+
+      // Function to change the shape of a selected node
+      function changeNodeShape() {
+        const selectedNode = document.getElementById("nodeSelector").value; // Get selected node
+        const newShape = document.getElementById("shapeSelector").value; // Get selected shape
+
+        if (graph.hasNode(selectedNode)) {
+          graph.setNodeAttribute(selectedNode, "shape", newShape); // Set the new shape
+          sigmaInstance.refresh(); // Refresh the graph to apply changes
+        }
+      }
+
+      // Initialize the graph on page load
+      window.onload = updateGraph;
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const table = document.getElementById("data-table");
+        let isSelecting = false;
+        let startCell = null;
+        let endCell = null;
+        let selectedCells = [];
+
+        // Handle mouse down to start selection
+        table.addEventListener("mousedown", (event) => {
+          const cell = event.target;
+          if (cell.tagName === "TD" && cell.cellIndex !== 3) {
+            isSelecting = true;
+            startCell = cell;
+            clearSelection(); // Clear previous selection
+            cell.classList.add("selected");
+            selectedCells.push(cell);
+          }
+        });
+
+        // Handle mouse over to extend selection
+        table.addEventListener("mouseover", (event) => {
+          if (
+            isSelecting &&
+            event.target.tagName === "TD" &&
+            event.target.cellIndex !== 3
+          ) {
+            endCell = event.target;
+            clearSelection(); // Clear the previous selection
+            highlightCells(startCell, endCell);
+          }
+        });
+
+        // Stop selection on mouse up
+        document.addEventListener("mouseup", () => {
+          isSelecting = false;
+        });
+
+        // Clear all selected cells' content on Delete or Backspace
+        document.addEventListener("keydown", (event) => {
+          if (
+            (event.key === "Delete" || event.key === "Backspace") &&
+            selectedCells.length > 0
+          ) {
+            selectedCells.forEach((cell) => (cell.innerText = ""));
+            clearSelection();
+            event.preventDefault(); // Prevent default browser behavior
+          }
+        });
+
+        // Handle paste operation while excluding the 4th column
+        table.addEventListener("paste", (event) => {
+          const activeCell = document.activeElement;
+          if (activeCell && activeCell.isContentEditable) {
+            const columnIndex = activeCell.cellIndex;
+            if (columnIndex === 3) {
+              return; // Skip handling for the 4th column (color column)
+            }
+
+            event.preventDefault();
+            const clipboardData = event.clipboardData.getData("text");
+            const rows = clipboardData
+              .split("\n")
+              .filter((row) => row.trim() !== ""); // Split rows
+            const tableRow = activeCell.parentElement; // Current row
+            const startCellIndex = Array.from(tableRow.cells).indexOf(
+              activeCell
+            ); // Start cell index
+
+            rows.forEach((row, rowIndex) => {
+              const columns = row.split("\t"); // Split columns by tabs
+              let targetRow;
+
+              if (rowIndex === 0) {
+                targetRow = tableRow; // Use the current row for the first row of pasted data
+              } else {
+                targetRow = table.insertRow(tableRow.rowIndex + rowIndex); // Add a new row for subsequent rows
+                for (let i = 0; i < tableRow.cells.length; i++) {
+                  const newCell = targetRow.insertCell(i);
+                  if (i === 3) {
+                    // Skip making the 4th column editable; keep it as a color picker
+                    newCell.innerHTML = `<input type="color" value="#000000" />`;
+                  } else {
+                    newCell.contentEditable = "true"; // Make other cells editable
+                  }
+                }
+              }
+
+              // Fill cells with pasted data, excluding the 4th column
+              columns.forEach((col, colIndex) => {
+                const targetCell = targetRow.cells[startCellIndex + colIndex];
+                if (targetCell && targetCell.cellIndex !== 3) {
+                  targetCell.innerText = col.trim();
+                }
+              });
+            });
+          }
+        });
+
+        // Highlight cells between startCell and endCell
+        function highlightCells(startCell, endCell) {
+          selectedCells = [];
+          const startRow = Math.min(
+            startCell.parentElement.rowIndex,
+            endCell.parentElement.rowIndex
+          );
+          const endRow = Math.max(
+            startCell.parentElement.rowIndex,
+            endCell.parentElement.rowIndex
+          );
+          const startCol = Math.min(startCell.cellIndex, endCell.cellIndex);
+          const endCol = Math.max(startCell.cellIndex, endCell.cellIndex);
+
+          for (let row = startRow; row <= endRow; row++) {
+            for (let col = startCol; col <= endCol; col++) {
+              const cell = table.rows[row].cells[col];
+              if (cell && col !== 3) {
+                cell.classList.add("selected");
+                selectedCells.push(cell);
+              }
+            }
+          }
+        }
+
+        // Clear previous selection
+        function clearSelection() {
+          selectedCells.forEach((cell) => cell.classList.remove("selected"));
+          selectedCells = [];
+        }
+      });
+    </script>
+
+    <script>
+      // Function to export the graphs as a high-quality JPG
+      async function exportGraphsAsJPG() {
+        const svg1 = document.querySelector("svg"); // D3 Graph SVG
+        const sigmaCanvas = document.querySelector("canvas"); // Sigma.js Graph Canvas
+
+        if (!svg1 || !sigmaCanvas) {
+          alert("Both graphs must be rendered to export.");
+          return;
+        }
+
+        // Export the first graph (D3 SVG) as an image
+        const svgImage = await renderSVGToImage(svg1, 1920, 1080);
+
+        // Export the second graph (Sigma.js Canvas)
+        const sigmaImage = renderCanvasToImage(sigmaCanvas, 1920, 1080);
+
+        // Combine both graphs into one canvas
+        const finalCanvas = document.createElement("canvas");
+        const ctx = finalCanvas.getContext("2d");
+
+        finalCanvas.width = 1920;
+        finalCanvas.height = 2160; // Double the height for two graphs
+
+        // Draw the first graph
+        ctx.drawImage(svgImage, 0, 0, 1920, 1080);
+
+        // Draw the second graph
+        ctx.drawImage(sigmaImage, 0, 1080, 1920, 1080);
+
+        // Export as JPG
+        const link = document.createElement("a");
+        link.download = "graphs.jpg";
+        link.href = finalCanvas.toDataURL("image/jpeg", 0.95); // High-quality JPG
+        link.click();
+      }
+
+      // Helper function: Render an SVG element as an image
+      async function renderSVGToImage(svgElement, width, height) {
+        const xmlSerializer = new XMLSerializer();
+        const svgString = xmlSerializer.serializeToString(svgElement);
+
+        // Create a Blob for the SVG data
+        const blob = new Blob([svgString], {
+          type: "image/svg+xml;charset=utf-8",
+        });
+        const url = URL.createObjectURL(blob);
+
+        // Load the SVG into an image
+        const image = new Image();
+        image.width = width;
+        image.height = height;
+
+        return new Promise((resolve) => {
+          image.onload = () => {
+            // Render the SVG onto a canvas
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            canvas.width = width;
+            canvas.height = height;
+            ctx.fillStyle = "#fff"; // Add a white background
+            ctx.fillRect(0, 0, width, height);
+            ctx.drawImage(image, 0, 0, width, height);
+
+            URL.revokeObjectURL(url); // Clean up the blob URL
+            resolve(canvas);
+          };
+          image.src = url;
+        });
+      }
+
+      // Helper function: Render a Canvas element as an image
+      function renderCanvasToImage(canvas, width, height) {
+        const offscreenCanvas = document.createElement("canvas");
+        const ctx = offscreenCanvas.getContext("2d");
+
+        offscreenCanvas.width = width;
+        offscreenCanvas.height = height;
+
+        ctx.fillStyle = "#fff"; // Add a white background
+        ctx.fillRect(0, 0, width, height);
+        ctx.drawImage(canvas, 0, 0, width, height);
+
+        return offscreenCanvas;
+      }
+
+      // Attach the export function to the button
+      document
+        .getElementById("exportButton")
+        .addEventListener("click", exportGraphsAsJPG);
+    </script>
+  </body>
+</html>
