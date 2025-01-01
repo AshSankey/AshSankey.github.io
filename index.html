@@ -3,10 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sankey Chart Creator - About Us</title>
+    <title>Viroet Analysis - From historical insights to advanced AI-diven chart creation</title>
     <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
 
-      <meta
+    <meta
     name="description"
     content="Experience the Power of AI
     Our advanced AI tools enable you to transform raw data into compelling visuals in seconds. Upload your data, and let our algorithms do the rest—providing you with actionable insights and professional-grade charts."
@@ -31,7 +32,8 @@
     property="og:image:alt"
     content="Screenshot of the Viroet diagram-building interface"
   />
-    <meta name="google-site-verification" content="_fD2d1jpXAIKw49SiFxO0sXqLgcfINsdRwWd2SBG0n4" />
+
+  <meta name="google-site-verification" content="_fD2d1jpXAIKw49SiFxO0sXqLgcfINsdRwWd2SBG0n4" />
     <style>
       * {
         margin: 0;
@@ -427,13 +429,14 @@ footer {
         
       </a>
       
-
+      <section class="section" style=" background: #070716;">
+        <div data-aos="zoom-in" class="gif-container">
     <div class="container">
         <div class="hero-content">
           <!-- Left section for text -->
           <div class="ai-text">
             <div class="section ai-feature">
-              <h3>Experience the Power of AI</h3>
+              <h3>SankeyASH</h3>
               <p>
                 Our advanced AI tools enable you to transform raw data into compelling
                 visuals in seconds. Upload your data, and let our algorithms do the
@@ -453,14 +456,19 @@ footer {
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
 
+   <!-- Section 2 -->
+   <section class="section" style=" background: #070716;">
+    <div data-aos="zoom-in" class="gif-container">
       <div class="container">
         <div class="hero-content">
           <!-- Left section for text -->
           <div class="ai-text">
             <div class="section ai-feature">
-              <h3>Experience the Power of AI</h3>
+              <h3>TreeMAP</h3>
               <p>
                 Our intuitive tools allow you to convert complex datasets into visually striking treemaps within seconds. Simply upload your hierarchical data, and watch it transform into a dynamic chart that highlights proportions, trends, and relationships—perfect for financial analyses, market shares, or resource allocation.
               </p>
@@ -477,14 +485,19 @@ footer {
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
 
+  <!-- Section 3 -->
+  <section class="section" style=" background: #070716;">
+    <div data-aos="zoom-in" class="gif-container">
       <div class="container">
         <div class="hero-content">
           <!-- Left section for text -->
           <div class="ai-text">
             <div class="section ai-feature">
-              <h3>Experience the Power of AI</h3>
+              <h3>SunburstASH</h3>
               <p>
                 Effortlessly create stunning sunburst charts that showcase your data’s hierarchical structure in a radial layout. With just a few clicks, our advanced tools bring your data to life, offering an engaging and clear way to explore layers of information and uncover hidden insights.
               </p>
@@ -501,16 +514,50 @@ footer {
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
 
+  
 
 
+ <!-- Section 4 -->
+ 
       <section class="video-section">
         <h2>"Check out our tutorial videos to master the tools and make the most out of them."</h2>
         <div class="video-container">
           <iframe src="https://www.youtube.com/embed/0jaWNP-qUfY?si=bcix4fJXHzvN7v8e" frameborder="0" allowfullscreen></iframe>
         </div>
       </section>
+    
+
+   <!-- Section 4 -->
+   <section class="section" style=" background: #070716;">
+    <div data-aos="zoom-in" class="gif-container">
+      <div class="container">
+        <div class="hero-content">
+          <!-- Left section for text -->
+          <div class="ai-text">
+            <div class="section ai-feature">
+              <h3>ReactorASH</h3>
+              <p>
+                Sigma uses WebGL to render graphs. This makes it good at rendering medium to larger graphs in web pages (thousands of nodes and edges or more). It is also possible to customize rendering, but it is harder than it would be with SVG or Canvas based solutions.
+              </p>
+            </div>
+      
+            <div class="cta">
+              <a href="reactorash.html">Start Creating Your Reactor Chart</a>
+            </div>
+          </div>
+      
+          <!-- Right section for GIF -->
+          <div class="hero-gif">
+            <img src="react.gif" alt="Dynamic and Looping Sankey Chart Animation" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
       
 
       <div class="section">
@@ -568,5 +615,14 @@ Our mission is to simplify data visualization for everyone—from beginners to s
     <footer>
       <p>&copy; 2024 Viroet. All rights reserved.</p>
     </footer>
+     <!-- AOS Library JS -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+     <script>
+         // Initialize AOS with reverse animations enabled
+         AOS.init({
+             duration: 1000, // Animation duration in milliseconds
+             once: false     // Allows animations to trigger on both scroll down and up
+         });
+     </script>
   </body>
 </html>
