@@ -410,7 +410,33 @@ footer {
   font-size: 1.5rem; /* Adjust title size for better balance */
 }
 
+/* Full-page overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 
+/* Hide the overlay initially */
+.overlay.hidden {
+  display: none;
+}
+
+/* New Year card styling */
+.new-year-card img {
+  max-width: 100%; /* Ensure the image is responsive */
+  height: auto; /* Maintain aspect ratio */
+  width: 600px; /* Set the desired width */
+  border-radius: 10px; /* Optional: Add rounded corners */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Optional: Add a shadow */
+}
       
     </style>
   </head>
@@ -428,6 +454,14 @@ footer {
         <img src="Welcome to Viroet Analysis_transparent-.png"alt="SankeyASH Logo" style="width: 400px; height: auto;">
         
       </a>
+
+
+      <div id="new-year-overlay" class="overlay">
+        <div class="new-year-card" data-aos="zoom-in">
+          <img src="2025b.png" alt="Happy New Year 2025" />
+        </div>
+      </div>
+      
       
       <section class="section" style=" background: #070716;">
         <div data-aos="zoom-in" class="gif-container">
@@ -615,14 +649,46 @@ Our mission is to simplify data visualization for everyone—from beginners to s
     <footer>
       <p>&copy; 2024 Viroet. All rights reserved.</p>
     </footer>
-     <!-- AOS Library JS -->
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-     <script>
-         // Initialize AOS with reverse animations enabled
-         AOS.init({
-             duration: 1000, // Animation duration in milliseconds
-             once: false     // Allows animations to trigger on both scroll down and up
-         });
+    
+
+
      </script>
+<!-- AOS Library JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+<script>
+  // Initialize AOS (Animate On Scroll) Library
+  AOS.init({
+    duration: 1000, // Animation duration in milliseconds
+    once: false, // Allows animations to trigger on both scroll down and up
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const overlay = document.getElementById("new-year-overlay");
+    const card = document.querySelector(".new-year-card");
+
+    // Show the card only if not shown before in this session
+    if (!sessionStorage.getItem("newYearCardShown")) {
+      overlay.classList.remove("hidden");
+      sessionStorage.setItem("newYearCardShown", "true");
+    }
+
+    // Function to hide the card
+    const dismissCard = () => {
+      overlay.classList.add("hidden");
+    };
+
+    // Add event listener to overlay to hide it when clicking outside the card
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) dismissCard();
+    });
+
+    // Prevent hiding the card when clicking inside it
+    card.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+  });
+</script>
+
   </body>
 </html>
