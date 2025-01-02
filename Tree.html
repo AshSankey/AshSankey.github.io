@@ -3,11 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Interactive Dashboard with ECharts and Treemaps</title>
-     <link rel="icon" href="favicon.png" type="image/png">
+    <title>Interactive Dashboard with Treemap</title>
+    <link rel="icon" href="favicon.png" type="image/png">
 
-    
-      <meta
+    <meta
     name="description"
     content="Our intuitive tools allow you to convert complex datasets into visually striking treemaps within seconds. Simply upload your hierarchical data, and watch it transform into a dynamic chart that highlights proportions, trends, and relationships—perfect for financial analyses, market shares, or resource allocation."
   />
@@ -468,6 +467,17 @@
 
       <!-- Export Buttons -->
       <div class="export-controls">
+        <button id="toggle-percentage" class="ribbon-button">Show Percentage</button>
+        <div class="control-section">
+          <label for="category-color">Category:</label>
+          <select id="category-color">
+            <!-- Options will be dynamically populated -->
+          </select>
+          <input type="color" id="portion-color-picker" value="#ffffff" />
+          <button id="apply-color" class="ribbon-button">Apply Color</button>
+        </div>
+        
+
         <button id="save-png" class="ribbon-button">Save as PNG</button>
         <button id="save-jpg" class="ribbon-button">Save as JPG</button>
         <button id="save-excel" class="ribbon-button">Save as Excel</button>
@@ -578,95 +588,118 @@
         borderWidthValue.textContent = borderWidthSlider.value;
       });
 
-      // Update Chart function
-      const updateChart = () => {
-        const tableData = hot.getData();
-        const parentMap = new Map();
+      let showPercentage = false; // Default state for percentage display
 
-        // Process the data into parent-child structure
-        tableData.slice(1).forEach((row) => {
-          const [category, value, parent] = row;
+// Add event listener to toggle percentage display
+document.getElementById("toggle-percentage").addEventListener("click", () => {
+  showPercentage = !showPercentage; // Toggle the state
+  const button = document.getElementById("toggle-percentage");
+  button.textContent = showPercentage ? "Hide Percentage" : "Show Percentage"; // Update button text
+  updateChart(); // Re-render the chart with updated settings
+});
 
-          if (parent) {
-            if (!parentMap.has(parent)) {
-              parentMap.set(parent, { children: [] });
-            }
-            parentMap
-              .get(parent)
-              .children.push({ name: category, value: value });
-          } else {
-            if (!parentMap.has(category)) {
-              parentMap.set(category, { children: [] });
-            }
-          }
-        });
+const updateChart = () => {
+  const tableData = hot.getData();
+  const parentMap = new Map();
 
-        // Prepare the final data array for Treemap
-        const nodes = [];
+  // Process the data into parent-child structure
+  tableData.slice(1).forEach((row) => {
+    const [category, value, parent] = row;
 
-        parentMap.forEach((data, category) => {
-          nodes.push({
-            name: category,
-            value: data.children.reduce((acc, child) => acc + child.value, 0), // Sum of all children's values
-            children: data.children, // Assign the children to the parent
-          });
-        });
+    if (parent) {
+      if (!parentMap.has(parent)) {
+        parentMap.set(parent, { children: [] });
+      }
+      parentMap.get(parent).children.push({ name: category, value: value });
+    } else {
+      if (!parentMap.has(category)) {
+        parentMap.set(category, { children: [] });
+      }
+    }
+  });
 
-        chart.setOption({
-          title: {
-            text:
-              titleInput.value ||
-              "Revenue Breakdown Across Organizational Hierarchies",
+  // Prepare the final data array for Treemap
+  const nodes = [];
+  parentMap.forEach((data, category) => {
+    nodes.push({
+      name: category,
+      value: data.children.reduce((acc, child) => acc + child.value, 0),
+      children: data.children,
+    });
+  });
 
-            left: "center",
+  const totalValue = nodes.reduce((acc, node) => acc + node.value, 0);
+
+  // Update the chart options
+  chart.setOption({
+    title: {
+      text:
+        titleInput.value ||
+        "Revenue Breakdown Across Organizational Hierarchies",
+      left: "center",
+    },
+    tooltip: {
+      trigger: "item",
+      formatter: (params) => {
+        const percentage = ((params.value / totalValue) * 100).toFixed(2);
+        return showPercentage
+          ? `${params.name}: ${params.value} (${percentage}%)`
+          : `${params.name}: ${params.value}`;
+      },
+    },
+    series: [
+      {
+        type: "treemap",
+        data: nodes,
+        label: {
+          show: true,
+          formatter: (params) => {
+            const percentage = ((params.value / totalValue) * 100).toFixed(2);
+            return showPercentage
+              ? `${params.name}\n(${percentage}%)`
+              : `${params.name}`;
           },
-          tooltip: {
-            trigger: "item",
-            formatter: "{b}: {c}",
-          },
-          series: [
-            {
-              type: "treemap",
-              data: nodes,
-              label: {
-                show: true,
-                formatter: "{b}",
-              },
-              itemStyle: {
-                borderWidth: parseInt(borderWidthSlider.value, 10),
-                borderColor: colorPicker.value,
-              },
-            },
-          ],
-        });
-      };
+        },
+        itemStyle: {
+          borderWidth: parseInt(borderWidthSlider.value, 10),
+          borderColor: colorPicker.value,
+        },
+      },
+    ],
+  });
+};
 
-      // Update Chart
-      document
-        .getElementById("update-chart")
-        .addEventListener("click", updateChart);
+// Ensure the chart updates correctly after the DOM is ready
+updateChart();
+
+
+        
 
       // Save as PNG
       document.getElementById("save-png").addEventListener("click", () => {
-        const imgData = chart.getDataURL({
-          type: "png",
-        });
-        const a = document.createElement("a");
-        a.href = imgData;
-        a.download = "chart.png";
-        a.click();
-      });
+  const imgData = chart.getDataURL({
+    type: "png",
+    backgroundColor: '#ffffff', // Set to white or any desired color
+  });
+  const a = document.createElement("a");
+  a.href = imgData;
+  a.download = "chart.png";
+  a.click();
+});
+
 
       // Save as JPG
       document.getElementById("save-jpg").addEventListener("click", () => {
-        const imgData = chart.getDataURL({
-          type: "jpg",
-        });
-        const a = document.createElement("a");
-        a.href = imgData;
-        a.download = "chart.jpg";
-        a.click();
-      });
+  const imgData = chart.getDataURL({
+    type: "jpg",
+    backgroundColor: '#ffffff', // Set to white or any desired color
+  });
+  const a = document.createElement("a");
+  a.href = imgData;
+  a.download = "chart.jpg";
+  a.click();
+});
+
 
       // Save Table as Excel
       document.getElementById("save-excel").addEventListener("click", () => {
@@ -696,6 +729,87 @@
 window.addEventListener("resize", () => {
   chart.resize();
 });
+
+const populateCategoryDropdown = () => {
+  const tableData = hot.getData();
+  const uniqueCategories = new Set(tableData.slice(1).map(row => row[0])); // Extract unique categories
+
+  const dropdown = document.getElementById("category-color");
+  dropdown.innerHTML = ""; // Clear existing options
+
+  uniqueCategories.forEach((category) => {
+    if (category) {
+      const option = document.createElement("option");
+      option.value = category;
+      option.textContent = category;
+      dropdown.appendChild(option);
+    }
+  });
+};
+populateCategoryDropdown();
+
+// Re-populate when table data changes
+hot.addHook("afterChange", populateCategoryDropdown);
+
+const applyColorToCategory = () => {
+  const selectedCategory = document.getElementById("category-color").value;
+  const selectedColor = document.getElementById("portion-color-picker").value;
+
+  const tableData = hot.getData();
+  const parentMap = new Map();
+
+  // Rebuild parent-child relationships
+  tableData.slice(1).forEach((row) => {
+    const [category, value, parent] = row;
+
+    if (parent) {
+      if (!parentMap.has(parent)) {
+        parentMap.set(parent, { children: [] });
+      }
+      parentMap.get(parent).children.push({
+        name: category,
+        value: value,
+        itemStyle: category === selectedCategory ? { color: selectedColor } : {},
+      });
+    } else {
+      if (!parentMap.has(category)) {
+        parentMap.set(category, { children: [] });
+      }
+    }
+  });
+
+  const nodes = [];
+  parentMap.forEach((data, category) => {
+    nodes.push({
+      name: category,
+      value: data.children.reduce((acc, child) => acc + child.value, 0),
+      children: data.children,
+      itemStyle: category === selectedCategory ? { color: selectedColor } : {},
+    });
+  });
+
+  chart.setOption({
+    series: [
+      {
+        type: "treemap",
+        data: nodes,
+        label: {
+          show: true,
+          formatter: (params) => `${params.name}\n(${params.value})`,
+        },
+        itemStyle: {
+          borderWidth: parseInt(borderWidthSlider.value, 10),
+          borderColor: colorPicker.value,
+        },
+      },
+    ],
+  });
+};
+
+// Add event listener to "Apply Color" button
+document.getElementById("apply-color").addEventListener("click", applyColorToCategory);
+
+
 
     </script>
 
