@@ -48,7 +48,10 @@
         font-family: "Roboto", sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #f0f2f5;
+        background: linear-gradient(
+    to right,
+    #000e18,
+    #0d0142); /* Subtle background color */
         color: #333;
         height: 100vh;
         display: flex;
@@ -62,7 +65,10 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background-color: #34495e;
+  background: linear-gradient(
+    to right,
+    #000e18,
+    #0d0142); /* Subtle background color */
   color: #fff;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   font-weight: 500;
@@ -171,7 +177,7 @@
       }
 
       button {
-        padding: 14px 28px;
+       
         background-color: #3498db;
         color: white;
         border: none;
@@ -181,6 +187,11 @@
         transition: background-color 0.3s ease;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         margin: 5px; /* Added margin between buttons */
+        padding: 10px 15px;
+        
+
+        
+            
       }
 
       button:hover {
@@ -245,8 +256,13 @@
 
       /* Footer */
       #footer {
-        background-color: #34495e;
-        color: #fff;
+        background: linear-gradient(
+    to right,
+    #3498db,
+    #2ecc71,
+    #f39c12
+  ); /* Subtle background color */
+        color: #0d063a;
         text-align: center;
         padding: 10px;
         font-size: 14px;
@@ -281,19 +297,28 @@
         border-color: #3498db;
       }
 
-      /* Controls Ribbon Styling */
-      #controls-ribbon {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 15px;
-        padding: 10px;
-        background-color: #f9f9f9;
-        border-top: 1px solid #ccc;
-        border-bottom: 1px solid #ccc;
-        font-family: Arial, sans-serif;
-        white-space: nowrap;
-      }
+   /* Controls Ribbon Styling */
+#controls-ribbon {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+  padding: 10px 45px; /* Add horizontal padding for left and right gap */
+  background: linear-gradient(
+    to right,
+    #3498db,
+    #2ecc71,
+    #f39c12
+  ); /* Subtle background color */
+ 
+  font-family: Arial, sans-serif;
+  white-space: nowrap;
+  border-bottom-left-radius: 20px; /* Round bottom-left corner */
+  border-bottom-right-radius: 20px; /* Round bottom-right corner */
+  margin-left: 30px; /* Adjust this value for more space on the left */
+  margin-right: 30px; /* Adjust this value for more space on the right */
+}
+
 
       /* Input and Control Sections */
       .control-section,
@@ -317,13 +342,15 @@
 
       /* Ribbon Buttons */
       .ribbon-button {
-        padding: 6px 10px;
+        padding: 10px 15px;
         background-color: #007bff;
         color: white;
         border: none;
         border-radius: 3px;
         cursor: pointer;
-        font-size: 12px;
+        font-size: 16px;
+        border-radius: 10px; /* Increased roundness */
+       
       }
 
       .ribbon-button:hover {
@@ -419,7 +446,52 @@
     padding-left: 10px; /* Optional: Add some space on the left for aesthetics */
   }
 }
+.dropdown {
+            position: relative;
+            display: inline-block;
+        }
 
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 170px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content button {
+            color: black;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+            border: none;
+            background: none;
+            width: 95%;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .dropdown-content button:hover {
+            background-color: #2980b9;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown-button:hover {
+            background-color: #3e8e41;
+        }
 
     </style>
     
@@ -433,11 +505,10 @@
 
     <div id="controls-ribbon">
       <!-- Add Row Button -->
-      <button id="add-row" class="ribbon-button">
+    
 
       
-      <!-- Update Chart Button -->
-      <button id="update-chart" class="ribbon-button">Update Chart</button>
+
 
       <!-- Title Input -->
       <div class="control-section">
@@ -478,9 +549,14 @@
         </div>
         
 
-        <button id="save-png" class="ribbon-button">Save as PNG</button>
-        <button id="save-jpg" class="ribbon-button">Save as JPG</button>
-        <button id="save-excel" class="ribbon-button">Save as Excel</button>
+        <div class="dropdown">
+          <button class="dropdown-button">Save Options</button>
+          <div class="dropdown-content">
+              <button id="save-png">Save as PNG</button>
+              <button id="save-jpg">Save as JPG</button>
+              <button id="save-excel">Save as Excel</button>
+          </div>
+      </div>
       </div>
       
     </div>
@@ -556,9 +632,7 @@
         columns: [{ type: "text" }, { type: "numeric" }, { type: "text" }],
       });
 
-      document.getElementById("add-row").addEventListener("click", () => {
-        hot.alter("insert_row");
-      });
+     
 
       // ECharts Initialization
       const chartContainer = document.getElementById("chart");
