@@ -4,32 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Interactive Dashboard with Treemap</title>
-    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="icon" href="favicon.png" type="image/png" />
 
     <meta
-    name="description"
-    content="Our intuitive tools allow you to convert complex datasets into visually striking treemaps within seconds. Simply upload your hierarchical data, and watch it transform into a dynamic chart that highlights proportions, trends, and relationships—perfect for financial analyses, market shares, or resource allocation."
-  />
-  <meta property="og:title" content="Our intuitive tools allow you to convert complex datasets into visually striking treemaps within seconds. Simply upload your hierarchical data, and watch it transform into a dynamic chart that highlights proportions, trends, and relationships—perfect for financial analyses, market shares, or resource allocation." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.Viroet.com/Tree.html" />
-  <meta
-    property="og:description"
-    content="Make beautiful flow diagrams. Export them as images or SVG."
-  />
-  <meta property="og:site_name" content="www.Viroet.com/Tree.html" />
-  <meta property="og:locale" content="en_US" />
-  <meta
-    property="og:image"
-    content="https://www.Viroet.com/Apple%20FY24%20Income%20Statement.png"
-  />
-  <meta property="og:image:type" content="image/png" />
-  <meta property="og:image:width" content="2700" />
-  <meta property="og:image:height" content="1350" />
-  <meta
-    property="og:image:alt"
-    content="Screenshot of the Viroet diagram-building interface"
-  />
+      name="description"
+      content="Our intuitive tools allow you to convert complex datasets into visually striking treemaps within seconds. Simply upload your hierarchical data, and watch it transform into a dynamic chart that highlights proportions, trends, and relationships—perfect for financial analyses, market shares, or resource allocation."
+    />
+    <meta
+      property="og:title"
+      content="Our intuitive tools allow you to convert complex datasets into visually striking treemaps within seconds. Simply upload your hierarchical data, and watch it transform into a dynamic chart that highlights proportions, trends, and relationships—perfect for financial analyses, market shares, or resource allocation."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.Viroet.com/Tree.html" />
+    <meta
+      property="og:description"
+      content="Make beautiful flow diagrams. Export them as images or SVG."
+    />
+    <meta property="og:site_name" content="www.Viroet.com/Tree.html" />
+    <meta property="og:locale" content="en_US" />
+    <meta
+      property="og:image"
+      content="https://www.Viroet.com/Apple%20FY24%20Income%20Statement.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="2700" />
+    <meta property="og:image:height" content="1350" />
+    <meta
+      property="og:image:alt"
+      content="Screenshot of the Viroet diagram-building interface"
+    />
 
     <!-- Include ECharts -->
     <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
@@ -46,12 +49,13 @@
       /* Global Styles */
       body {
         font-family: "Roboto", sans-serif;
-        margin: 0;
+        margin: 5;
         padding: 0;
         background: linear-gradient(
-    to right,
-    #000e18,
-    #0d0142); /* Subtle background color */
+          to right,
+          #000e18,
+          #0d0142
+        ); /* Subtle background color */
         color: #333;
         height: 100vh;
         display: flex;
@@ -61,21 +65,21 @@
 
       /* Layout Sections */
       #top-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  background: linear-gradient(
-    to right,
-    #000e18,
-    #0d0142); /* Subtle background color */
-  color: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  font-weight: 500;
-  width: 100%; /* Increase width to extend beyond parent */
-  border-bottom: 2px solid #f0efee; /* Add a solid bottom border with color */
-
-}
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        background: linear-gradient(
+          to right,
+          #000e18,
+          #0d0142
+        ); /* Subtle background color */
+        color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        font-weight: 500;
+        width: 100%; /* Increase width to extend beyond parent */
+        border-bottom: 2px solid #f0efee; /* Add a solid bottom border with color */
+      }
 
       #bottom-section {
         display: flex;
@@ -96,17 +100,72 @@
       #left-section table {
         width: 100%;
         border-collapse: collapse;
+        border-radius: 8px; /* Rounded corners for modern design */
+        overflow: hidden; /* Ensure rounded corners work with overflow */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for modern look */
+        background-color: #ffffff; /* Table background color */
+      }
+
+      #left-section thead {
+        background-color: #4caf50; /* Modern header color */
+        color: white; /* Contrast text color */
+        position: sticky;
+        top: 0;
+        z-index: 1;
       }
 
       #left-section th,
       #left-section td {
-        padding: 12px;
+        padding: 12px 15px; /* Larger padding for better readability */
         text-align: left;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid #ddd; /* Maintain separation between rows */
       }
 
       #left-section th {
-        background-color: #f8f9fa;
+        text-transform: uppercase;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+      }
+      #left-section thead {
+        display: table; /* Align header to table width */
+        width: 100%; /* Match the table width */
+      }
+
+      #left-section tbody {
+        display: block !important;
+        max-height: calc(
+          40px * 12
+        ) !important; /* Adjust based on actual row height */
+        overflow-y: auto !important;
+        width: 100% !important;
+      }
+
+      #left-section tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed; /* Consistent column widths */
+        height: 40px; /* Set a fixed row height */
+      }
+
+      #left-section tbody tr:hover {
+        background-color: #f1f1f1; /* Row hover effect */
+      }
+
+      #left-section tbody::-webkit-scrollbar {
+        width: 8px; /* Narrow scrollbar */
+      }
+
+      #left-section tbody::-webkit-scrollbar-thumb {
+        background: #888; /* Scrollbar thumb color */
+        border-radius: 4px;
+      }
+
+      #left-section tbody::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+
+      #left-section tbody::-webkit-scrollbar-track {
+        background: #f1f1f1; /* Scrollbar track color */
       }
 
       /* Right Section for Output and Controls */
@@ -117,10 +176,6 @@
         gap: 20px;
       }
 
-    
-
-
-     
       /* Main Content */
       #controls {
         display: flex;
@@ -132,7 +187,6 @@
       }
 
       button {
-       
         background-color: #3498db;
         color: white;
         border: none;
@@ -143,10 +197,6 @@
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         margin: 5px; /* Added margin between buttons */
         padding: 10px 15px;
-        
-
-        
-            
       }
 
       button:hover {
@@ -170,9 +220,20 @@
 
       /* Slider Container */
       .slider-container {
+        /* Modern Slider Container */
+
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 15px;
+        padding: 7px 13px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        color: #2c3e50;
+        max-width: 400px;
+        margin: 0 auto;
       }
 
       /* Chart and Table Container */
@@ -209,21 +270,20 @@
         text-transform: uppercase;
       }
 
-      /* Footer */
       #footer {
-        background: linear-gradient(
-    to right,
-    #3498db,
-    #2ecc71,
-    #f39c12
-  ); /* Subtle background color */
+        display: flex; /* Use flexbox for alignment */
+        justify-content: center; /* Center text horizontally */
+        align-items: center; /* Center text vertically */
+        background: linear-gradient(to right, #3498db, #2ecc71, #f39c12);
         color: #0d063a;
-        text-align: center;
-        padding: 10px;
-        font-size: 14px;
+        font-size: 14px; /* Adjust font size */
         position: relative;
         bottom: 0;
         width: 100%;
+        height: 50px; /* Footer height */
+        margin: 0; /* Remove any default margins */
+        padding: 0; /* Remove extra space inside the footer */
+        box-sizing: border-box; /* Ensure padding doesn’t affect height */
       }
 
       /* Utility Styles */
@@ -252,29 +312,27 @@
         border-color: #3498db;
       }
 
-   /* Controls Ribbon Styling */
-#controls-ribbon {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 5px;
-  padding: 10px 45px; /* Add horizontal padding for left and right gap */
-  background: linear-gradient(
-    to right,
-    #3498db,
-    #2ecc71,
-    #f39c12
-  ); /* Subtle background color */
- 
-  font-family: Arial, sans-serif;
-  white-space: nowrap;
-  border-bottom-left-radius: 20px; /* Round bottom-left corner */
-  border-bottom-right-radius: 20px; /* Round bottom-right corner */
-  margin-left: 30px; /* Adjust this value for more space on the left */
-  margin-right: 30px; /* Adjust this value for more space on the right */
- 
-}
+      /* Controls Ribbon Styling */
+      #controls-ribbon {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 5px;
+        padding: 10px 45px; /* Add horizontal padding for left and right gap */
+        background: linear-gradient(
+          to right,
+          #3498db,
+          #2ecc71,
+          #f39c12
+        ); /* Subtle background color */
 
+        font-family: Arial, sans-serif;
+        white-space: nowrap;
+        border-bottom-left-radius: 20px; /* Round bottom-left corner */
+        border-bottom-right-radius: 20px; /* Round bottom-right corner */
+        margin-left: 30px; /* Adjust this value for more space on the left */
+        margin-right: 30px; /* Adjust this value for more space on the right */
+      }
 
       /* Input and Control Sections */
       .control-section,
@@ -304,9 +362,8 @@
         border: none;
         border-radius: 3px;
         cursor: pointer;
-        font-size: 16px;
+        font-size: 15px;
         border-radius: 10px; /* Increased roundness */
-       
       }
 
       .ribbon-button:hover {
@@ -332,144 +389,422 @@
         }
       }
       /* Media Query for Mobile Screens */
-@media (max-width: 768px) {
-  #top-section {
-    flex-direction: column;
-    text-align: center;
-   
-  }
-
-  #bottom-section {
-    flex-direction: column;
-    gap: 15px;
-    overflow-y: auto; /* Enable scrolling for smaller screens */
-  }
-
-  #left-section,
-  #right-section {
-    flex: 1 1 100%; /* Make sections stack vertically */
-    width: 100%;
-  }
-
-  #controls-ribbon {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    padding: 10px;
-  }
-
-  #controls {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  button {
-    padding: 12px 20px;
-    font-size: 14px;
-  }
-
-  #table-container {
-    overflow-x: auto; /* Enable horizontal scrolling for table */
-    max-height: 300px; /* Limit table height on small screens */
-  }
-
-  #chart-container {
-    height: 300px; /* Limit chart height on small screens */
-  }
-}
-/* Default Logo Styling */
-#logo {
-  height: 40px; /* Adjust height for visibility */
-  width: auto; /* Maintain aspect ratio */
-  margin: 0; /* Remove unnecessary margins */
-  display: block; /* Ensure block-like behavior */
-}
-
-/* Logo Container Styling */
-#logo-container {
-  display: flex;
-  justify-content: flex-start; /* Align logo to the left */
-  align-items: center; /* Vertically center logo within container */
-  padding: 10px; /* Add padding for spacing */
-  width: 100%; /* Ensure the container spans full width */
-  box-sizing: border-box; /* Include padding in the container width */
-}
-
-/* Responsive Adjustments for Mobile */
-@media (max-width: 768px) {
-  #logo-container {
-    justify-content: flex-start; /* Ensure logo stays aligned to the left */
-    padding-left: 10px; /* Optional: Add some space on the left for aesthetics */
-  }
-}
-.dropdown {
-            position: relative;
-            display: inline-block;
+      @media (max-width: 768px) {
+        #top-section {
+          flex-direction: column;
+          text-align: center;
         }
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 170px;
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1;
+        #bottom-section {
+          flex-direction: column;
+          gap: 15px;
+          overflow-y: auto; /* Enable scrolling for smaller screens */
         }
 
-        .dropdown-content button {
-            color: black;
-            padding: 10px 15px;
-            text-decoration: none;
-            display: block;
-            border: none;
-            background: none;
-            width: 95%;
-            text-align: left;
-            cursor: pointer;
+        #left-section,
+        #right-section {
+          flex: 1 1 100%; /* Make sections stack vertically */
+          width: 100%;
         }
 
-        .dropdown-content button:hover {
-            background-color: #2980b9;
+        #controls-ribbon {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 10px;
+          padding: 10px;
         }
 
-        .dropdown:hover .dropdown-content {
-            display: block;
+        #controls {
+          flex-wrap: wrap;
+          justify-content: center;
         }
 
-        .dropdown-button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 15px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
+        button {
+          padding: 12px 20px;
+          font-size: 14px;
         }
 
-        .dropdown-button:hover {
-            background-color: #3e8e41;
+        #table-container {
+          overflow-x: auto; /* Enable horizontal scrolling for table */
+          max-height: 300px; /* Limit table height on small screens */
         }
 
+        #chart-container {
+          height: 300px; /* Limit chart height on small screens */
+        }
+      }
+      /* Default Logo Styling */
+      #logo {
+        height: 40px; /* Adjust height for visibility */
+        width: auto; /* Maintain aspect ratio */
+        margin: 0; /* Remove unnecessary margins */
+        display: block; /* Ensure block-like behavior */
+      }
+
+      /* Logo Container Styling */
+      #logo-container {
+        display: flex;
+        justify-content: flex-start; /* Align logo to the left */
+        align-items: center; /* Vertically center logo within container */
+        padding: 10px; /* Add padding for spacing */
+        width: 100%; /* Ensure the container spans full width */
+        box-sizing: border-box; /* Include padding in the container width */
+      }
+
+      /* Responsive Adjustments for Mobile */
+      @media (max-width: 768px) {
+        #logo-container {
+          justify-content: flex-start; /* Ensure logo stays aligned to the left */
+          padding-left: 10px; /* Optional: Add some space on the left for aesthetics */
+        }
+      }
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 170px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+      }
+
+      .dropdown-content button {
+        color: black;
+        padding: 10px 15px;
+        text-decoration: none;
+        display: block;
+        border: none;
+        background: none;
+        width: 95%;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .dropdown-content button:hover {
+        background-color: #2980b9;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+
+      .dropdown-button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 15px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+      }
+
+      .dropdown-button:hover {
+        background-color: #3e8e41;
+      }
+      /* Modal Overlay */
+      .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+      }
+
+      /* Responsive Dialog */
+      .responsive-dialog {
+        max-width: 90%;
+        width: 1000px;
+        margin: 0 auto;
+        border: none;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        background: white;
+        z-index: 1000;
+        position: relative;
+
+        /* Centering Styles */
+        position: fixed; /* Ensure the dialog is positioned relative to the viewport */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* Dialog Title */
+      .dialog-title {
+        margin-bottom: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      /* Dialog Content for Link */
+      .dialog-content {
+        word-break: break-all; /* Break long words for scroll */
+        overflow-x: auto; /* Enable horizontal scrolling */
+        white-space: nowrap; /* Prevent text from wrapping */
+        background: #f9f9f9;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        text-align: center;
+        font-size: 14px;
+        max-width: 100%; /* Restrict width within the modal */
+        border: 1px solid #ddd;
+      }
+
+      /* Link Style */
+      .dialog-content a {
+        color: #3498db; /* Blue color for the link */
+        text-decoration: none; /* Remove underline */
+      }
+
+      .dialog-content a:hover {
+        text-decoration: underline; /* Add underline on hover */
+      }
+
+      /* Dialog Buttons */
+      .dialog-buttons {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .button-primary {
+        background: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        flex: 1;
+        text-align: center;
+      }
+
+      .button-primary:hover {
+        background: #2980b9;
+      }
+
+      .button-secondary {
+        background: #e74c3c;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        flex: 1;
+        text-align: center;
+      }
+
+      .button-secondary:hover {
+        background: #c0392b;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .responsive-dialog {
+          width: 90%;
+          max-width: 100%;
+          padding: 15px;
+        }
+
+        .dialog-title {
+          font-size: 16px;
+        }
+
+        .dialog-content {
+          font-size: 13px;
+        }
+
+        .button-primary,
+        .button-secondary {
+          font-size: 13px;
+          padding: 8px 12px;
+        }
+      }
+      td.selected {
+        background-color: #d3d3d3; /* Highlight color */
+      }
+
+      .nav-link {
+        text-decoration: none;
+        color: #ffffff; /* White text for clarity */
+        font-weight: 500; /* Slightly lighter weight for readability */
+        padding: 12px 24px; /* Balanced padding for a modern button feel */
+        border-radius: 12px; /* Increased border-radius for a more modern, smooth look */
+        background-color: transparent; /* Transparent background initially */
+        font-family: "Roboto", sans-serif; /* Clean, modern font */
+        letter-spacing: 0.5px; /* Subtle letter-spacing for clarity */
+        display: inline-block; /* Keeps the link inline with other elements */
+        text-transform: uppercase; /* Uppercase text for a more tech-focused vibe */
+        transition: color 0.3s ease; /* Smooth transition for text color */
+        margin-right: 38px; /* Adds a small gap on the left */
+      }
+
+      /* Hover state */
+      .nav-link:hover {
+        color: #007bff; /* Change text color to blue on hover */
+      }
+
+      /* Active or selected state */
+      .nav-link.active {
+        color: #007bff; /* Text remains blue for active links */
+        font-weight: 600; /* Optional: Slightly bolder text for active state */
+      }
+
+      .switch-ai-button {
+        display: inline-flex; /* Flexbox for aligning text and logo */
+        align-items: center;
+        justify-content: center;
+        padding: 8px 20px;
+        border: none;
+        border-radius: 24px; /* Rounded button */
+        background: linear-gradient(
+          45deg,
+          #ffffff,
+          #c87aff
+        ); /* Gradient colors */
+        color: #000000; /* White text */
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.3s ease;
+        margin-left: 850px; /* Move the button to the right */
+      }
+
+      .switch-ai-button img {
+        width: 29px; /* Adjust size of the logo */
+        height: 29px;
+        margin-right: 5px; /* Space between logo and text */
+      }
+
+      .switch-ai-button:hover {
+        transform: translateY(-2px); /* Slight lift on hover */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Glow effect */
+      }
+
+      .switch-ai-button:active {
+        transform: translateY(0); /* Reset lift on click */
+        box-shadow: none; /* Remove shadow on click */
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .switch-ai-button {
+          padding: 8px 16px; /* Smaller padding for mobile */
+          font-size: 14px; /* Slightly smaller text */
+          margin-left: 10px; /* Adjust margin for smaller screens */
+        }
+
+        .switch-ai-button img {
+          width: 18px; /* Smaller logo */
+          height: 18px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .switch-ai-button {
+          padding: 6px 12px; /* Even smaller padding for very small screens */
+          font-size: 12px; /* Smaller text size */
+          margin-left: 5px; /* Further adjust margin */
+        }
+
+        .switch-ai-button img {
+          width: 16px; /* Smaller logo */
+          height: 16px;
+        }
+      }
+
+      /* Modern input field styling */
+      .modern-input {
+        width: 80%;
+        padding: 6px 10px;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        font-size: 1rem;
+        color: #333;
+        background-color: #faf8f8;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      .modern-input:focus {
+        border-color: #0078d4;
+        box-shadow: 0 0 5px rgba(0, 120, 212, 0.3);
+      }
+
+      /* Placeholder text styling */
+      .modern-input::placeholder {
+        color: #aaa;
+        transition: color 0.3s ease;
+      }
+
+      .modern-input:focus::placeholder {
+        color: transparent;
+      }
+      /* Color Picker Container */
+      .color-picker-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 3px 10px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+        margin: 0 auto;
+      }
+
+      .modern-color-picker {
+        width: 50px;
+        height: 50px;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
     </style>
-    
   </head>
 
   <body>
     <div id="top-section" id="logo-container">
       <img src="TreeMAP_transparent-.png" alt="Logo" id="logo" />
-      
+
+      <!-- Button with logo -->
+      <button class="switch-ai-button">
+        <img src="tree assets/ai-svgrepo-com (1).svg" alt="AI Logo" /> Switch On
+      </button>
+
+      <a href="index.html" class="nav-link">public diagrams</a>
     </div>
 
     <div id="controls-ribbon">
       <!-- Add Row Button -->
-    
 
-      
-
-
-      <!-- Title Input -->
+      <!-- Title Input Section -->
       <div class="control-section">
-        <label for="treemap-title">Title:</label>
-        <input type="text" id="treemap-title" placeholder="Enter a title" />
+        <label for="treemap-title" class="label">Title:</label>
+        <div class="input-container">
+          <input
+            type="text"
+            id="treemap-title"
+            placeholder="Enter a title"
+            class="modern-input"
+          />
+          <span class="underline"></span>
+        </div>
       </div>
 
       <!-- Border Width Slider -->
@@ -488,45 +823,185 @@
 
       <!-- Color Picker -->
       <div class="control-section">
-        <label for="color-picker">Choose Color:</label>
-        <input type="color" id="color-picker" value="#FFFFFF" />
+        <div class="color-picker-container">
+          <label for="color-picker">Choose Color:</label>
+          <input
+            type="color"
+            id="color-picker"
+            class="modern-color-picker"
+            value="#FFFFFF"
+          />
+        </div>
       </div>
 
       <!-- Export Buttons -->
       <div class="export-controls">
-        <button id="toggle-percentage" class="ribbon-button">Show Percentage</button>
-        <div class="control-section">
+        <button id="toggle-percentage" class="ribbon-button">
+          Show Percentage
+        </button>
+        <div class="control-section" class="modern-color-picker">
           <label for="category-color">Category:</label>
           <select id="category-color">
             <!-- Options will be dynamically populated -->
           </select>
-          <input type="color" id="portion-color-picker" value="#ffffff" />
+          <input type="color" id="portion-color-picker" value="#ff0000" />
           <button id="apply-color" class="ribbon-button">Apply Color</button>
         </div>
-        
 
         <div class="dropdown">
           <button class="dropdown-button">Save Options</button>
           <div class="dropdown-content">
-              <button id="save-png">Save as PNG</button>
-              <button id="save-jpg">Save as JPG</button>
-              <button id="save-excel">Save as Excel</button>
+            <button id="save-png">Save as PNG</button>
+            <button id="save-jpg">Save as JPG</button>
+            <button id="save-excel">Save as Excel</button>
+            <button id="create-share-link" class="ribbon-button">
+              Create Share Link
+            </button>
           </div>
+        </div>
       </div>
-      </div>
-      
     </div>
-    
-    
-    
-
-
-
 
     <div id="bottom-section">
       <!-- Left Section: Table -->
       <div id="left-section">
-        <div id="table-container"></div>
+        <table id="custom-table">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Value</th>
+              <th>Parent</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td contenteditable="true">Corporate</td>
+              <td contenteditable="true">1200</td>
+              <td contenteditable="true"></td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Marketing</td>
+              <td contenteditable="true">500</td>
+              <td contenteditable="true">Corporate</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Social Media</td>
+              <td contenteditable="true">200</td>
+              <td contenteditable="true">Marketing</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Email Campaigns</td>
+              <td contenteditable="true">150</td>
+              <td contenteditable="true">Marketing</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Content Creation</td>
+              <td contenteditable="true">150</td>
+              <td contenteditable="true">Marketing</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Sales</td>
+              <td contenteditable="true">400</td>
+              <td contenteditable="true">Corporate</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">B2B Sales</td>
+              <td contenteditable="true">300</td>
+              <td contenteditable="true">Sales</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">B2C Sales</td>
+              <td contenteditable="true">100</td>
+              <td contenteditable="true">Sales</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Operations</td>
+              <td contenteditable="true">300</td>
+              <td contenteditable="true">Corporate</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Logistics</td>
+              <td contenteditable="true">150</td>
+              <td contenteditable="true">Operations</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Procurement</td>
+              <td contenteditable="true">100</td>
+              <td contenteditable="true">Operations</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Quality Assurance</td>
+              <td contenteditable="true">50</td>
+              <td contenteditable="true">Operations</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">IT Department</td>
+              <td contenteditable="true">1000</td>
+              <td contenteditable="true"></td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Software Development</td>
+              <td contenteditable="true">600</td>
+              <td contenteditable="true">IT Department</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Frontend Development</td>
+              <td contenteditable="true">250</td>
+              <td contenteditable="true">Software Development</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Backend Development</td>
+              <td contenteditable="true">300</td>
+              <td contenteditable="true">Software Development</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Testing and QA</td>
+              <td contenteditable="true">50</td>
+              <td contenteditable="true">Software Development</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Infrastructure</td>
+              <td contenteditable="true">400</td>
+              <td contenteditable="true">IT Department</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Cloud Services</td>
+              <td contenteditable="true">200</td>
+              <td contenteditable="true">Infrastructure</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Networking</td>
+              <td contenteditable="true">150</td>
+              <td contenteditable="true">Infrastructure</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Cybersecurity</td>
+              <td contenteditable="true">50</td>
+              <td contenteditable="true">Infrastructure</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Human Resources</td>
+              <td contenteditable="true">400</td>
+              <td contenteditable="true"></td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Recruitment</td>
+              <td contenteditable="true">200</td>
+              <td contenteditable="true">Human Resources</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Employee Training</td>
+              <td contenteditable="true">150</td>
+              <td contenteditable="true">Human Resources</td>
+            </tr>
+            <tr>
+              <td contenteditable="true">Payroll and Benefits</td>
+              <td contenteditable="true">50</td>
+              <td contenteditable="true">Human Resources</td>
+            </tr>
+          </tbody>
+        </table>
+        <button id="add-row-button">Add Row</button>
       </div>
 
       <!-- Right Section: Output and Controls -->
@@ -535,317 +1010,521 @@
         <div id="chart-container">
           <div id="chart"></div>
         </div>
-   
 
-      
+        <dialog id="getLinkDialog" class="responsive-dialog">
+          <p class="dialog-title">Here is your shareable link:</p>
+          <div id="linkTargetDiv" class="dialog-content"></div>
+          <div class="dialog-buttons">
+            <button id="copyLinkButton" class="button-primary">
+              Copy Link
+            </button>
+            <button id="closeDialog" class="button-secondary">Close</button>
+          </div>
+        </dialog>
+
+        <div id="modal-overlay" class="overlay"></div>
+      </div>
+    </div>
     <div id="footer">2024 Viroet. All rights reserved.</div>
 
     <script>
-    
-
-     
-
-      // Handsontable Initialization
-      const tableContainer = document.getElementById("table-container");
-      const initialData = [
-        ["Category", "Value", "Parent"],
-        ["Corporate", 1200, ""],
-        ["Marketing", 500, "Corporate"],
-        ["Social Media", 200, "Marketing"],
-        ["Email Campaigns", 150, "Marketing"],
-        ["Content Creation", 150, "Marketing"],
-        ["Sales", 400, "Corporate"],
-        ["B2B Sales", 300, "Sales"],
-        ["B2C Sales", 100, "Sales"],
-        ["Operations", 300, "Corporate"],
-        ["Logistics", 150, "Operations"],
-        ["Procurement", 100, "Operations"],
-        ["Quality Assurance", 50, "Operations"],
-        ["IT Department", 1000, ""],
-        ["Software Development", 600, "IT Department"],
-        ["Frontend Development", 250, "Software Development"],
-        ["Backend Development", 300, "Software Development"],
-        ["Testing and QA", 50, "Software Development"],
-        ["Infrastructure", 400, "IT Department"],
-        ["Cloud Services", 200, "Infrastructure"],
-        ["Networking", 150, "Infrastructure"],
-        ["Cybersecurity", 50, "Infrastructure"],
-        ["Human Resources", 400, ""],
-        ["Recruitment", 200, "Human Resources"],
-        ["Employee Training", 150, "Human Resources"],
-        ["Payroll and Benefits", 50, "Human Resources"],
-      ];
-
-      const hot = new Handsontable(tableContainer, {
-        data: initialData,
-        rowHeaders: true,
-        colheaders: ["Name", "Value", "Parent", ],
-        licenseKey: "non-commercial-and-evaluation",
-        stretchH: "all",
-        minSpareRows: 10,
-        height: "100%",
-        width: "100%",
-        columns: [{ type: "text" }, { type: "numeric" }, { type: "text" }],
-      });
-
-     
-
       // ECharts Initialization
       const chartContainer = document.getElementById("chart");
       const chart = echarts.init(chartContainer);
 
+      // DOM Elements for Dynamic Updates
       const borderWidthSlider = document.getElementById("border-width");
       const borderWidthValue = document.getElementById("border-width-value");
       const colorPicker = document.getElementById("color-picker");
       const titleInput = document.getElementById("treemap-title");
-      const subtitleInput = document.getElementById("treemap-subtitle");
+      const categoryDropdown = document.getElementById("category-color");
+      const portionColorPicker = document.getElementById(
+        "portion-color-picker"
+      );
+      let showPercentage = false;
 
-      // Function to handle updates when any of the inputs change
-      function handleInputChange() {
-        // Example update action when any input changes
-        updateChart(); // Update chart, assuming this function already exists in your code
+      // Function to Update Chart
+      const updateChart = () => {
+        const tableRows = document.querySelectorAll("#custom-table tbody tr");
+        const parentMap = new Map();
 
-        // Optionally, display the border width value
-        borderWidthValue.textContent = `Border Width: ${borderWidthSlider.value}px`;
-      }
+        const selectedCategory = categoryDropdown.value;
+        const selectedColor = portionColorPicker.value;
 
-      // Event listeners for each DOM element
+        tableRows.forEach((row) => {
+          const cells = row.querySelectorAll("td");
+          const category = cells[0].textContent.trim();
+          const value = parseFloat(cells[1].textContent.trim()) || 0;
+          const parent = cells[2].textContent.trim();
+
+          if (parent) {
+            if (!parentMap.has(parent)) {
+              parentMap.set(parent, { children: [] });
+            }
+            parentMap.get(parent).children.push({
+              name: category,
+              value,
+              itemStyle:
+                category === selectedCategory ? { color: selectedColor } : {},
+            });
+          } else {
+            if (!parentMap.has(category)) {
+              parentMap.set(category, { children: [] });
+            }
+          }
+        });
+
+        const nodes = [];
+        parentMap.forEach((data, category) => {
+          nodes.push({
+            name: category,
+            value: data.children.reduce((acc, child) => acc + child.value, 0),
+            children: data.children,
+            itemStyle:
+              category === selectedCategory ? { color: selectedColor } : {},
+          });
+        });
+
+        const totalValue = nodes.reduce((acc, node) => acc + node.value, 0);
+
+        chart.setOption({
+          title: {
+            text:
+              titleInput.value ||
+              "Revenue Breakdown Across Organizational Hierarchies",
+            left: "center",
+          },
+          tooltip: {
+            trigger: "item",
+            formatter: (params) => {
+              const percentage = ((params.value / totalValue) * 100).toFixed(2);
+              return showPercentage
+                ? `${params.name}: ${params.value} (${percentage}%)`
+                : `${params.name}: ${params.value}`;
+            },
+          },
+          series: [
+            {
+              type: "treemap",
+              data: nodes,
+              label: {
+                show: true,
+                formatter: (params) => {
+                  const percentage = (
+                    (params.value / totalValue) *
+                    100
+                  ).toFixed(2);
+                  return showPercentage
+                    ? `${params.name}\n(${percentage}%)`
+                    : `${params.name}`;
+                },
+              },
+              itemStyle: {
+                borderWidth: parseInt(borderWidthSlider.value, 10),
+                borderColor: colorPicker.value,
+              },
+            },
+          ],
+        });
+      };
+
+      // Add Row Functionality
+      document
+        .getElementById("add-row-button")
+        .addEventListener("click", () => {
+          const tableBody = document.querySelector("#custom-table tbody");
+          const newRow = document.createElement("tr");
+          newRow.innerHTML = `
+    <td contenteditable="true"></td>
+    <td contenteditable="true"></td>
+    <td contenteditable="true"></td>
+  `;
+          tableBody.appendChild(newRow);
+
+          // Attach event listeners for chart updates and cell selection
+          newRow.querySelectorAll("td").forEach((cell) => {
+            // Chart updates on input
+            cell.addEventListener("input", () => {
+              updateChart();
+              populateCategoryDropdown(); // Ensure dropdown is updated dynamically
+            });
+
+            // Selection logic
+            cell.addEventListener("click", (event) => {
+              if (!event.shiftKey) clearSelection(); // Clear selection unless Shift is held
+              selectedCells.add(cell);
+              cell.classList.add("selected");
+            });
+          });
+
+          populateCategoryDropdown(); // Update dropdown after adding a row
+        });
+
+      // Populate Category Dropdown
+      const populateCategoryDropdown = () => {
+        const tableRows = document.querySelectorAll("#custom-table tbody tr");
+        const categories = new Set();
+
+        tableRows.forEach((row) => {
+          const cells = row.querySelectorAll("td");
+          const category = cells[0].textContent.trim();
+          if (category) {
+            categories.add(category);
+          }
+        });
+
+        categoryDropdown.innerHTML = ""; // Clear existing options
+        categories.forEach((category) => {
+          const option = document.createElement("option");
+          option.value = category;
+          option.textContent = category;
+          categoryDropdown.appendChild(option);
+        });
+      };
+
+      // Handle Input Changes
+      const handleInputChange = () => {
+        borderWidthValue.textContent = `${borderWidthSlider.value}px`;
+        updateChart();
+      };
+
+      // Event Listeners
       borderWidthSlider.addEventListener("input", handleInputChange);
       colorPicker.addEventListener("input", handleInputChange);
-      titleInput.addEventListener("input", handleInputChange);
+      titleInput.addEventListener("input", updateChart);
 
-      borderWidthSlider.addEventListener("input", () => {
-        borderWidthValue.textContent = borderWidthSlider.value;
+      document
+        .getElementById("toggle-percentage")
+        .addEventListener("click", () => {
+          showPercentage = !showPercentage;
+          const button = document.getElementById("toggle-percentage");
+          button.textContent = showPercentage
+            ? "Hide Percentage"
+            : "Show Percentage";
+          updateChart();
+        });
+
+      document
+        .getElementById("apply-color")
+        .addEventListener("click", updateChart);
+
+      // Dynamically Update Chart When Table Data Changes
+      document
+        .querySelectorAll("#custom-table td[contenteditable]")
+        .forEach((cell) => {
+          cell.addEventListener("input", () => {
+            populateCategoryDropdown();
+            updateChart();
+          });
+        });
+
+      // Populate Dropdown on Load
+      populateCategoryDropdown();
+
+      // Initial Chart Update
+      updateChart();
+    </script>
+
+    <script>
+      // Function to create a shareable link
+      document
+        .getElementById("create-share-link")
+        .addEventListener("click", () => {
+          // Extract data from the custom table
+          const tableRows = document.querySelectorAll("#custom-table tbody tr");
+          const tableData = [];
+
+          tableRows.forEach((row) => {
+            const cells = row.querySelectorAll("td");
+            const category = cells[0].textContent.trim();
+            const value = cells[1].textContent.trim();
+            const parent = cells[2].textContent.trim();
+
+            if (category || value || parent) {
+              tableData.push([category, value, parent]);
+            }
+          });
+
+          // Extract additional settings
+          const settings = {
+            borderWidth: document.getElementById("border-width").value,
+            borderColor: document.getElementById("color-picker").value,
+            chartTitle: document.getElementById("treemap-title").value,
+            selectedCategory:
+              document.getElementById("category-color").value || null,
+            selectedColor:
+              document.getElementById("portion-color-picker").value || null,
+          };
+
+          // Encode the table data and settings
+          const encodedData = encodeURIComponent(
+            JSON.stringify({ tableData, settings })
+          );
+
+          // Create a sharable link
+          const baseURL = window.location.origin + window.location.pathname; // Current page's base URL
+          const publicLink = `${baseURL}?data=${encodedData}`;
+
+          // Display the link in a dialog
+          const dialog = document.getElementById("getLinkDialog");
+          const overlay = document.getElementById("modal-overlay");
+          const linkTargetDiv = document.getElementById("linkTargetDiv");
+
+          linkTargetDiv.innerHTML = `<a href="${publicLink}" target="_blank">${publicLink}</a>`;
+          dialog.showModal();
+          overlay.style.display = "block";
+
+          // Update the "Copy Link" button to copy the correct link
+          document
+            .getElementById("copyLinkButton")
+            .setAttribute("data-link", publicLink);
+        });
+
+      // Function to handle "Copy Link" button
+      document
+        .getElementById("copyLinkButton")
+        .addEventListener("click", () => {
+          const publicLink = document
+            .getElementById("copyLinkButton")
+            .getAttribute("data-link");
+          navigator.clipboard
+            .writeText(publicLink)
+            .then(() => alert("Link copied to clipboard!"))
+            .catch((err) => console.error("Failed to copy link:", err));
+        });
+
+      // Check if the URL contains a data parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const chartData = urlParams.get("data");
+
+      if (chartData) {
+        // Decode the JSON string
+        const decodedData = JSON.parse(decodeURIComponent(chartData));
+        const { tableData, settings } = decodedData;
+
+        // Populate the custom table with the decoded data
+        const tbody = document.querySelector("#custom-table tbody");
+        tbody.innerHTML = ""; // Clear existing rows
+
+        tableData.forEach(([category, value, parent]) => {
+          const row = document.createElement("tr");
+
+          row.innerHTML = `
+        <td contenteditable="true">${category}</td>
+        <td contenteditable="true">${value}</td>
+        <td contenteditable="true">${parent}</td>
+      `;
+
+          tbody.appendChild(row);
+        });
+
+        // Apply settings
+        document.getElementById("border-width").value = settings.borderWidth;
+        document.getElementById("color-picker").value = settings.borderColor;
+        document.getElementById("treemap-title").value = settings.chartTitle;
+
+        if (settings.selectedCategory && settings.selectedColor) {
+          document.getElementById("category-color").value =
+            settings.selectedCategory;
+          document.getElementById("portion-color-picker").value =
+            settings.selectedColor;
+        }
+
+        // Update the chart to reflect the new data and settings
+        updateChart();
+      }
+
+      // Close the modal when the "Close" button is clicked
+      document.getElementById("closeDialog").addEventListener("click", () => {
+        const dialog = document.getElementById("getLinkDialog");
+        const overlay = document.getElementById("modal-overlay");
+        dialog.close();
+        overlay.style.display = "none";
       });
 
-      let showPercentage = false; // Default state for percentage display
+      // Close the modal when clicking the overlay
+      document.getElementById("modal-overlay").addEventListener("click", () => {
+        const dialog = document.getElementById("getLinkDialog");
+        const overlay = document.getElementById("modal-overlay");
+        dialog.close();
+        overlay.style.display = "none";
+      });
+    </script>
 
-// Add event listener to toggle percentage display
-document.getElementById("toggle-percentage").addEventListener("click", () => {
-  showPercentage = !showPercentage; // Toggle the state
-  const button = document.getElementById("toggle-percentage");
-  button.textContent = showPercentage ? "Hide Percentage" : "Show Percentage"; // Update button text
-  updateChart(); // Re-render the chart with updated settings
-});
+    <script>
+      let isMouseDown = false;
+      let selectedCells = new Set();
 
-const updateChart = () => {
-  const tableData = hot.getData();
-  const parentMap = new Map();
-
-  // Process the data into parent-child structure
-  tableData.slice(1).forEach((row) => {
-    const [category, value, parent] = row;
-
-    if (parent) {
-      if (!parentMap.has(parent)) {
-        parentMap.set(parent, { children: [] });
+      // Clear selection
+      function clearSelection() {
+        selectedCells.forEach((cell) => cell.classList.remove("selected"));
+        selectedCells.clear();
       }
-      parentMap.get(parent).children.push({ name: category, value: value });
-    } else {
-      if (!parentMap.has(category)) {
-        parentMap.set(category, { children: [] });
+
+      // Handle mouse down on a cell
+      function handleMouseDown(event, cell) {
+        isMouseDown = true;
+        clearSelection();
+        selectCell(cell);
       }
-    }
-  });
 
-  // Prepare the final data array for Treemap
-  const nodes = [];
-  parentMap.forEach((data, category) => {
-    nodes.push({
-      name: category,
-      value: data.children.reduce((acc, child) => acc + child.value, 0),
-      children: data.children,
-    });
-  });
+      // Handle mouse over a cell (dragging)
+      function handleMouseOver(event, cell) {
+        if (isMouseDown) {
+          selectCell(cell);
+        }
+      }
 
-  const totalValue = nodes.reduce((acc, node) => acc + node.value, 0);
+      // Handle mouse up (end dragging)
+      function handleMouseUp() {
+        isMouseDown = false;
+      }
 
-  // Update the chart options
-  chart.setOption({
-    title: {
-      text:
-        titleInput.value ||
-        "Revenue Breakdown Across Organizational Hierarchies",
-      left: "center",
-    },
-    tooltip: {
-      trigger: "item",
-      formatter: (params) => {
-        const percentage = ((params.value / totalValue) * 100).toFixed(2);
-        return showPercentage
-          ? `${params.name}: ${params.value} (${percentage}%)`
-          : `${params.name}: ${params.value}`;
-      },
-    },
-    series: [
-      {
-        type: "treemap",
-        data: nodes,
-        label: {
-          show: true,
-          formatter: (params) => {
-            const percentage = ((params.value / totalValue) * 100).toFixed(2);
-            return showPercentage
-              ? `${params.name}\n(${percentage}%)`
-              : `${params.name}`;
-          },
-        },
-        itemStyle: {
-          borderWidth: parseInt(borderWidthSlider.value, 10),
-          borderColor: colorPicker.value,
-        },
-      },
-    ],
-  });
-};
+      // Select a cell
+      function selectCell(cell) {
+        if (!selectedCells.has(cell)) {
+          selectedCells.add(cell);
+          cell.classList.add("selected");
+        }
+      }
 
-// Ensure the chart updates correctly after the DOM is ready
-updateChart();
+      // Handle deletion
+      function deleteSelectedCells() {
+        selectedCells.forEach((cell) => {
+          cell.textContent = ""; // Clear cell content
+        });
+        clearSelection();
+        updateChart(); // Update the graph dynamically
+      }
 
+      // Attach event listeners to cells
+      document.querySelectorAll("#custom-table td").forEach((cell) => {
+        cell.addEventListener("mousedown", (event) =>
+          handleMouseDown(event, cell)
+        );
+        cell.addEventListener("mouseover", (event) =>
+          handleMouseOver(event, cell)
+        );
+        cell.addEventListener("mouseup", handleMouseUp);
+      });
 
-        
+      // Attach event listener for delete key
+      document.addEventListener("keydown", (event) => {
+        if (
+          (event.key === "Delete" || event.key === "Backspace") &&
+          selectedCells.size > 0
+        ) {
+          deleteSelectedCells();
+        }
+      });
+
+      // Ensure mouseup clears the drag state
+      document.addEventListener("mouseup", handleMouseUp);
+
+      // Function to handle paste event
+      function handlePaste(event) {
+        event.preventDefault(); // Prevent default paste behavior
+
+        const clipboardData = event.clipboardData || window.clipboardData;
+        const pastedData = clipboardData.getData("text"); // Get pasted data as plain text
+        const rows = pastedData.split("\n").filter((row) => row.trim() !== ""); // Split into rows
+
+        // Find the starting cell (first selected cell)
+        const allCells = Array.from(
+          document.querySelectorAll("#custom-table tbody td")
+        );
+        const startCell = Array.from(selectedCells)[0]; // Use the first selected cell
+        if (!startCell) {
+          alert("Please select a starting cell before pasting.");
+          return;
+        }
+
+        const startIndex = allCells.indexOf(startCell);
+        if (startIndex === -1) return; // No valid starting cell
+
+        // Get the number of columns in the table
+        const columnsPerRow = startCell.parentNode.cells.length;
+
+        // Loop through rows and columns to paste data
+        let currentRowIndex = Math.floor(startIndex / columnsPerRow);
+        rows.forEach((row) => {
+          const values = row.split("\t"); // Split row into columns
+          let currentCellIndex = startIndex % columnsPerRow;
+
+          values.forEach((value) => {
+            const cellIndex =
+              currentRowIndex * columnsPerRow + currentCellIndex;
+            const cell = allCells[cellIndex];
+
+            if (cell) {
+              cell.textContent = value.trim(); // Set cell content
+            }
+            currentCellIndex++;
+          });
+
+          currentRowIndex++;
+        });
+
+        updateChart(); // Refresh the graph after pasting
+        populateCategoryDropdown(); // Update dropdown if categories change
+      }
+
+      // Add paste event listener to the table
+      document
+        .querySelector("#custom-table")
+        .addEventListener("paste", handlePaste);
 
       // Save as PNG
       document.getElementById("save-png").addEventListener("click", () => {
-  const imgData = chart.getDataURL({
-    type: "png",
-    backgroundColor: '#ffffff', // Set to white or any desired color
-  });
-  const a = document.createElement("a");
-  a.href = imgData;
-  a.download = "chart.png";
-  a.click();
-});
-
+        const imgData = chart.getDataURL({
+          type: "png",
+          backgroundColor: "#ffffff", // Set to white or any desired color
+        });
+        const a = document.createElement("a");
+        a.href = imgData;
+        a.download = "chart.png";
+        a.click();
+      });
 
       // Save as JPG
       document.getElementById("save-jpg").addEventListener("click", () => {
-  const imgData = chart.getDataURL({
-    type: "jpg",
-    backgroundColor: '#ffffff', // Set to white or any desired color
-  });
-  const a = document.createElement("a");
-  a.href = imgData;
-  a.download = "chart.jpg";
-  a.click();
-});
+        const imgData = chart.getDataURL({
+          type: "jpg",
+          backgroundColor: "#ffffff", // Set to white or any desired color
+        });
+        const a = document.createElement("a");
+        a.href = imgData;
+        a.download = "chart.jpg";
+        a.click();
+      });
 
-
-      // Save Table as Excel
+      // Save as Excel
       document.getElementById("save-excel").addEventListener("click", () => {
-        const tableData = hot.getData(); // Get the data from the Handsontable instance
+        const tableRows = document.querySelectorAll("#custom-table tbody tr");
+        const tableData = [];
 
-        // Convert the table data into a worksheet format
-        const ws = XLSX.utils.aoa_to_sheet(tableData);
+        // Extract table data
+        tableRows.forEach((row) => {
+          const cells = row.querySelectorAll("td");
+          const rowData = Array.from(cells).map((cell) =>
+            cell.textContent.trim()
+          );
+          tableData.push(rowData);
+        });
 
-        // Create a new workbook and append the worksheet
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Table Data");
+        // Create a workbook and a worksheet
+        const workbook = XLSX.utils.book_new();
+        const worksheet = XLSX.utils.aoa_to_sheet([
+          ["Category", "Value", "Parent"], // Add column headers
+          ...tableData,
+        ]);
 
-        // Write the workbook to a binary Excel file and trigger download
-        XLSX.writeFile(wb, "table.xlsx");
+        // Append the worksheet to the workbook
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Table Data");
+
+        // Export the workbook to an Excel file
+        XLSX.writeFile(workbook, "table_data.xlsx");
       });
-
-      // Initial chart update
-      updateChart();
-
-      // Real-Time Edit Listener for Handsontable (Instant Update)
-      hot.addHook("afterChange", function (changes, source) {
-        if (source === "edit" || source === "Autofill.fill") {
-          updateChart(); // Update chart when table changes
-        }
-      });
-      // Dynamically resize the chart on window resize
-window.addEventListener("resize", () => {
-  chart.resize();
-});
-
-const populateCategoryDropdown = () => {
-  const tableData = hot.getData();
-  const uniqueCategories = new Set(tableData.slice(1).map(row => row[0])); // Extract unique categories
-
-  const dropdown = document.getElementById("category-color");
-  dropdown.innerHTML = ""; // Clear existing options
-
-  uniqueCategories.forEach((category) => {
-    if (category) {
-      const option = document.createElement("option");
-      option.value = category;
-      option.textContent = category;
-      dropdown.appendChild(option);
-    }
-  });
-};
-populateCategoryDropdown();
-
-// Re-populate when table data changes
-hot.addHook("afterChange", populateCategoryDropdown);
-
-const applyColorToCategory = () => {
-  const selectedCategory = document.getElementById("category-color").value;
-  const selectedColor = document.getElementById("portion-color-picker").value;
-
-  const tableData = hot.getData();
-  const parentMap = new Map();
-
-  // Rebuild parent-child relationships
-  tableData.slice(1).forEach((row) => {
-    const [category, value, parent] = row;
-
-    if (parent) {
-      if (!parentMap.has(parent)) {
-        parentMap.set(parent, { children: [] });
-      }
-      parentMap.get(parent).children.push({
-        name: category,
-        value: value,
-        itemStyle: category === selectedCategory ? { color: selectedColor } : {},
-      });
-    } else {
-      if (!parentMap.has(category)) {
-        parentMap.set(category, { children: [] });
-      }
-    }
-  });
-
-  const nodes = [];
-  parentMap.forEach((data, category) => {
-    nodes.push({
-      name: category,
-      value: data.children.reduce((acc, child) => acc + child.value, 0),
-      children: data.children,
-      itemStyle: category === selectedCategory ? { color: selectedColor } : {},
-    });
-  });
-
-  chart.setOption({
-    series: [
-      {
-        type: "treemap",
-        data: nodes,
-        label: {
-          show: true,
-          formatter: (params) => `${params.name}\n(${params.value})`,
-        },
-        itemStyle: {
-          borderWidth: parseInt(borderWidthSlider.value, 10),
-          borderColor: colorPicker.value,
-        },
-      },
-    ],
-  });
-};
-
-// Add event listener to "Apply Color" button
-document.getElementById("apply-color").addEventListener("click", applyColorToCategory);
-
-
-
     </script>
-
-    
-   
-  
-  
   </body>
 </html>
