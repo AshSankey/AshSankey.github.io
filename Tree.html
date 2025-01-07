@@ -78,7 +78,6 @@
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         font-weight: 500;
         width: 100%; /* Increase width to extend beyond parent */
-        border-bottom: 2px solid #f0efee; /* Add a solid bottom border with color */
       }
 
       #bottom-section {
@@ -176,29 +175,6 @@
         gap: 20px;
       }
 
-      /* Main Content */
-      #controls {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 20px; /* This will add space between the buttons */
-        margin-bottom: 20px;
-        flex-wrap: wrap;
-      }
-
-      button {
-        background-color: #3498db;
-        color: white;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s ease;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        margin: 5px; /* Added margin between buttons */
-        padding: 10px 15px;
-      }
-
       button:hover {
         background-color: #2980b9;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -218,13 +194,10 @@
         cursor: not-allowed;
       }
 
-      /* Slider Container */
       .slider-container {
-        /* Modern Slider Container */
-
         display: flex;
-        align-items: center;
-        gap: 15px;
+        align-items: center; /* Aligns elements vertically in the center */
+        justify-content: flex-start; /* Default: Aligns content to the left */
         padding: 7px 13px;
         background-color: #f9f9f9;
         border-radius: 10px;
@@ -233,7 +206,13 @@
         font-size: 14px;
         color: #2c3e50;
         max-width: 400px;
-        margin: 0 auto;
+        margin: 0 auto; /* Centers the container horizontally */
+      }
+
+      /* Add this to shift the slider to the right */
+      .slider-container {
+        margin-left: auto; /* Pushes the slider to the right */
+        margin-right: 0; /* Ensures no extra space on the right */
       }
 
       /* Chart and Table Container */
@@ -299,140 +278,226 @@
         display: none;
       }
 
-      #color-picker {
+      #controls-ribbon {
+        display: flex; /* Aligns all controls in a row */
+        flex-wrap: wrap; /* Allows wrapping to the next line if space is limited */
+        align-items: center; /* Vertically aligns all controls */
+        justify-content: flex-start; /* Aligns controls to the left */
+        gap: 10px; /* Consistent spacing between controls */
+        padding: 15px;
+        background-color: #f4f4f4;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .control-section,
+      .slider-container {
+        display: flex; /* Aligns label and input horizontally */
+        align-items: center; /* Vertically centers the items */
+        gap: 10px; /* Adds spacing between label and input */
+      }
+
+      .label {
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+        white-space: nowrap; /* Prevents labels from wrapping */
+      }
+
+      .modern-input {
+        padding: 8px 12px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        width: 200px; /* Ensures consistent input width */
+      }
+
+      #border-width {
+        margin: 0; /* Removes any default margins */
+      }
+
+      #border-width-value {
+        font-size: 14px;
+        color: #333;
+      }
+
+      .input-container {
+        display: flex;
+        align-items: center;
+      }
+
+      .modern-input {
+        padding: 8px 12px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        width: 200px; /* Ensures consistent input width */
+      }
+
+      .modern-input:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+      }
+      #category-color {
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        width: 150px;
+      }
+
+      #portion-color-picker {
         width: 40px;
         height: 40px;
-        border-radius: 50%;
-        cursor: pointer;
-        border: 2px solid #ccc;
-        margin-left: 10px;
-      }
-
-      #color-picker:hover {
-        border-color: #3498db;
-      }
-
-      /* Controls Ribbon Styling */
-      #controls-ribbon {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 5px;
-        padding: 10px 45px; /* Add horizontal padding for left and right gap */
-        background: linear-gradient(
-          to right,
-          #3498db,
-          #2ecc71,
-          #f39c12
-        ); /* Subtle background color */
-
-        font-family: Arial, sans-serif;
-        white-space: nowrap;
-        border-bottom-left-radius: 20px; /* Round bottom-left corner */
-        border-bottom-right-radius: 20px; /* Round bottom-right corner */
-        margin-left: 30px; /* Adjust this value for more space on the left */
-        margin-right: 30px; /* Adjust this value for more space on the right */
-      }
-
-      /* Input and Control Sections */
-      .control-section,
-      .slider-container,
-      .export-controls {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-      }
-
-      label {
-        font-size: 14px;
-        font-weight: bold;
-      }
-
-      input[type="text"],
-      input[type="color"],
-      input[type="range"] {
-        margin-left: 5px;
-      }
-
-      /* Ribbon Buttons */
-      .ribbon-button {
-        padding: 10px 15px;
-        background-color: #007bff;
-        color: white;
         border: none;
-        border-radius: 3px;
+        border-radius: 6px;
         cursor: pointer;
-        font-size: 15px;
-        border-radius: 10px; /* Increased roundness */
+      }
+
+      .ribbon-button {
+        padding: 10px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
       }
 
       .ribbon-button:hover {
         background-color: #0056b3;
       }
 
-      /* Responsive Design */
-      @media (max-width: 768px) {
-        #controls-ribbon {
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-
-        .control-section,
-        .slider-container,
-        .export-controls {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-
-        label {
-          margin-bottom: 5px;
-        }
+      /* Slider Styling */
+      .slider-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
       }
+
+      #border-width {
+        appearance: none;
+        width: 150px;
+        height: 6px;
+        background: #ddd;
+        border-radius: 5px;
+        outline: none;
+      }
+
+      #border-width::-webkit-slider-thumb {
+        appearance: none;
+        width: 14px;
+        height: 14px;
+        background: #007bff;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      #border-width-value {
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+      }
+
+      /* Color Picker Styling */
+      .color-picker-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .modern-color-picker {
+        width: 40px;
+        height: 40px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      /* Export Controls */
+      .export-controls {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .ribbon-button {
+        padding: 10px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .ribbon-button:hover {
+        background-color: #0056b3;
+      }
+
+      /* Dropdown Styling */
+      .dropdown {
+        position: relative;
+        z-index: 10; /* Ensures dropdown stays above other elements */
+      }
+
+      .dropdown-button {
+        padding: 8px 12px; /* Smaller padding for a compact look */
+        font-size: 14px;
+        font-weight: 500;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .dropdown-button:hover {
+        background-color: #0056b3;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 150px; /* Smaller width for a compact container */
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        z-index: 1000; /* Ensures dropdown stays on top */
+      }
+
+      .dropdown-content button {
+        padding: 8px 12px; /* Smaller padding for compact options */
+        font-size: 13px; /* Slightly smaller font size */
+        color: #333;
+        background-color: #fff;
+        border: none;
+        text-align: left;
+        width: 100%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .dropdown-content button:hover {
+        background-color: #f4f4f4;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+
       /* Media Query for Mobile Screens */
-      @media (max-width: 768px) {
-        #top-section {
-          flex-direction: column;
-          text-align: center;
-        }
 
-        #bottom-section {
-          flex-direction: column;
-          gap: 15px;
-          overflow-y: auto; /* Enable scrolling for smaller screens */
-        }
-
-        #left-section,
-        #right-section {
-          flex: 1 1 100%; /* Make sections stack vertically */
-          width: 100%;
-        }
-
-        #controls-ribbon {
-          flex-wrap: wrap;
-          justify-content: center;
-          gap: 10px;
-          padding: 10px;
-        }
-
-        #controls {
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-
-        button {
-          padding: 12px 20px;
-          font-size: 14px;
-        }
-
-        #table-container {
-          overflow-x: auto; /* Enable horizontal scrolling for table */
-          max-height: 300px; /* Limit table height on small screens */
-        }
-
-        #chart-container {
-          height: 300px; /* Limit chart height on small screens */
-        }
-      }
       /* Default Logo Styling */
       #logo {
         height: 40px; /* Adjust height for visibility */
@@ -451,59 +516,6 @@
         box-sizing: border-box; /* Include padding in the container width */
       }
 
-      /* Responsive Adjustments for Mobile */
-      @media (max-width: 768px) {
-        #logo-container {
-          justify-content: flex-start; /* Ensure logo stays aligned to the left */
-          padding-left: 10px; /* Optional: Add some space on the left for aesthetics */
-        }
-      }
-      .dropdown {
-        position: relative;
-        display: inline-block;
-      }
-
-      .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f9f9f9;
-        min-width: 170px;
-        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-      }
-
-      .dropdown-content button {
-        color: black;
-        padding: 10px 15px;
-        text-decoration: none;
-        display: block;
-        border: none;
-        background: none;
-        width: 95%;
-        text-align: left;
-        cursor: pointer;
-      }
-
-      .dropdown-content button:hover {
-        background-color: #2980b9;
-      }
-
-      .dropdown:hover .dropdown-content {
-        display: block;
-      }
-
-      .dropdown-button {
-        background-color: #4caf50;
-        color: white;
-        padding: 10px 15px;
-        font-size: 16px;
-        border: none;
-        cursor: pointer;
-      }
-
-      .dropdown-button:hover {
-        background-color: #3e8e41;
-      }
       /* Modal Overlay */
       .overlay {
         display: none;
@@ -573,6 +585,7 @@
       .dialog-buttons {
         display: flex;
         justify-content: space-between;
+
         gap: 10px;
       }
 
@@ -608,28 +621,6 @@
         background: #c0392b;
       }
 
-      /* Responsive Design */
-      @media (max-width: 768px) {
-        .responsive-dialog {
-          width: 90%;
-          max-width: 100%;
-          padding: 15px;
-        }
-
-        .dialog-title {
-          font-size: 16px;
-        }
-
-        .dialog-content {
-          font-size: 13px;
-        }
-
-        .button-primary,
-        .button-secondary {
-          font-size: 13px;
-          padding: 8px 12px;
-        }
-      }
       td.selected {
         background-color: #d3d3d3; /* Highlight color */
       }
@@ -698,82 +689,29 @@
         transform: translateY(0); /* Reset lift on click */
         box-shadow: none; /* Remove shadow on click */
       }
-
-      /* Responsive Design */
-      @media (max-width: 768px) {
-        .switch-ai-button {
-          padding: 8px 16px; /* Smaller padding for mobile */
-          font-size: 14px; /* Slightly smaller text */
-          margin-left: 10px; /* Adjust margin for smaller screens */
-        }
-
-        .switch-ai-button img {
-          width: 18px; /* Smaller logo */
-          height: 18px;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .switch-ai-button {
-          padding: 6px 12px; /* Even smaller padding for very small screens */
-          font-size: 12px; /* Smaller text size */
-          margin-left: 5px; /* Further adjust margin */
-        }
-
-        .switch-ai-button img {
-          width: 16px; /* Smaller logo */
-          height: 16px;
-        }
-      }
-
-      /* Modern input field styling */
-      .modern-input {
-        width: 80%;
-        padding: 6px 10px;
-        border: 2px solid #ccc;
-        border-radius: 8px;
-        font-size: 1rem;
-        color: #333;
-        background-color: #faf8f8;
-        outline: none;
-        transition: all 0.3s ease;
-      }
-
-      .modern-input:focus {
-        border-color: #0078d4;
-        box-shadow: 0 0 5px rgba(0, 120, 212, 0.3);
-      }
-
-      /* Placeholder text styling */
-      .modern-input::placeholder {
-        color: #aaa;
-        transition: color 0.3s ease;
-      }
-
-      .modern-input:focus::placeholder {
-        color: transparent;
-      }
-      /* Color Picker Container */
-      .color-picker-container {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 3px 10px;
-        background-color: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        max-width: 300px;
-        margin: 0 auto;
-      }
-
-      .modern-color-picker {
-        width: 50px;
-        height: 50px;
+      #add-row-button {
+        padding: 10px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #fff;
+        background-color: #28a745; /* Green color for positive action */
         border: none;
-        border-radius: 50%;
+        border-radius: 6px;
         cursor: pointer;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      #add-row-button:hover {
+        background-color: #218838; /* Darker green on hover */
+      }
+
+      #add-row-button:active {
+        transform: scale(0.98); /* Slightly shrink on click */
+      }
+
+      #add-row-button:focus {
+        outline: none;
+        box-shadow: 0 0 4px rgba(40, 167, 69, 0.8); /* Green focus glow */
       }
     </style>
   </head>
@@ -791,11 +729,10 @@
     </div>
 
     <div id="controls-ribbon">
-      <!-- Add Row Button -->
-
       <!-- Title Input Section -->
       <div class="control-section">
         <label for="treemap-title" class="label">Title:</label>
+
         <div class="input-container">
           <input
             type="text"
@@ -803,7 +740,6 @@
             placeholder="Enter a title"
             class="modern-input"
           />
-          <span class="underline"></span>
         </div>
       </div>
 
@@ -839,7 +775,7 @@
         <button id="toggle-percentage" class="ribbon-button">
           Show Percentage
         </button>
-        <div class="control-section" class="modern-color-picker">
+        <div class="control-section">
           <label for="category-color">Category:</label>
           <select id="category-color">
             <!-- Options will be dynamically populated -->
