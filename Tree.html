@@ -939,6 +939,18 @@
         </table>
         <button id="add-row-button">Add Row</button>
       </div>
+      <div
+        id="insights-section"
+        style="
+          padding: 10px;
+          background-color: #f9f9f9;
+          border-radius: 6px;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        "
+      >
+        <h3></h3>
+        <ul id="insights-list"></ul>
+      </div>
 
       <!-- Right Section: Output and Controls -->
       <div id="right-section">
@@ -1461,6 +1473,369 @@
         // Export the workbook to an Excel file
         XLSX.writeFile(workbook, "table_data.xlsx");
       });
+    </script>
+
+    <script>
+      // Select the AI switch button
+      const aiSwitchButton = document.querySelector(".switch-ai-button");
+
+      // Flag to track AI state
+      let isAiEnabled = false;
+
+      // Event listener for AI switch button
+      aiSwitchButton.addEventListener("click", () => {
+        isAiEnabled = !isAiEnabled;
+
+        // Update button text
+        aiSwitchButton.innerHTML = isAiEnabled
+          ? '<img src="tree assets/ai-svgrepo-com (1).svg" alt="AI Logo" /> Switch Off'
+          : '<img src="tree assets/ai-svgrepo-com (1).svg" alt="AI Logo" /> Switch On';
+
+        // Perform AI actions
+        if (isAiEnabled) {
+          enableAiFeatures();
+        } else {
+          disableAiFeatures();
+        }
+      });
+
+      // Function to enable AI features
+      function enableAiFeatures() {
+        console.log("AI features enabled.");
+        autoUpdateChart();
+        suggestData();
+        highlightErrors();
+        performAdvancedAnalysis(); // Add advanced analysis
+        renderAdditionalCharts(); // Add new charts to insights
+      }
+
+      // Function to disable AI features
+      function disableAiFeatures() {
+        console.log("AI features disabled.");
+        clearSuggestions();
+        clearHighlights();
+        disableDynamicUpdates();
+      }
+
+      function renderAdditionalCharts() {
+        const insightsSection = document.getElementById("insights-section");
+
+        // Clear existing charts before rendering new ones
+        let chartsContainer = document.getElementById("ai-charts-container");
+        if (chartsContainer) {
+          chartsContainer.remove();
+        }
+
+        // Create a container for the new charts
+        chartsContainer = document.createElement("div");
+        chartsContainer.id = "ai-charts-container";
+        chartsContainer.style.display = "flex";
+        chartsContainer.style.flexWrap = "wrap";
+        chartsContainer.style.gap = "20px";
+        insightsSection.appendChild(chartsContainer);
+
+        // Bar Chart
+        const barChartDiv = document.createElement("div");
+        barChartDiv.style.width = "400px";
+        barChartDiv.style.height = "300px";
+        barChartDiv.id = "bar-chart";
+        chartsContainer.appendChild(barChartDiv);
+        renderBarChart(barChartDiv);
+      }
+
+      // Function to render a bar chart
+      function renderBarChart(container) {
+        const chart = echarts.init(container);
+        const data = extractTableData();
+
+        const option = {
+          title: { text: "Top Categories", left: "center" },
+          xAxis: {
+            type: "category",
+            data: data.topCategories.map((c) => c.category),
+          },
+          yAxis: { type: "value" },
+          series: [
+            {
+              data: data.topCategories.map((c) => c.value),
+              type: "bar",
+              color: "#32CD32",
+            },
+          ],
+        };
+        chart.setOption(option);
+      }
+
+      // Helper function to extract data from the table
+      function extractTableData() {
+        const tableRows = document.querySelectorAll("#custom-table tbody tr");
+        const data = [];
+
+        tableRows.forEach((row) => {
+          const cells = row.querySelectorAll("td");
+          const category = cells[0].textContent.trim();
+          const value = parseFloat(cells[1].textContent.trim()) || 0;
+
+          if (category) {
+            data.push({ category, value });
+          }
+        });
+
+        // Calculate top categories and contributions
+        const totalValue = data.reduce((sum, item) => sum + item.value, 0);
+        const sortedData = data.sort((a, b) => b.value - a.value);
+        const topCategories = sortedData.slice(0, 3);
+        const contributions = data.map((item) => ({
+          category: item.category,
+          value: item.value,
+          percentage: ((item.value / totalValue) * 100).toFixed(2),
+        }));
+
+        return { topCategories, contributions };
+      }
+      // AI Feature 1: Automatically update chart based on trends
+      function autoUpdateChart() {
+        console.log("Dynamic chart updates enabled.");
+        // Example: Automatically refresh the chart every 5 seconds
+        window.aiUpdateInterval = setInterval(updateChart, 5000);
+      }
+
+      // AI Feature 2: Suggest data for empty cells
+      function suggestData() {
+        console.log("Data suggestion enabled.");
+        const rows = document.querySelectorAll("#custom-table tbody tr");
+
+        rows.forEach((row) => {
+          const cells = row.querySelectorAll("td");
+          cells.forEach((cell, index) => {
+            if (cell.textContent.trim() === "") {
+              if (index === 1) {
+                // Suggest a value for the "Value" column
+                cell.textContent = Math.floor(Math.random() * 1000);
+                cell.style.backgroundColor = "#ffffcc"; // Highlight suggestion
+              } else if (index === 2) {
+                // Suggest a parent category
+                cell.textContent = "Suggested Parent";
+                cell.style.backgroundColor = "#ffffcc"; // Highlight suggestion
+              }
+            }
+          });
+        });
+      }
+
+      // AI Feature 3: Highlight errors in the table
+      function highlightErrors() {
+        console.log("Error highlighting enabled.");
+        const rows = document.querySelectorAll("#custom-table tbody tr");
+
+        rows.forEach((row) => {
+          const cells = row.querySelectorAll("td");
+          const valueCell = cells[1];
+          const value = parseFloat(valueCell.textContent.trim());
+
+          if (isNaN(value) || value < 0) {
+            // Highlight cells with invalid or negative values
+            valueCell.style.backgroundColor = "#ffcccc";
+          }
+        });
+      }
+
+      function performAdvancedAnalysis() {
+        console.log("Performing advanced analysis...");
+        const tableRows = document.querySelectorAll("#custom-table tbody tr");
+        const data = [];
+
+        // Extract data from the table
+        tableRows.forEach((row) => {
+          const cells = row.querySelectorAll("td");
+          const category = cells[0].textContent.trim();
+          const value = parseFloat(cells[1].textContent.trim()) || 0;
+
+          if (category) {
+            data.push({ category, value });
+          }
+        });
+
+        if (data.length === 0) {
+          alert("No data available for analysis!");
+          return;
+        }
+
+        // Clear previous insights and chart data
+        const insightsList = document.getElementById("insights-list");
+        insightsList.innerHTML = ""; // Clear previous insights
+
+        const chartContainer = document.getElementById("chart-container");
+        chartContainer.innerHTML =
+          '<div id="chart" style="width: 100%; height: 100%;"></div>'; // Reset chart
+
+        // Reinitialize the chart
+        const chart = echarts.init(document.getElementById("chart"));
+
+        // Calculate metrics
+        const totalValue = data.reduce((sum, item) => sum + item.value, 0);
+        const averageValue = totalValue / data.length;
+        const values = data.map((item) => item.value);
+        const variance =
+          values.reduce(
+            (sum, value) => sum + Math.pow(value - averageValue, 2),
+            0
+          ) / data.length;
+        const standardDeviation = Math.sqrt(variance);
+
+        // Sort categories
+        const sortedData = data.sort((a, b) => b.value - a.value);
+        const topCategories = sortedData.slice(0, 3); // Top 3
+        const bottomCategories = sortedData.slice(-3); // Bottom 3
+
+        // Calculate contributions
+        const contributions = data.map((item) => ({
+          category: item.category,
+          percentage: ((item.value / totalValue) * 100).toFixed(2),
+        }));
+
+        // Insights
+        const insights = [];
+        insights.push(`Total value across all categories: ${totalValue}.`);
+        insights.push(
+          `Average value per category: ${averageValue.toFixed(2)}.`
+        );
+        insights.push(
+          `Standard deviation: ${standardDeviation.toFixed(
+            2
+          )} (indicates data variability).`
+        );
+        insights.push(
+          `Top 3 categories: ${topCategories
+            .map((item) => `${item.category} (${item.value})`)
+            .join(", ")}.`
+        );
+        insights.push(
+          `Bottom 3 categories: ${bottomCategories
+            .map((item) => `${item.category} (${item.value})`)
+            .join(", ")}.`
+        );
+
+        // Actionable Recommendations
+        if (bottomCategories.length > 0) {
+          insights.push(
+            `Consider reallocating resources from ${bottomCategories
+              .map((item) => item.category)
+              .join(", ")} to higher-performing categories.`
+          );
+        }
+        if (topCategories.length > 0) {
+          insights.push(
+            `Focus on expanding ${
+              topCategories[0].category
+            }, which has the highest contribution of ${
+              contributions.find(
+                (c) => c.category === topCategories[0].category
+              ).percentage
+            }% to the total value.`
+          );
+        }
+
+        // Display Insights with Typing Effect
+        displayInsightsWithTyping(insights);
+
+        // Update Chart with Contributions
+        const nodes = data.map((item) => ({
+          name: `${item.category} (${
+            contributions.find((c) => c.category === item.category).percentage
+          }%)`,
+          value: item.value,
+          itemStyle: {
+            color: item.value >= averageValue ? "#32CD32" : "#FF5733", // Green for high, red for low
+          },
+        }));
+
+        chart.setOption({
+          series: [
+            {
+              type: "treemap",
+              data: nodes,
+            },
+          ],
+        });
+      }
+
+      // Typing Effect Function
+      function displayInsightsWithTyping(insights) {
+        const insightsList = document.getElementById("insights-list");
+        insightsList.innerHTML = ""; // Clear previous content
+
+        let currentInsightIndex = 0;
+
+        // Function to type out a single insight
+        function typeInsight(insight, listItem, charIndex = 0) {
+          if (charIndex < insight.length) {
+            listItem.innerHTML += insight.charAt(charIndex); // Append one character
+            setTimeout(() => typeInsight(insight, listItem, charIndex + 1), 10); // Typing speed
+          } else {
+            // Move to the next insight after a short delay
+            currentInsightIndex++;
+            if (currentInsightIndex < insights.length) {
+              setTimeout(() => typeNextInsight(), 500); // Delay between insights
+            }
+          }
+        }
+
+        // Function to handle the next insight
+        function typeNextInsight() {
+          const insight = insights[currentInsightIndex];
+          const listItem = document.createElement("li"); // Create a new list item
+          insightsList.appendChild(listItem); // Add it to the insights list
+          typeInsight(insight, listItem); // Start typing the current insight
+        }
+
+        // Start typing the first insight
+        if (insights.length > 0) {
+          typeNextInsight();
+        }
+      }
+
+      // Clear AI suggestions
+      function clearSuggestions() {
+        console.log("Clearing AI suggestions.");
+        const cells = document.querySelectorAll("#custom-table td");
+        cells.forEach((cell) => {
+          if (cell.style.backgroundColor === "rgb(255, 255, 204)") {
+            cell.style.backgroundColor = ""; // Reset background color
+          }
+        });
+      }
+
+      // Function to display insights
+      function displayInsights() {
+        const insightsList = document.getElementById("insights-list");
+        insights.forEach((insight) => {
+          const listItem = document.createElement("li");
+          listItem.textContent = insight;
+          insightsList.appendChild(listItem);
+        });
+
+        // Show the insights section once content is added
+        document.getElementById("insights-section").style.display = "block";
+      }
+
+      // Call the function to display insights
+      displayInsights();
+      // Clear error highlights
+      function clearHighlights() {
+        console.log("Clearing error highlights.");
+        const cells = document.querySelectorAll("#custom-table td");
+        cells.forEach((cell) => {
+          if (cell.style.backgroundColor === "rgb(255, 204, 204)") {
+            cell.style.backgroundColor = ""; // Reset background color
+          }
+        });
+      }
+
+      // Stop dynamic updates when AI is disabled
+      function disableDynamicUpdates() {
+        clearInterval(window.aiUpdateInterval);
+      }
     </script>
   </body>
 </html>
