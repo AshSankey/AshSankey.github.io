@@ -161,7 +161,7 @@ footer {
 }
 
       .ai-feature {
-        background: linear-gradient(90deg, #673ab7, #3f51b5);
+        background:#070716;
         color: #fff;
         padding: 20px;
         border-radius: 8px;
@@ -170,9 +170,13 @@ footer {
       }
 
       .ai-feature h3 {
-        margin-bottom: 15px;
-        font-size: 1.5rem;
-      }
+  margin-bottom: 15px;
+  font-size: 5.1rem;
+  background: linear-gradient(to right, #3498db, #2ecc71, #f39c12); /* Gradient colors */
+  -webkit-background-clip: text; /* Clips the gradient to the text */
+  -webkit-text-fill-color: transparent; /* Makes the text transparent to show the gradient */
+  text-align: center; /* Optional: Center the text */
+}
 
       .ai-feature p {
         font-size: 1rem;
@@ -181,6 +185,7 @@ footer {
       .hero-image {
         text-align: center;
         margin-bottom: 20px;
+        border-radius: 15px; /* Adjust the value as needed for rounded corners */
       }
 
       .hero-image img {
@@ -203,6 +208,8 @@ footer {
   justify-content: space-between; /* Ensures spacing between elements */
   width: 100%;
   gap: 20px; /* Adds space between the GIF and text */
+  
+
 }
 
 .ai-text {
@@ -287,6 +294,7 @@ footer {
 .hero-gif img {
     width: 600px; /* Set the desired width */
     height: auto; /* Maintain aspect ratio */
+    border-radius: 15px; /* Adjust the value as needed for rounded corners */
 }
 @media (max-width: 768px) {
     .hero-content {
@@ -303,6 +311,7 @@ footer {
     .hero-gif img {
       width: 100%;
       max-width: 300px;
+      
     }
 
     .feature {
@@ -518,7 +527,23 @@ footer {
         font-size: 0.9rem; /* Smaller text for very small screens */
       }
     }
+    @media (max-width: 1024px) {
+  .ai-feature h3 {
+    font-size: 4rem; /* Adjusted for tablets */
+  }
+}
 
+@media (max-width: 768px) {
+  .ai-feature h3 {
+    font-size: 3rem; /* Adjusted for mobile screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .ai-feature h3 {
+    font-size: 2rem; /* Adjusted for very small screens */
+  }
+}
     </style>
 
     
