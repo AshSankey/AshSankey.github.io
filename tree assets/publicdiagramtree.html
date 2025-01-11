@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> </title>
+    <!-- DataTables CSS for modern table -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css"
+    />
+    <!-- Bootstrap for modern, responsive design -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="favicon.png" type="image/png" />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #030c29;
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+
+      .gallery {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 40px;
+        justify-content: center;
+      }
+
+      .gallery img {
+        width: 350px;
+        
+        object-fit: cover;
+        cursor: pointer;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .gallery img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+      }
+
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.75);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        color: white;
+      }
+
+      .modal.show {
+        display: flex;
+      }
+
+      .modal img {
+        width: 100%; /* Make image fit within modal width */
+        max-height: 90vh; /* Limit the image height to 80% of the viewport */
+        object-fit: contain; /* Ensure the image aspect ratio is preserved */
+        margin-bottom: 20px;
+        border-radius: 12px;
+        margin-top: 300px; /* Add margin at the top */
+      }
+
+      .modal .modal-header {
+        font-size: 28px;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .modal .close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+  z-index: 100; /* Ensure it appears above other elements */
+}
+
+
+      .modal .download-button {
+        background-color: #007bff;
+        color: white;
+        padding: 12px 24px;
+        text-decoration: none;
+        border-radius: 8px;
+        margin-top: 10px;
+        transition: background-color 0.3s;
+      }
+
+      .modal .download-button:hover {
+        background-color: #0056b3;
+      }
+
+      .dataTables_wrapper .dt-buttons {
+        margin-top: 20px;
+        text-align: right;
+      }
+      .chart-title {
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        padding: 10px; /* Adds space inside the box */
+        background-color: #f4f4f4; /* Example background color */
+        color: #333;
+        border-radius: 5px; /* Optional: Adds rounded corners */
+      }
+      .dataTables_wrapper .dt-buttons button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 14px;
+        border: none;
+        transition: background-color 0.3s;
+      }
+
+      .dataTables_wrapper .dt-buttons button:hover {
+        background-color: #0056b3;
+      }
+
+      /* Styling for modern chart images */
+      .modern-chart {
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      #details-table {
+        width: 100%; /* Make the table take up the full width of the container */
+        table-layout: fixed; /* Fix column widths */
+      }
+
+      #details-table thead th,
+      #details-table tbody td {
+        text-align: left; /* Align text to the left */
+        padding: 10px; /* Add some padding for better readability */
+      }
+
+      .modern-chart:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <img
+    src="aibutton new .gif"
+    alt="Looping GIF"
+    id="scrollingLogo"
+    style="
+      position: absolute;
+      top: 0;
+      right: 20px;
+      width: 80px;
+      height: auto;
+      z-index: -1;
+    "
+  />
+
+  <script>
+    window.addEventListener("scroll", () => {
+      const scrollPosition = window.scrollY; // Get current scroll position
+      const logo = document.getElementById("scrollingLogo");
+      logo.style.top = `${scrollPosition + 20}px`; // Move the logo down as you scroll
+    });
+  </script>
+  <body>
+    <div class="gallery">
+      <div class="modern-chart">
+        <img
+          src="Alphabet q3 2024 tree.png"
+          alt="Chart 1"
+          onclick="openModal('Alphabet q3 2024 tree.png', 'Chart 1', rowsData1)"
+        />
+        <div class="chart-title">Alphabet Q3 FY24 Income Statement</div>
+      </div>
+      <div class="modern-chart">
+        <img
+          src="TSMC Q3 FY24 Income Statement tree.jpg"
+          alt="Chart 2"
+          onclick="openModal('TSMC Q3 FY24 Income Statement tree.jpg', 'Chart 2', rowsData2)"
+        />
+        <div class="chart-title">TSMC Q3 FY24 Income Statement</div>
+      </div>
+      <div class="modern-chart">
+        <img
+          src="Apple FY24 Income Statement tree.jpg"
+          alt="Chart 3"
+          onclick="openModal('Apple FY24 Income Statement tree.jpg', 'Chart 3', rowsData3)"
+        />
+        <div class="chart-title">Apple FY24 Income Statement</div>
+      </div>
+
+      <div class="modern-chart">
+        <img
+          src="Berkshire Hathaway Q3 FY24 Income Statement tree.jpg"
+          alt="Chart 1"
+          onclick="openModal('Berkshire Hathaway Q3 FY24 Income Statement tree.jpg', 'Chart 4', rowsData4)"
+        />
+        <div class="chart-title">
+          Berkshire Hathaway Q3 FY24 Income Statement
+        </div>
+      </div>
+
+      <div class="modern-chart">
+        <img
+          src="Accenture Q3 FY24 Income Statement tree.jpg"
+          alt="Chart 1"
+          onclick="openModal('Accenture Q3 FY24 Income Statement tree.jpg', 'Chart 5', rowsData5)"
+        />
+        <div class="chart-title">Accenture Q3 FY24 Income Statement</div>
+      </div>
+
+     
+
+    <div id="modal" class="modal">
+      <span class="close-button" onclick="closeModal()">&times;</span>
+      <div class="modal-header" id="modal-title">Modal Title</div>
+      <img id="modal-image" src="" alt="Modal Image" />
+      <a id="download-button" href="#" download class="download-button"
+        >Download</a
+      >
+      <table
+        id="details-table"
+        class="display"
+        style="width: 100%; background: white; color: black"
+      ></table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+
+    <script>
+      const rowsData1 = [
+        {
+          Category: "Search advertising",
+          Value: "49.385",
+          Parent: "Ad revenue",
+        },
+        { Category: "YouTube", Value: "8.921", Parent: "Ad revenue" },
+        {
+          Category: "AdMob, AdSense & other",
+          Value: "7.548",
+          Parent: "Ad revenue",
+        },
+        { Category: "Ad revenue", Value: "65.854", Parent: "Revenue" },
+        { Category: "Playstore & other", Value: "10.656", Parent: "Revenue" },
+        { Category: "Google Cloud", Value: "11.353", Parent: "Revenue" },
+        { Category: "Other revenue", Value: "0.388", Parent: "Revenue" },
+        { Category: "Hedging gains", Value: "0.017", Parent: "Revenue" },
+        { Category: "Revenue", Value: "51.794", Parent: "Gross profit" },
+        { Category: "Revenue", Value: "36.474", Parent: "Cost of revenue" },
+        {
+          Category: "Gross profit",
+          Value: "28.521",
+          Parent: "Operating profit",
+        },
+        {
+          Category: "Gross profit",
+          Value: "23.273",
+          Parent: "Operating expenses",
+        },
+        {
+          Category: "Cost of revenue",
+          Value: "13.719",
+          Parent: "Traffic acquisition costs",
+        },
+        {
+          Category: "Cost of revenue",
+          Value: "22.755",
+          Parent: "Content acquisition, data centers, other",
+        },
+        { Category: "Operating profit", Value: "26.301", Parent: "Net profit" },
+        { Category: "Operating profit", Value: "5.405", Parent: "Tax" },
+        {
+          Category: "Other income",
+          Value: "3.185",
+          Parent: "Operating profit",
+        },
+        { Category: "Operating expenses", Value: "12.447", Parent: "R&D" },
+        {
+          Category: "Operating expenses",
+          Value: "7.227",
+          Parent: "Sales & marketing",
+        },
+        {
+          Category: "Operating expenses",
+          Value: "3.599",
+          Parent: "General & admin",
+        },
+      ];
+
+      const rowsData2 = [
+        { Category: "HPC", Value: "11.98704", Parent: "Revenue" },
+        { Category: "Smartphone", Value: "7.99136", Parent: "Revenue" },
+        { Category: "IoT", Value: "1.64528", Parent: "Revenue" },
+        { Category: "Automotive", Value: "1.1752", Parent: "Revenue" },
+        { Category: "Digital CE", Value: "0.23504", Parent: "Revenue" },
+        { Category: "Others", Value: "0.47008", Parent: "Revenue" },
+        { Category: "Revenue", Value: "9.911", Parent: "Cost of revenue" },
+        { Category: "Revenue", Value: "13.593", Parent: "Gross profit" },
+        { Category: "Gross profit", Value: "2.447", Parent: "Operating costs" },
+        { Category: "Operating costs", Value: "1.633", Parent: "R&D" },
+        { Category: "Operating costs", Value: "0.814", Parent: "SG&A" },
+        { Category: "Operating profit", Value: "1.828", Parent: "Tax" },
+        {
+          Category: "Non operating profit",
+          Value: "0.724",
+          Parent: "Operating profit",
+        },
+        {
+          Category: "Other profit",
+          Value: "0.016",
+          Parent: "Operating profit",
+        },
+        {
+          Category: "Gross profit",
+          Value: "11.146",
+          Parent: "Operating profit",
+        },
+        { Category: "Operating profit", Value: "10.058", Parent: "Net profit" },
+      ];
+
+      const rowsData3 = [
+        { Category: "iPhone", Value: "201.183", Parent: "Products" },
+        { Category: "MacBook", Value: "29.984", Parent: "Products" },
+        { Category: "iPad", Value: "26.694", Parent: "Products" },
+        { Category: "Watch and AirPods", Value: "37.005", Parent: "Products" },
+        { Category: "Products", Value: "294.866", Parent: "Revenue" },
+        { Category: "Services", Value: "96.169", Parent: "Revenue" },
+        { Category: "Revenue", Value: "180.683", Parent: "Gross profit" },
+        { Category: "Revenue", Value: "210.352", Parent: "Cost of revenue" },
+        {
+          Category: "Gross profit",
+          Value: "123.216",
+          Parent: "Operating profit",
+        },
+        {
+          Category: "Gross profit",
+          Value: "57.467",
+          Parent: "Operating expenses",
+        },
+        {
+          Category: "Cost of revenue",
+          Value: "185.233",
+          Parent: "Product costs",
+        },
+        {
+          Category: "Cost of revenue",
+          Value: "25.119",
+          Parent: "Service costs",
+        },
+        { Category: "Operating profit", Value: "93.467", Parent: "Net profit" },
+        { Category: "Operating profit", Value: "29.749", Parent: "Tax" },
+        { Category: "Other", Value: "0.269", Parent: "Net profit" },
+        { Category: "Operating expenses", Value: "31.37", Parent: "R&D" },
+        { Category: "Operating expenses", Value: "26.097", Parent: "SG&A" },
+      ];
+
+      const rowsData4 = [
+        {
+          Category: "Insurance & Corporate",
+          Value: "27.104",
+          Parent: "Revenue",
+        },
+        { Category: "BNSF", Value: "5.92", Parent: "Revenue" },
+        { Category: "Energy", Value: "7.323", Parent: "Revenue" },
+        { Category: "Pilot", Value: "10.623", Parent: "Revenue" },
+        { Category: "Manufacturing", Value: "19.67", Parent: "Revenue" },
+        { Category: "McLane", Value: "12.527", Parent: "Revenue" },
+        { Category: "Service & Retailing", Value: "9.828", Parent: "Revenue" },
+        { Category: "Revenue", Value: "81.223", Parent: "Expenses" },
+        { Category: "Expenses", Value: "60.758", Parent: "Insurance & Other" },
+        {
+          Category: "Expenses",
+          Value: "20.465",
+          Parent: "Railroad, Utilities & Energy",
+        },
+        {
+          Category: "Insurance & Other",
+          Value: "15.163",
+          Parent: "Losses & Loss Adjustment",
+        },
+        {
+          Category: "Insurance & Other",
+          Value: "0.925",
+          Parent: "Life, Annuity & Health Benefits",
+        },
+        {
+          Category: "Insurance & Other",
+          Value: "4.934",
+          Parent: "Underwriting Expenses",
+        },
+        {
+          Category: "Insurance & Other",
+          Value: "30.323",
+          Parent: "Sales & Services",
+        },
+        { Category: "Insurance & Other", Value: "1.774", Parent: "Leasing" },
+        {
+          Category: "Insurance & Other",
+          Value: "7.324",
+          Parent: "Selling, Gen. & Admin.",
+        },
+        { Category: "Insurance & Other", Value: "0.315", Parent: "Interest" },
+        { Category: "Revenue", Value: "11.772", Parent: "Gross profit" },
+        {
+          Category: "Railroad, Utilities & Energy",
+          Value: "3.855",
+          Parent: "Freight Rail Transportation",
+        },
+        {
+          Category: "Railroad, Utilities & Energy",
+          Value: "14.607",
+          Parent: "Utilities & Energy",
+        },
+        {
+          Category: "Railroad, Utilities & Energy",
+          Value: "1.104",
+          Parent: "Other",
+        },
+        {
+          Category: "Railroad, Utilities & Energy",
+          Value: "0.899",
+          Parent: "Interest Expenses",
+        },
+        {
+          Category: "Gross profit",
+          Value: "32.286",
+          Parent: "Operating profit",
+        },
+        {
+          Category: "Investment Gains",
+          Value: "20.514",
+          Parent: "Gross profit",
+        },
+        { Category: "Equity", Value: "0.222", Parent: "Operating profit" },
+        { Category: "Operating profit", Value: "6.028", Parent: "Tax" },
+        { Category: "Operating profit", Value: "26.48", Parent: "Net profit" },
+      ];
+
+      const rowsData5 = [
+        { Category: "North America", Value: "7.834206", Parent: "Revenue" },
+        {
+          Category: "Europe, M East, Africa",
+          Value: "5.776624",
+          Parent: "Revenue",
+        },
+        { Category: "Rest of World", Value: "2.855998", Parent: "Revenue" },
+        { Category: "Revenue", Value: "2.630865", Parent: "Operating profit" },
+        {
+          Category: "Revenue",
+          Value: "13.835963",
+          Parent: "Operating expenses",
+        },
+        { Category: "Interest", Value: "0.042356", Parent: "Net profit" },
+        {
+          Category: "Operating profit",
+          Value: "1.938992",
+          Parent: "Net profit",
+        },
+        { Category: "Operating profit", Value: "0.673022", Parent: "Tax" },
+        { Category: "Operating profit", Value: "0.018851", Parent: "Other" },
+        {
+          Category: "Operating expenses",
+          Value: "10.968377",
+          Parent: "Cost of Services",
+        },
+        {
+          Category: "Operating expenses",
+          Value: "1.750366",
+          Parent: "Sales & Marketing",
+        },
+        {
+          Category: "Operating expenses",
+          Value: "1.0398",
+          Parent: "General & Admin.",
+        },
+        {
+          Category: "Operating expenses",
+          Value: "0.07742",
+          Parent: "Business Optimization",
+        },
+      ];
+
+      function openModal(imageSrc, title, rows) {
+        const modal = document.getElementById("modal");
+        const modalImage = document.getElementById("modal-image");
+        const modalTitle = document.getElementById("modal-title");
+        const downloadButton = document.getElementById("download-button");
+        const detailsTable = $("#details-table").DataTable();
+
+        modalImage.src = imageSrc;
+        modalTitle.textContent = title;
+        downloadButton.href = imageSrc;
+
+        detailsTable.clear().draw();
+        rows.forEach((row) => {
+          detailsTable.row.add([row.Category, row.Value, row.Parent]).draw();
+        });
+
+        modal.classList.add("show");
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("modal");
+        modal.classList.remove("show");
+      }
+
+      $(document).ready(function () {
+        $("#details-table").DataTable({
+          paging: false, // Disable pagination
+          searching: false, // Disable search functionality
+          info: false, // Disable info display
+          select: true, // Enable row selection
+          dom: "Bfrtip", // Buttons and other elements
+          buttons: [
+            {
+              extend: "copy",
+              text: "Copy",
+              exportOptions: {
+                columns: ":visible", // Include only visible columns
+                rows: ":visible", // Include only visible rows
+                modifier: {
+                  selected: true, // Only include selected rows
+                },
+                header: false, // Exclude the header row from being copied
+              },
+            },
+          ],
+          columns: [
+            { title: "Category" },
+            { title: "Value" },
+            { title: "Parent" },
+          ],
+          scrollY: "200px", // Set the height of the table to make it scrollable
+          scrollCollapse: true, // Allow the table to collapse when fewer rows are present
+          scroller: true, // Enable smooth scrolling
+        });
+      });
+    </script>
+  </body>
+</html>
