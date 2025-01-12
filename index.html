@@ -34,6 +34,116 @@
   />
 
   <meta name="google-site-verification" content="_fD2d1jpXAIKw49SiFxO0sXqLgcfINsdRwWd2SBG0n4" />
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .navbar {
+      background-color:  #4b4b4c;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+    }
+
+    .navbar button {
+      background-color: #007bff;
+      border: none;
+      padding: 10px 15px;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .modal-content {
+      background-color: white;
+      width: 400px;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-content h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .modal-content input {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .modal-content button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .modal-content button:hover {
+      background-color: #0056b3;
+    }
+
+    .modal-content p {
+      font-size: 14px;
+      color: #666;
+      margin: 15px 0;
+    }
+
+    .modal-content a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .modal-content a:hover {
+      text-decoration: underline;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      cursor: pointer;
+      font-size: 18px;
+      color: #999;
+    }
+
+    .close:hover {
+      color: #000;
+    }
+  </style>
     <style>
       * {
         margin: 0;
@@ -549,6 +659,39 @@ footer {
     
   </head>
   <body>
+    <div class="navbar">
+      <div>Welcome to Viroet Analysis</div>
+      <button id="signup-button">Sign Up</button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="signup-modal">
+      <div class="modal-content">
+        <span class="close" id="close-modal">&times;</span>
+        <h2>Sign Up</h2>
+        <form id="signup-form">
+          <input
+            type="email"
+            id="signup-email"
+            placeholder="Email address"
+            required
+          />
+          <input
+            type="password"
+            id="signup-password"
+            placeholder="Password"
+            required
+          />
+          <p>
+            By signing up, I accept the
+            <a href="#">terms of use</a> and the <a href="#">privacy policy</a>.
+          </p>
+          <button type="button" id="signup-submit">Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="#">Go to sign in</a>.</p>
+      </div>
+    </div>
+
     <header class="header vs f-middle">
       <nav class="header__nav hs-sm-vs space-between">
         <a
@@ -790,6 +933,67 @@ Our mission is to simplify data visualization for everyone—from beginners to s
   }
 
   setInterval(changeImage, 3000);
+</script>
+<script>
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAOxmi_pAhwNxXvLc5AeJJFkhLR8Dn3Fms",
+    authDomain: "viroet.firebaseapp.com",
+    projectId: "viroet",
+    storageBucket: "viroet.firebasestorage.app",
+    messagingSenderId: "293358324162",
+    appId: "1:293358324162:web:7e4a4c14029461697a2e5b",
+    measurementId: "G-PVD8TQ7XW6",
+  };
+
+  // Initialize Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  // DOM Elements
+  const modal = document.getElementById("signup-modal");
+  const signupButton = document.getElementById("signup-button");
+  const closeModal = document.getElementById("close-modal");
+
+  // Show Modal
+  signupButton.addEventListener("click", () => {
+    modal.style.display = "flex";
+  });
+
+  // Hide Modal
+  closeModal.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  // Hide Modal on Outside Click
+  window.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  // Signup Functionality
+  document.getElementById("signup-submit").addEventListener("click", () => {
+    const email = document.getElementById("signup-email").value;
+    const password = document.getElementById("signup-password").value;
+
+    if (!email || !password) {
+      alert("Please fill out both email and password fields.");
+      return;
+    }
+
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        alert("Signup successful!");
+        console.log("User created:", userCredential.user);
+        modal.style.display = "none";
+      })
+      .catch((error) => {
+        alert(`Error: ${error.message}`);
+        console.error("Signup error:", error);
+      });
+  });
 </script>
   </body>
 </html>
