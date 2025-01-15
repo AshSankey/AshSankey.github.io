@@ -690,6 +690,9 @@ footer {
           </p>
           <button type="button" id="modal-submit">Sign Up</button>
         </form>
+        <p id="forgot-password" style="display: none">
+          <a href="#" id="forgot-password-link">Forgot Password?</a>
+        </p>
         <p id="modal-switch">
           Already have an account?
           <a href="#" id="toggle-modal">Go to sign in</a>.
@@ -925,6 +928,9 @@ Our mission is to simplify data visualization for everyone—from beginners to s
              duration: 1000, // Animation duration in milliseconds
              once: false     // Allows animations to trigger on both scroll down and up
          });
+
+
+         
      </script>
 
 <script>
@@ -978,14 +984,16 @@ Our mission is to simplify data visualization for everyone—from beginners to s
   });
 
   // Toggle Between Signup and Signin
-  toggleModal.addEventListener("click", () => {
-    if (isSignup) {
-      toggleToSignin();
-    } else {
-      toggleToSignup();
+  document.addEventListener("click", (event) => {
+    if (event.target && event.target.id === "toggle-modal") {
+      event.preventDefault();
+      if (isSignup) {
+        toggleToSignin();
+      } else {
+        toggleToSignup();
+      }
     }
   });
-
   function toggleToSignup() {
     isSignup = true;
     modalTitle.textContent = "Sign Up";
@@ -993,6 +1001,7 @@ Our mission is to simplify data visualization for everyone—from beginners to s
     modalSwitch.innerHTML =
       'Already have an account? <a href="#" id="toggle-modal">Go to sign in</a>.';
     modalTerms.style.display = "block";
+    document.getElementById("forgot-password").style.display = "none"; // Hide forgot password
   }
 
   function toggleToSignin() {
@@ -1002,6 +1011,7 @@ Our mission is to simplify data visualization for everyone—from beginners to s
     modalSwitch.innerHTML =
       'Don\'t have an account? <a href="#" id="toggle-modal">Sign Up</a>.';
     modalTerms.style.display = "none";
+    document.getElementById("forgot-password").style.display = "block"; // Show forgot password
   }
 
   // Form Submission
@@ -1105,7 +1115,7 @@ Our mission is to simplify data visualization for everyone—from beginners to s
 
 <h2>1. Acceptance of Terms</h2>
 <p>
-  By accessing or using the Viroet website (referred to as "the Website"), you
+  By accessing or using the SankeyASH website (referred to as "the Website"), you
   acknowledge that you have read, understood, and agree to be bound by these Terms of
   Use, along with our <a href="#">Privacy Policy</a>. If you do not agree, please discontinue
   using the Website.
@@ -1113,7 +1123,7 @@ Our mission is to simplify data visualization for everyone—from beginners to s
 
 <h2>2. Services Overview</h2>
 <p>
-  Viroet provides AI-powered data visualization tools, including but not limited to:
+  SankeyASH provides AI-powered data visualization tools, including but not limited to:
 </p>
 <ul>
   <li>Sankey Chart Creator</li>
@@ -1175,7 +1185,7 @@ Our mission is to simplify data visualization for everyone—from beginners to s
 
 <h2>9. Governing Law</h2>
 <p>
-  These Terms of Use are governed by the laws of [Your Country/State]. Any disputes will be
+  These Terms of Use are governed by the laws. Any disputes will be
   resolved exclusively in the courts of [Your Country/State].
 </p>
 
@@ -1185,7 +1195,7 @@ Our mission is to simplify data visualization for everyone—from beginners to s
 </p>
 <ul>
   <li><strong>Email:</strong> support@viroet.com</li>
-  <li><strong>Phone:</strong> [Insert Phone Number]</li>
+  <li></li>
 </ul>
   </body>
 </html>
@@ -1343,12 +1353,67 @@ Our mission is to simplify data visualization for everyone—from beginners to s
 </p>
 <ul>
   <li><strong>Email:</strong> <a href="mailto:support@viroet.com">support@viroet.com</a></li>
-  <li><strong>Phone:</strong> [Insert Phone Number]</li>
+  
 </ul>
   </body>
 </html>
 `);
   });
+
+  auth
+    .createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+
+      // Send email verification
+      user
+        .sendEmailVerification()
+        .then(() => {
+          alert(
+            "Signup successful! A verification email has been sent to your email address. Please verify before signing in."
+          );
+        })
+        .catch((error) => {
+          console.error("Error sending email verification:", error);
+          alert(`Error: ${error.message}`);
+        });
+
+      // Close the modal after signup
+      modal.style.display = "none";
+    })
+    .catch((error) => {
+      alert(`Error: ${error.message}`);
+      console.error("Signup error:", error);
+    });
+
+  document
+    .getElementById("forgot-password-link")
+    .addEventListener("click", function (event) {
+      event.preventDefault(); // Prevent default behavior of the link
+
+      // Get the email from the input field
+      const email = document.getElementById("modal-email").value;
+
+      if (!email) {
+        alert(
+          "Please enter your email address in the email field before requesting a password reset."
+        );
+        return;
+      }
+
+      // Send password reset email using Firebase
+      auth
+        .sendPasswordResetEmail(email)
+        .then(() => {
+          alert(
+            "A password reset email has been sent to your email address. Please check your inbox."
+          );
+        })
+        .catch((error) => {
+          console.error("Error sending password reset email:", error);
+          alert(`Error: ${error.message}`);
+        });
+    });
 </script>
   </body>
 </html>
