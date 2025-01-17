@@ -51,6 +51,15 @@
       justify-content: space-between;
       align-items: center;
       color: white;
+      position: fixed; /* Makes the navbar fixed */
+  top: 0; /* Positions it at the top of the viewport */
+  left: 0; /* Aligns it to the left */
+  width: 100%; /* Ensures it spans the full width of the viewport */
+  z-index: 10000; /* Keeps it above other elements */
+    }
+     /* Add spacing below the navbar */
+     .content {
+      margin-top: 40px; /* Matches the navbar's height (adjust as needed) */
     }
 
     .navbar button {
@@ -61,6 +70,7 @@
       font-size: 14px;
       cursor: pointer;
       border-radius: 5px;
+      margin-left: auto; /* Push the button to the right */
     }
 
     .modal {
@@ -588,7 +598,7 @@ footer {
       max-width: 600px;
       font-size: 1.1rem;
       color: #333;
-      text-align: center;
+      text-align: left;
       line-height: 1.6;
     }
 
@@ -655,15 +665,236 @@ footer {
   }
 }
 
+
+.navbar {
+  background-color: #333;
+  padding: 7px 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.names {
+  display: flex;
+  gap: 25px; /* Increase the gap between the elements */
+}
+
+.name {
+  color: white;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.3s ease; /* Smooth hover effect */
+  padding: 10px 20px;
+}
+
+.name:hover {
+  color: #ddd;
+  transform: scale(1.1); /* Enlarge the button slightly on hover */
+}
+
+.name a {
+  text-decoration: none;
+  color: inherit;
+  transition: filter 0.3s ease; /* For blur effect */
+}
+
+
+
+.table-container {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 350px; /* Increase container width */
+  z-index: 999;
+  padding: 10px;
+}
+
+.name:hover .table-container {
+  display: block;
+}
+
+.container-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.description {
+  font-size: 0.9em; /* Smaller font size for description */
+  color: #666; /* Lighter gray for the description */
+  margin-bottom: 10px;
+}
+
+.other-links {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.other-links a {
+  text-decoration: none;
+  color: #007bff;
+  font-size: 0.9em; /* Adjust font size for side links */
+}
+
+.other-links a:hover {
+  color: #0056b3; /* Hover color for side links */
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.table-container table td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.table-container table td a {
+  text-decoration: none;
+  color: black;
+  transition: color 0.2s ease;
+}
+
+.table-container table td a:hover {
+  color: #007bff; /* Add hover effect for links */
+}
+
+/* Apply to the Public Diagrams section */
+.name:first-child .table-container {
+  width: 600px; /* Adjust this value to your desired width */
+}
+/* Apply to the Products section (make it smaller) */
+.name:nth-child(2) .table-container {
+  width: 150px; /* Adjust this value to make it smaller */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the start */
+    padding: 10px 15px;
+  }
+
+  .names {
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 15px; /* Reduce gap */
+    width: 100%; /* Full width for buttons */
+  }
+
+  .name {
+    padding: 10px 0; /* Reduce padding for smaller buttons */
+    width: 100%; /* Full width for buttons */
+    text-align: left;
+  }
+
+  .table-container {
+    width: 100%; /* Full width dropdown on mobile */
+    position: relative; /* Ensure it doesn't overflow */
+  }
+
+  .table-container table td {
+    padding: 10px;
+  }
+
+  .other-links {
+    flex-direction: column; /* Stack links vertically */
+    gap: 5px;
+  }
+
+  .description {
+    font-size: 0.8em; /* Slightly smaller description */
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 10px;
+  }
+
+  .name {
+    font-size: 0.9em; /* Smaller font for buttons */
+    padding: 8px 0;
+  }
+
+  .description {
+    font-size: 0.75em; /* Further reduce description font size */
+  }
+}
     </style>
 
     
   </head>
   <body>
     <div class="navbar">
-      <div>Welcome to Viroet Analysis</div>
+      <div>Welcome to My Website</div>
+      <div class="navbar">
+        <div class="names">
+          <div class="name">
+            Diagrams &#9662;
+            <div class="table-container">
+              
+              <table>
+                <tr><td><a href="https://www.viroet.com/manual.htm" target="_blank">Public SankeyASH</a><p class="description">It contains public companies' financial statements and data. Made with SankeyASH.</p></td>
+                
+                <td><a href="https://www.viroet.com/tree%20assets/publicdiagramtree.html" target="_blank">Public TreeMAP</a><p class="description">It contains public companies' financial statements and data. Made with TreeMAP.</p></td>
+                <td><a  href="https://www.viroet.com/tree%20assets/publicdiagramtree.html" target="_blank">Public SunburstASH</a><p class="description">It contains public companies' financial statements and data. Made with SunburstASH.</p></td>
+              </table>
+            </div>
+          </div>
+          <div class="name">
+            Products &#9662;
+            <div class="table-container">
+              <table>
+                <tr><td><a href="https://www.viroet.com/sankey.html">SankeyASH</a></td></tr>
+                <tr><td><a href="https://www.viroet.com/Tree.html">TreeMAP</a></td></tr>
+                <tr><td><a href="https://www.viroet.com/sunburst.html">SunburstASH</a></td></tr>
+                <tr><td><a href="https://www.viroet.com/reactorash.html">ReactorASH</a></td></tr>
+              </table>
+            </div>
+          </div>
+          <div class="name">
+            AI Features &#9662;
+            <div class="table-container">
+              <table>
+                <tr><td><a href="#">AI-Driven Recommendations</a></td></tr>
+                <tr><td><a href="#">Customizable Visuals</a></td></tr>
+                <tr><td><a href="#">Real-Time Collaboration</a></td></tr>
+              </table>
+            </div>
+          </div>
+          <div class="name">
+            Updates &#9662;
+            <div class="table-container">
+              <table>
+                <tr><td><a href="#">TreeMAP AI prediction and negative value detection</a></td></tr>
+                <tr><td><a href="#">SankeyASH voice controller and command </a></td></tr>
+                <tr><td><a href="#">Upto 30 million data input enabled in ReactorASH Backend</a></td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      
+      
       <button id="signup-button">Sign Up</button>
-    </div>
+    </div></div>
+
+    
 
     <!-- Modal -->
     <div class="modal" id="signup-modal">
@@ -700,6 +931,8 @@ footer {
       </div>
     </div>
 
+    
+    <div class="content">
     <header class="header vs f-middle">
       <nav class="header__nav hs-sm-vs space-between">
         <a
@@ -714,7 +947,7 @@ footer {
         
       </a>
 
-
+   
       <div class="ribbon">
         <!-- Animation -->
         <div class="image-container">
