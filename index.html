@@ -598,7 +598,7 @@ footer {
       max-width: 600px;
       font-size: 1.1rem;
       color: #333;
-      text-align: left;
+      text-align: center;
       line-height: 1.6;
     }
 
@@ -714,11 +714,11 @@ footer {
   left: 0;
   background-color: white;
   color: black;
-  border: 1px solid #ccc;
+
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 350px; /* Increase container width */
   z-index: 999;
-  padding: 10px;
+  
 }
 
 .name:hover .table-container {
@@ -756,12 +756,12 @@ footer {
 .table-container table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+ 
 }
 
 .table-container table td {
-  padding: 8px;
-  border-bottom: 1px solid #ddd;
+  padding: 0px;
+ 
 }
 
 .table-container table td a {
@@ -769,71 +769,75 @@ footer {
   color: black;
   transition: color 0.2s ease;
 }
-
+.table-container table td a {
+  display: block; /* Make the link fill the entire cell */
+  padding: 10px; /* Adjust padding for consistent spacing */
+  border-radius: 0; /* Remove rounded corners */
+  background-color: #eaeaea; /* Subtle light gray background */
+  color: #333; /* Dark text color */
+  text-decoration: none; /* Remove underline */
+  font-weight: normal; /* Standard text weight */
+  transition: all 0.3s ease; /* Smooth hover transition */
+  text-align: center; /* Center align the text */
+  box-shadow: none; /* Remove shadow for a flat appearance */
+}
 .table-container table td a:hover {
-  color: #007bff; /* Add hover effect for links */
+  background-color: #007bff; /* Blue background on hover */
+  color: white; /* White text on hover */
+  transform: scale(1.01); /* Subtle zoom effect */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
 }
 
 /* Apply to the Public Diagrams section */
 .name:first-child .table-container {
-  width: 600px; /* Adjust this value to your desired width */
+  width: 630px; /* Adjust this value to your desired width */
 }
 /* Apply to the Products section (make it smaller) */
 .name:nth-child(2) .table-container {
   width: 150px; /* Adjust this value to make it smaller */
 }
 
-/* Responsive Design */
+/* Responsive Design for Smaller Screens */
 @media (max-width: 768px) {
   .navbar {
-    flex-direction: column; /* Stack items vertically */
-    align-items: flex-start; /* Align items to the start */
-    padding: 10px 15px;
+    padding: 7px 20px; /* Reduce padding */
   }
 
   .names {
-    flex-direction: column; /* Stack buttons vertically */
-    gap: 15px; /* Reduce gap */
-    width: 100%; /* Full width for buttons */
+    gap: 10px; /* Reduce gap between elements */
   }
 
   .name {
-    padding: 10px 0; /* Reduce padding for smaller buttons */
-    width: 100%; /* Full width for buttons */
-    text-align: left;
+    padding: 8px 15px; /* Reduce button padding */
+    font-size: 0.9em; /* Reduce font size */
   }
 
   .table-container {
-    width: 100%; /* Full width dropdown on mobile */
-    position: relative; /* Ensure it doesn't overflow */
-  }
-
-  .table-container table td {
-    padding: 10px;
-  }
-
-  .other-links {
-    flex-direction: column; /* Stack links vertically */
-    gap: 5px;
+    width: 300px; /* Adjust dropdown width */
   }
 
   .description {
-    font-size: 0.8em; /* Slightly smaller description */
+    font-size: 0.8em; /* Smaller description font */
   }
 }
 
 @media (max-width: 480px) {
   .navbar {
-    padding: 10px;
+    padding: 5px 5px; /* Further reduce padding */
   }
 
   .name {
-    font-size: 0.9em; /* Smaller font for buttons */
-    padding: 8px 0;
+    font-size: 0.5em; /* Smaller font for buttons */
+    padding: 2px 10px; /* Further reduce padding */
+  }
+
+  .table-container {
+    width: 150px; /* Narrower dropdown for small screens */
+    padding: 2px; /* Adjust padding */
   }
 
   .description {
-    font-size: 0.75em; /* Further reduce description font size */
+    font-size: 0.7em; /* Further reduce font size */
   }
 }
     </style>
