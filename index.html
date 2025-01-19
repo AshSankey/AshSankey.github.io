@@ -1166,7 +1166,23 @@ Our mission is to simplify data visualization for everyone—from beginners to s
              once: false     // Allows animations to trigger on both scroll down and up
          });
 
+  document.addEventListener("DOMContentLoaded", () => {
+  const images = document.querySelectorAll(".ribbon .image-container img");
+  let currentIndex = 0;
 
+  function switchImage() {
+    // Remove the `active` class from all images
+    images.forEach((img, index) => {
+      img.classList.toggle("active", index === currentIndex);
+    });
+
+    // Move to the next image in the sequence
+    currentIndex = (currentIndex + 1) % images.length;
+  }
+
+  // Call switchImage every 3 seconds
+  setInterval(switchImage, 3000); // 3000ms = 3 seconds
+});
          
      </script>
 
