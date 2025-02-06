@@ -39,7 +39,7 @@
     <meta property="og:locale" content="en_US" />
     <meta
       property="og:image"
-   content="https://www.Viroet.com/Apple%20FY24%20Income%20Statement.png"
+      content="https://www.Viroet.com/Apple%20FY24%20Income%20Statement.png"
     />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="2700" />
@@ -1670,6 +1670,8 @@ Budget [160] Other Necessities #0F0
                       flow <strong>endpoints</strong><br />
                       at the <strong>right</strong> edge</label
                     >
+
+                    
                   </td>
                 </tr>
               </table>
@@ -1759,12 +1761,90 @@ Budget [160] Other Necessities #0F0
             </div>
           </div>
           <!-- End LAYOUT -->
+           
           </div>
       </div>
+
+      <div class="button-wrapper">
+        <button class="ribbon-button" onclick="toggleBox('box6')">
+          Logo</Title>
+          <span class="new-badge">New</span>
+      </button>
+      
+        <div id="box6" class="content-box">
+
+<!-- Input for Title -->
+<label for="diagram_topic"><strong>Diagram Topic:</strong></label>
+<input id="diagram_topic" type="text" placeholder="Enter topic..." onchange="updateDiagramTopic();" />
+
+
+
+<!-- Upload PNG Logo -->
+<label for="logo_upload"><strong>Upload Logo:</strong></label>
+<input id="logo_upload" type="file" accept="image/png" onchange="handleLogoUpload(event)" />
+
+<!-- Button to open logo selection dropdown -->
+<button id="select_logos_btn">Select Logos</button>
+
+<!-- Dropdown containing logos in a scrollable grid -->
+<div id="logo_dropdown" class="dropdown-menu">
+  <div class="logo-grid">
+    <!-- 36 preloaded logos inside containers -->
+    <div class="logo-container">
+      <img src="sankey assets/logo1.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo1.png')">
+      <img src="sankey assets/logo2.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo2.png')">
+      <img src="sankey assets/logo3.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo3.png')">
+      <img src="sankey assets/logo4.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo4.png')">
+      <img src="sankey assets/logo5.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo5.png')">
+      <img src="sankey assets/logo6.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo6.png')">
+      <img src="sankey assets/logo7.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo7.png')">
+      <img src="sankey assets/logo8.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo8.png')">
+      <img src="sankey assets/logo9.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo9.png')">
+      <img src="sankey assets/logo10.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo10.png')">
+      <img src="sankey assets/logo11.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo11.png')">
+      <img src="sankey assets/logo12.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo12.png')">
+      <img src="sankey assets/logo13.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo13.png')">
+      <img src="sankey assets/logo14.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo14.png')">
+      <img src="sankey assets/logo15.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo15.png')">
+      <img src="sankey assets/logo16.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo16.png')">
+      <img src="sankey assets/logo17.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo17.png')">
+      <img src="sankey assets/logo18.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo18.png')">
+      <img src="sankey assets/logo19.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo19.png')">
+      <img src="sankey assets/logo20.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo20.png')">
+      <img src="sankey assets/logo21.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo21.png')">
+      <img src="sankey assets/logo22.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo22.png')">
+      <img src="sankey assets/logo23.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo23.png')">
+      <img src="sankey assets/logo24.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo24.png')">
+      <img src="sankey assets/logo25.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo25.png')">
+      <img src="sankey assets/logo26.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo26.png')">
+      <img src="sankey assets/logo27.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo27.png')">
+      <img src="sankey assets/logo28.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo28.png')">
+      <img src="sankey assets/logo29.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo29.png')">
+      <img src="sankey assets/logo30.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo30.png')">
+      <img src="sankey assets/logo31.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo31.png')">
+      <img src="sankey assets/logo32.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo32.png')">
+      <img src="sankey assets/logo33.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo33.png')">
+      <img src="sankey assets/logo34.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo34.png')">
+      <img src="sankey assets/logo35.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo35.png')">
+      <img src="sankey assets/logo36.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo36.png')">
+      <img src="sankey assets/logo37.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo37.png')">
+      <img src="sankey assets/logo38.png" onclick="addPredefinedLogoWithBase64('sankey assets/logo38.png')">
+    
+    </div>
+  </div>
+</div> 
+
+
+
+
+
+
+          </div>
     </div>
       
     </div>
     <form id="skm_form" onsubmit="process_sankey(); return false;">
+      
   </header>
     
 
@@ -1831,32 +1911,25 @@ Budget [160] Other Necessities #0F0
                   <div id="info_messages"></div>
                   <div id="issue_messages"></div>
                 </div>
+              
 
                 <p id="chart">
-                  <svg
-                    id="svg_scratch"
-                    height="600"
-                    width="600"
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="hidden_under"
-                  ></svg>
-                  <svg
-                    id="sankey_svg"
-                    height="600"
-                    width="600"
-                    xmlns="http://www.w3.org/2000/svg"
-                  ></svg>
-                </p>
-                <canvas
-                  id="png_preview"
-                  height="600"
-                  width="600"
-                  style="background-color: transparent; display: none"
-                ></canvas>
-               
-                    
-                  </p>
+                  <svg id="svg_scratch" height="600" width="600" xmlns="http://www.w3.org/2000/svg" class="hidden_under"></svg>
                 
+                  <svg id="sankey_svg" height="600" width="600" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Guide Lines (Will be controlled via JavaScript) -->
+                    <line id="x_guide" stroke="red" stroke-dasharray="5,5" visibility="hidden"/>
+                    <line id="y_guide" stroke="red" stroke-dasharray="5,5" visibility="hidden"/>
+                  </svg>
+                </p>
+                
+                <canvas id="png_preview" height="600" width="600" style="background-color: transparent; display: none"></canvas>
+                
+                <br>
+                
+                
+                
+                  
                 <table id="messages" class="expandable_box">
                   
                     <td>
@@ -2008,7 +2081,7 @@ Budget [160] Other Necessities #0F0
                     type="number"
                     class="number_10000s"
                     min="40"
-                    value="600"
+                    value="800"
                     step="2"
                     onchange="process_sankey();"
                 /></span>
@@ -2024,7 +2097,7 @@ Budget [160] Other Necessities #0F0
                     type="number"
                     class="number_10000s"
                     min="40"
-                    value="600"
+                    value="800"
                     step="2"
                     onchange="process_sankey();"
                 /></span>
