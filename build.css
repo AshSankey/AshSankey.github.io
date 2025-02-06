@@ -6,6 +6,7 @@
   --medium-blue: rgb(12, 13, 13);
   --button-blue: #131313;
   --light-blue: rgb(4, 4, 4);
+
   --lighter-blue: #74b4b4;
   --gray-blue: rgb(31, 31, 31);
   --pale-blue-0: #090909;
@@ -1095,7 +1096,7 @@ input:checked ~ label.ropt,
 
 /* Apply a clean and professional font */
 .header__logo {
-  font-family: "Roboto", sans-serif; /* Modern sans-serif font for readability */
+  font-family: 'Anton', sans-serif;
   font-weight: 500; /* Balanced weight for a professional look */
   font-size: 2.5rem; /* Suitable size for logo text */
   color: #bcbcbb; /* Gold */ /* Soft, professional color */
@@ -1972,27 +1973,80 @@ footer p {
   text-align: center;
 }
 
+/* Ensure the dropdown is large enough */
+#logo_dropdown {
+  position: absolute !important;
+  background: white !important;
+  border: 1px solid #ccc !important;
+  width: 550px !important; /* Adjusted width for 5 columns */
+  max-height: 450px !important;
+  overflow-y: auto !important;
+  padding: 10px !important;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2) !important;
+  z-index: 1000 !important;
+}
+
+/* Logo grid - FORCE 5 columns */
+#logo_dropdown .logo-grid {
+  
+  grid-template-columns: repeat(5, 1fr) !important; /* FORCE 5 columns */
+  gap: 10px !important; /* Space between logos */
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important; /* Ensure full width */
+}
+
+/* Individual logo images */
+#logo_dropdown .logo-grid img {
+  width: 100px !important;
+  height: 100px !important;
+  cursor: pointer !important;
+  border: 1px solid transparent !important;
+  transition: 0.3s !important;
+  object-fit: contain !important; /* Ensures proper scaling */
+}
+
+/* Hover effect */
+#logo_dropdown .logo-grid img:hover {
+  border: 2px solid blue !important;
+}
+
+.new-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: red;
+  color: white;
+  padding: 2px 6px;
+  font-size: 12px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
  /* Responsive Design for Mobile */
-    @media (max-width: 768px) {
-      .main-content {
-        flex-direction: column; /* Stack all sections vertically */
-      }
+ @media (max-width: 768px) {
+  .main-content {
+    flex-direction: column; /* Stack all sections vertically */
+  }
 
-      .left,
-      .center,
-      .right {
-        width: 100%; /* Full width for each section */
-        flex: none; /* Disable flex-grow */
-      }
+  .left,
+  .center,
+  .right {
+    width: 100%; /* Full width for each section */
+    flex: none; /* Disable flex-grow */
+  }
 
-      .right {
-        flex-direction: column; /* Stack the right sections vertically */
-      }
+  .right {
+    flex-direction: column; /* Stack the right sections vertically */
+  }
 
-      .right-top,
-      .right-bottom,
-      .right-bottom-top,
-      .right-bottom-bottom {
-        flex: none; /* Disable flex-grow */
-        width: 100%; /* Full width for each subsection */
-      }
+  .right-top,
+  .right-bottom,
+  .right-bottom-top,
+  .right-bottom-bottom {
+    flex: none; /* Disable flex-grow */
+    width: 100%; /* Full width for each subsection */
+  }
+
+ 
+  
