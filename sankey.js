@@ -1185,3 +1185,360 @@ function replaceGraph(graphName) {
   console.log(`Graph replaced with: ${graphName}`);
   // Add your graph replacement logic here
 }
+
+let selectedElement = null;
+let selectedDeleteButton = null;
+let selectedDeleteText = null;
+let offset = { x: 0, y: 0 };
+let logoCount = 0;
+let deleteButtonTimeouts = {};
+
+// Update diagram title in real-time
+function updateDiagramTopic() {
+  let topicInput = document.getElementById("diagram_topic");
+  let topic = topicInput.value.trim();
+  let svg = document.getElementById("sankey_svg");
+  let titleElement = document.getElementById("diagram_title");
+
+  if (!titleElement) {
+    titleElement = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "text"
+    );
+    titleElement.setAttribute("id", "diagram_title");
+    titleElement.setAttribute("x", "300");
+    titleElement.setAttribute("y", "50");
+    titleElement.setAttribute("text-anchor", "middle");
+    titleElement.setAttribute("font-size", "24");
+    titleElement.setAttribute("font-weight", "bold");
+    titleElement.setAttribute("fill", "#000");
+    titleElement.setAttribute("style", "cursor: move;");
+    titleElement.addEventListener("mousedown", startDrag);
+    svg.appendChild(titleElement);
+  }
+
+  titleElement.textContent = topic || "Default Topic"; // Update instantly
+}
+
+document
+  .getElementById("diagram_topic")
+  .addEventListener("input", updateDiagramTopic);
+
+// Handle PNG logo upload
+function handleLogoUpload(event) {
+  let file = event.target.files[0];
+  if (file && file.type === "image/png") {
+    let reader = new FileReader();
+    reader.onload = function (e) {
+      let svg = document.getElementById("sankey_svg");
+      let logoId = `logo_image_${logoCount}`;
+
+      let logoImage = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "image"
+      );
+      logoImage.setAttribute("id", logoId);
+      logoImage.setAttribute("width", "100");
+      logoImage.setAttribute("height", "100");
+
+      let xOffset = 250 + (logoCount % 3) * 120;
+      let yOffset = 150 + Math.floor(logoCount / 3) * 120;
+      logoImage.setAttribute("x", xOffset);
+      logoImage.setAttribute("y", yOffset);
+      logoImage.setAttribute("visibility", "visible");
+      logoImage.setAttribute("style", "cursor: move;");
+      logoImage.setAttribute("href", e.target.result);
+      logoImage.addEventListener("mousedown", startDrag);
+      svg.appendChild(logoImage);
+
+      // Create delete button
+      let deleteButton = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "circle"
+      );
+      deleteButton.setAttribute("id", `delete_${logoId}`);
+      deleteButton.setAttribute("cx", xOffset + 110);
+      deleteButton.setAttribute("cy", yOffset - 10);
+      deleteButton.setAttribute("r", "12");
+      deleteButton.setAttribute("fill", "#FF4C4C");
+      deleteButton.setAttribute("cursor", "pointer");
+      deleteButton.setAttribute("visibility", "hidden");
+
+      let deleteText = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "text"
+      );
+      deleteText.setAttribute("id", `delete_text_${logoId}`);
+      deleteText.setAttribute("x", xOffset + 110);
+      deleteText.setAttribute("y", yOffset - 6);
+      deleteText.setAttribute("text-anchor", "middle");
+      deleteText.setAttribute("fill", "#FFFFFF");
+      deleteText.setAttribute("font-size", "18");
+      deleteText.setAttribute("font-weight", "bold");
+      deleteText.textContent = "×";
+      deleteText.setAttribute("visibility", "hidden");
+
+      deleteButton.addEventListener("click", function () {
+        svg.removeChild(logoImage);
+        svg.removeChild(deleteButton);
+        svg.removeChild(deleteText);
+        deleteButtonTimeouts[logoId] = null;
+      });
+
+      logoImage.addEventListener("mouseover", function () {
+        deleteButton.setAttribute("visibility", "visible");
+        deleteText.setAttribute("visibility", "visible");
+        clearTimeout(deleteButtonTimeouts[logoId]);
+      });
+
+      logoImage.addEventListener("mouseout", function () {
+        deleteButtonTimeouts[logoId] = setTimeout(() => {
+          deleteButton.setAttribute("visibility", "hidden");
+          deleteText.setAttribute("visibility", "hidden");
+        }, 2000);
+      });
+
+      deleteButton.addEventListener("mouseover", function () {
+        clearTimeout(deleteButtonTimeouts[logoId]);
+        deleteButton.setAttribute("visibility", "visible");
+        deleteText.setAttribute("visibility", "visible");
+      });
+
+      svg.appendChild(deleteButton);
+      svg.appendChild(deleteText);
+      logoCount++;
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+// Create guide lines
+function createGuideLines() {
+  let svg = document.getElementById("sankey_svg");
+
+  let xGuide = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  xGuide.setAttribute("id", "x_guide");
+  xGuide.setAttribute("stroke", "red");
+  xGuide.setAttribute("stroke-dasharray", "5,5");
+  xGuide.setAttribute("visibility", "hidden");
+  svg.appendChild(xGuide);
+
+  let yGuide = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  yGuide.setAttribute("id", "y_guide");
+  yGuide.setAttribute("stroke", "red");
+  yGuide.setAttribute("stroke-dasharray", "5,5");
+  yGuide.setAttribute("visibility", "hidden");
+  svg.appendChild(yGuide);
+}
+
+// Start dragging
+function startDrag(event) {
+  if (event.target.id === "diagram_title" || event.target.tagName === "image") {
+    if (event.target.tagName === "circle") return;
+
+    selectedElement = event.target;
+    let svg = document.getElementById("sankey_svg");
+
+    let point = svg.createSVGPoint();
+    point.x = event.clientX;
+    point.y = event.clientY;
+    let cursor = point.matrixTransform(svg.getScreenCTM().inverse());
+
+    offset.x = cursor.x - parseFloat(selectedElement.getAttribute("x"));
+    offset.y = cursor.y - parseFloat(selectedElement.getAttribute("y"));
+
+    if (event.target.tagName === "image") {
+      selectedDeleteButton = document.getElementById(
+        `delete_${event.target.id}`
+      );
+      selectedDeleteText = document.getElementById(
+        `delete_text_${event.target.id}`
+      );
+    }
+
+    document.addEventListener("mousemove", drag);
+    document.addEventListener("mouseup", stopDrag);
+
+    updateGuideLines(cursor.x, cursor.y);
+    document.getElementById("x_guide").setAttribute("visibility", "visible");
+    document.getElementById("y_guide").setAttribute("visibility", "visible");
+  }
+}
+
+// Dragging action
+function drag(event) {
+  if (selectedElement) {
+    let svg = document.getElementById("sankey_svg");
+    let point = svg.createSVGPoint();
+    point.x = event.clientX;
+    point.y = event.clientY;
+    let cursor = point.matrixTransform(svg.getScreenCTM().inverse());
+
+    selectedElement.setAttribute("x", cursor.x - offset.x);
+    selectedElement.setAttribute("y", cursor.y - offset.y);
+
+    if (selectedDeleteButton) {
+      selectedDeleteButton.setAttribute("cx", cursor.x - offset.x + 110);
+      selectedDeleteButton.setAttribute("cy", cursor.y - offset.y - 10);
+    }
+    if (selectedDeleteText) {
+      selectedDeleteText.setAttribute("x", cursor.x - offset.x + 110);
+      selectedDeleteText.setAttribute("y", cursor.y - offset.y - 6);
+    }
+
+    updateGuideLines(cursor.x - offset.x, cursor.y - offset.y);
+  }
+}
+
+// Stop dragging
+function stopDrag() {
+  selectedElement = null;
+  selectedDeleteButton = null;
+  selectedDeleteText = null;
+  document.removeEventListener("mousemove", drag);
+  document.removeEventListener("mouseup", stopDrag);
+
+  document.getElementById("x_guide").setAttribute("visibility", "hidden");
+  document.getElementById("y_guide").setAttribute("visibility", "hidden");
+}
+
+// Initialize guide lines
+createGuideLines();
+
+// Toggle logo dropdown visibility
+document
+  .getElementById("select_logos_btn")
+  .addEventListener("click", function (event) {
+    let dropdown = document.getElementById("logo_dropdown");
+
+    // Close other dropdowns before opening this one
+    document.querySelectorAll(".dropdown-menu").forEach((menu) => {
+      if (menu !== dropdown) {
+        menu.style.display = "none";
+      }
+    });
+
+    // Toggle visibility
+    dropdown.style.display =
+      dropdown.style.display === "block" ? "none" : "block";
+
+    // Position dropdown near the button
+    let rect = event.target.getBoundingClientRect();
+    dropdown.style.left = `${rect.left}px`;
+    dropdown.style.top = `${rect.bottom + window.scrollY}px`;
+  });
+
+// Hide dropdown if clicked outside
+document.addEventListener("click", function (event) {
+  let dropdown = document.getElementById("logo_dropdown");
+  let button = document.getElementById("select_logos_btn");
+
+  if (!dropdown.contains(event.target) && event.target !== button) {
+    dropdown.style.display = "none";
+  }
+});
+
+// Add predefined logo from dropdown
+function addPredefinedLogo(logoSrc) {
+  let svg = document.getElementById("sankey_svg");
+  let logoId = `logo_image_${logoCount}`;
+
+  let logoImage = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "image"
+  );
+  logoImage.setAttribute("id", logoId);
+  logoImage.setAttribute("width", "100");
+  logoImage.setAttribute("height", "100");
+
+  let xOffset = 250 + (logoCount % 3) * 120;
+  let yOffset = 150 + Math.floor(logoCount / 3) * 120;
+  logoImage.setAttribute("x", xOffset);
+  logoImage.setAttribute("y", yOffset);
+  logoImage.setAttribute("visibility", "visible");
+  logoImage.setAttribute("style", "cursor: move;");
+  logoImage.setAttribute("href", logoSrc);
+  logoImage.addEventListener("mousedown", startDrag);
+  svg.appendChild(logoImage);
+
+  // Create delete button
+  let deleteButton = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "circle"
+  );
+  deleteButton.setAttribute("id", `delete_${logoId}`);
+  deleteButton.setAttribute("cx", xOffset + 110);
+  deleteButton.setAttribute("cy", yOffset - 10);
+  deleteButton.setAttribute("r", "12");
+  deleteButton.setAttribute("fill", "#FF4C4C");
+  deleteButton.setAttribute("cursor", "pointer");
+  deleteButton.setAttribute("visibility", "hidden");
+
+  let deleteText = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "text"
+  );
+  deleteText.setAttribute("id", `delete_text_${logoId}`);
+  deleteText.setAttribute("x", xOffset + 110);
+  deleteText.setAttribute("y", yOffset - 6);
+  deleteText.setAttribute("text-anchor", "middle");
+  deleteText.setAttribute("fill", "#FFFFFF");
+  deleteText.setAttribute("font-size", "18");
+  deleteText.setAttribute("font-weight", "bold");
+  deleteText.textContent = "×";
+  deleteText.setAttribute("visibility", "hidden");
+
+  deleteButton.addEventListener("click", function () {
+    svg.removeChild(logoImage);
+    svg.removeChild(deleteButton);
+    svg.removeChild(deleteText);
+    deleteButtonTimeouts[logoId] = null;
+  });
+
+  logoImage.addEventListener("mouseover", function () {
+    deleteButton.setAttribute("visibility", "visible");
+    deleteText.setAttribute("visibility", "visible");
+    clearTimeout(deleteButtonTimeouts[logoId]);
+  });
+
+  logoImage.addEventListener("mouseout", function () {
+    deleteButtonTimeouts[logoId] = setTimeout(() => {
+      deleteButton.setAttribute("visibility", "hidden");
+      deleteText.setAttribute("visibility", "hidden");
+    }, 2000);
+  });
+
+  deleteButton.addEventListener("mouseover", function () {
+    clearTimeout(deleteButtonTimeouts[logoId]);
+    deleteButton.setAttribute("visibility", "visible");
+    deleteText.setAttribute("visibility", "visible");
+  });
+
+  svg.appendChild(deleteButton);
+  svg.appendChild(deleteText);
+  logoCount++;
+}
+// Convert image URL to Base64 and call the existing function
+async function addPredefinedLogoWithBase64(logoSrc) {
+  let base64Image = await convertImageToBase64(logoSrc);
+  if (base64Image) {
+    addPredefinedLogo(base64Image); // Call existing function with Base64
+  } else {
+    console.error("Failed to convert image to Base64");
+  }
+}
+
+// Convert image URL to Base64
+async function convertImageToBase64(url) {
+  try {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.readAsDataURL(blob);
+    });
+  } catch (error) {
+    console.error("Error converting image to Base64:", error);
+  }
+}
