@@ -2296,7 +2296,7 @@ Requires:
 
     // Note: Checking the 'Transparent' background-color box *no longer* means
     // that the background-color-picker is pointless; it still affects the color
-    
+
     // Therefore, we no longer disable the Background Color element, even when
     // 'Transparent' is checked.
 
