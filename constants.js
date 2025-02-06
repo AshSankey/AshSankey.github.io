@@ -284,6 +284,7 @@ labels relativesize 100
     // Ranked-choice election:
     [
       "election",
+
       {
         name: "Ranked Election",
         flows:
@@ -388,7 +389,7 @@ labels relativesize 100
         flows: "a [1] b\na [1] c",
         settings: {
           size_h: 600,
-          size_w: 600,
+          size_w: 800,
           node_w: 12,
           node_h: 50,
           node_spacing: 80,
@@ -455,3 +456,6 @@ labels relativesize 100
     //   settings: {},
     // }],
   ]);
+
+
+  
