@@ -567,6 +567,7 @@ dfn {
   padding: 0.5em 0.7em; /* Comfortable padding */
   border-radius: 6px; /* Rounded corners for a modern look */
   transition: border-color 0.3s ease, background-color 0.3s ease;
+  
 }
 
 .share-box:hover {
@@ -2049,4 +2050,152 @@ footer p {
   }
 
  
-  
+  /* Mobile Responsiveness */
+@media (max-width: 768px) {
+  /* Adjust the main layout */
+  .main-content {
+    flex-direction: column; /* Stack sections vertically */
+  }
+
+  .left,
+  .center,
+  .right {
+    width: 100%; /* Full width for all sections */
+    flex: none; /* Disable flex-grow */
+  }
+
+  /* Adjust the right section */
+  .right {
+    flex-direction: column; /* Stack right-top and right-bottom vertically */
+  }
+
+  /* Adjust the logo dropdown */
+  #logo_dropdown {
+    width: 100% !important; /* Full width for dropdown */
+    max-height: 300px !important; /* Reduce height for smaller screens */
+  }
+
+  #logo_dropdown .logo-grid {
+    grid-template-columns: repeat(3, 1fr) !important; /* 3 columns for mobile */
+  }
+
+  /* Adjust the ribbon buttons */
+  .ash-ribbon {
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: flex-start; /* Align buttons to the left */
+  }
+
+  .button-wrapper {
+    width: 100%; /* Full width for button wrappers */
+    margin-bottom: 10px; /* Add spacing between buttons */
+  }
+
+  .ribbon-button {
+    width: 100%; /* Full width for buttons */
+    margin: 5px 0; /* Add spacing between buttons */
+  }
+
+  /* Adjust the content boxes */
+  .content-box {
+    width: 100%; /* Full width for content boxes */
+    left: 0; /* Align to the left */
+  }
+
+  /* Adjust the table */
+  .table-container1 {
+    overflow-x: auto; /* Enable horizontal scrolling for tables */
+  }
+
+  /* Adjust the footer */
+  footer {
+    padding: 10px 0; /* Reduce padding for smaller screens */
+  }
+
+  /* Hide or adjust non-essential elements */
+  .new-badge {
+    display: none; /* Hide the "New" badge on mobile */
+  }
+}
+.table-container1 {
+  overflow-x: auto; /* Enable horizontal scrolling */
+  width: 100%; /* Full width */
+}
+@media (max-width: 768px) {
+  .header__nav {
+    flex-direction: column; /* Stack navigation items vertically */
+    align-items: flex-start; /* Align items to the left */
+  }
+
+  .nav-menu {
+    flex-direction: column; /* Stack menu items vertically */
+    gap: 10px; /* Add spacing between items */
+  }
+
+  .nav-item {
+    width: 100%; /* Full width for menu items */
+  }
+
+  .dropdown-content {
+    position: static; /* Remove absolute positioning */
+    width: 100%; /* Full width for dropdown */
+  }
+}
+@media (max-width: 768px) {
+  footer {
+    padding: 10px 0; /* Reduce padding */
+    font-size: 12px; /* Reduce font size */
+  }
+}
+@media (max-width: 768px) {
+  #logo_dropdown {
+    width: 100% !important; /* Full width */
+    max-height: 300px !important; /* Reduce height */
+  }
+
+  #logo_dropdown .logo-grid {
+    grid-template-columns: repeat(3, 1fr) !important; /* 3 columns for mobile */
+  }
+
+  #logo_dropdown .logo-grid img {
+    width: 80px !important; /* Reduce logo size */
+    height: 80px !important;
+  }
+}
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column; /* Stack sections vertically */
+  }
+
+  .left,
+  .center,
+  .right {
+    width: 100%; /* Full width for all sections */
+    flex: none; /* Disable flex-grow */
+  }
+
+  .right {
+    flex-direction: column; /* Stack right-top and right-bottom vertically */
+  }
+}
+@media (max-width: 768px) {
+  .ash-ribbon {
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: flex-start; /* Align buttons to the left */
+  }
+
+  .button-wrapper {
+    width: 100%; /* Full width for button wrappers */
+    margin-bottom: 10px; /* Add spacing between buttons */
+  }
+
+  .ribbon-button {
+    width: 100%; /* Full width for buttons */
+    margin: 5px 0; /* Add spacing between buttons */
+  }
+}
+@media (max-width: 768px) {
+  .content-box {
+    width: 100%; /* Full width for content boxes */
+    left: 0; /* Align to the left */
+  }
+}
